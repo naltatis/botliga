@@ -1,27 +1,101 @@
 (function() {
-  var Rating, assert, suite, vows;
+  var assert, rating, vows;
   vows = require('vows');
   assert = require('assert');
-  Rating = require('../lib/rating').Rating;
-  suite = vows.describe('Result').addBatch({
-    'Rating': {
+  rating = require('../lib/rating');
+  vows.describe('rating for').addBatch({
+    'one match with': {
       topic: function() {
-        return new Rating();
+        return new rating.MatchScorer();
       },
-      'a correct draw should give two points': function(rating) {
-        var estimated, points, real;
+      'exact draw should give 4 points': function(match) {
+        assert.equal(match.score([0, 0], [0, 0]), 4);
+        return assert.equal(match.score([3, 3], [3, 3]), 4);
+      },
+      'exact home win shouldgive 4 points': function(match) {
+        return assert.equal(match.score([1, 0], [1, 0]), 4);
+      },
+      'exact away win should give 4 points': function(match) {
+        return assert.equal(match.score([0, 2], [0, 2]), 4);
+      },
+      'correct draw tendency gives 2 points': function(match) {
+        return assert.equal(match.score([2, 2], [1, 1]), 2);
+      },
+      'wrong tendency doesnt give any points': function(match) {
+        assert.equal(match.score([1, 2], [0, 0]), 0);
+        assert.equal(match.score([3, 2], [0, 1]), 0);
+        assert.equal(match.score([0, 0], [0, 1]), 0);
+        return assert.equal(match.score([0, 0], [2, 0]), 0);
+      },
+      'home win tendency should give 2 points': function(match) {
+        return assert.equal(match.score([8, 1], [2, 1]), 2);
+      },
+      'away win tendency should give 2 points': function(match) {
+        return assert.equal(match.score([0, 2], [0, 3]), 2);
+      },
+      'draw tendency should give 2 points': function(match) {
+        return assert.equal(match.score([2, 2], [0, 0]), 2);
+      },
+      'correct home win goal difference should give 3 points': function(match) {
+        assert.equal(match.score([3, 1], [2, 0]), 3);
+        return assert.equal(match.score([4, 3], [3, 2]), 3);
+      },
+      'correct away win goal difference should give 3 points': function(match) {
+        assert.equal(match.score([0, 1], [1, 2]), 3);
+        return assert.equal(match.score([1, 4], [0, 3]), 3);
+      }
+    }
+  }).addBatch({
+    'multipe matchs with': {
+      topic: function() {
+        var scorer;
+        scorer = new rating.MatchScorer();
+        return new rating.GroupScorer(scorer);
+      },
+      'two exact matches should give 8 points': function(group) {
+        var estimated, real;
         estimated = {
-          1: [0, 0]
+          1: [0, 0],
+          2: [2, 0]
         };
         real = {
-          1: [0, 0]
+          1: [0, 0],
+          2: [2, 0]
         };
-        points = rating.score(estimated, real);
-        return assert.equal(points, 2);
+        return assert.equal(group.score(estimated, real), 8);
       },
-      'A sub-context': function() {},
-      'Another context': function() {}
+      'no correct results should give 0 points': function(group) {
+        var estimated, real;
+        estimated = {
+          1: [0, 0],
+          2: [2, 0]
+        };
+        real = {
+          1: [1, 0],
+          2: [0, 0]
+        };
+        return assert.equal(group.score(estimated, real), 0);
+      },
+      'two tendencies and one exact draw 8 points': function(group) {
+        var estimated, real;
+        estimated = {
+          1: [2, 0],
+          2: [1, 2],
+          3: [4, 4]
+        };
+        real = {
+          1: [1, 0],
+          2: [3, 6],
+          3: [4, 4]
+        };
+        return assert.equal(group.score(estimated, real), 8);
+      },
+      'no match should give 0 points': function(group) {
+        var estimated, real;
+        estimated = {};
+        real = {};
+        return assert.equal(group.score(estimated, real), 0);
+      }
     }
-  });
-  suite["export"](module);
+  })["export"](module);
 }).call(this);
