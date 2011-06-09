@@ -5,8 +5,15 @@ Schema = mongoose.Schema
 
 Match = new Schema(
   id: Number
-  team1: String
-  team2: String
+  team1: Number
+  team2: Number
+  team1Name: String
+  team2Name: String
+  team1Goals: Number
+  team2Goals: Number
+  season: String
+  group: Number
+  date: Date
 )
 
 mongoose.model('Match', Match);

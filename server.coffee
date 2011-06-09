@@ -1,5 +1,5 @@
 express = require "express"
-model = require "./lib/model"
+openligadb = require "./lib/openligadb"
 require "express-namespace"
 app = express.createServer()
 
@@ -8,12 +8,10 @@ app.get "/", (req, res) ->
 
 app.namespace "/api", ->
   app.get "/", (req, res) ->
-    instance = new model.Match()
-    instance.id = 7
-    instance.team1 = "Werder"
-    instance.team2 = "Hamburg"
-    instance.save (err) -> 
-      res.send "saved"
+    importer = new openligadb.MatchImporter()
+    importer.importBySeason 2009
+    importer.importBySeason 2010
+
   app.get "/evaluate", (req, res) ->
     res.send "Hello World"
 
