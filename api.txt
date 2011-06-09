@@ -1,0 +1,18 @@
+GET /api/next_matches
+[
+  {
+    team1Id: 1,
+    team1Name: "Werder",
+    team2Id: 2,
+    team2Name: "Hamburg",
+    matchId: 447
+  },
+  ...
+]
+
+PUT /api/estimate
+  447=2:3
+  557=0:0
+  
+// custom url
+...script1.php?match=447&team1=1&team1_name=Werder&team2=2&team2_name=Hamburg  #=> 3:4
