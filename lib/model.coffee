@@ -4,7 +4,7 @@ mongoose.connect 'mongodb://localhost/botliga'
 Schema = mongoose.Schema
 
 Match = new Schema(
-  id: Number
+  id: { type: String, unique: true }
   team1: Number
   team2: Number
   team1Name: String
@@ -19,3 +19,4 @@ Match = new Schema(
 mongoose.model('Match', Match);
 
 (exports ? this).Match = mongoose.model('Match');
+(exports ? this).db = mongoose.connection.db
