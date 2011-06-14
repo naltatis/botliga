@@ -14,7 +14,8 @@
 		"express-mongoose": ">= 0.0.2",
 		"restler": ">= 0.2.1",
 		"underscore": ">= 1.1.6",
-		"coffee-script": "=> 1.1.1"
+		"coffee-script": ">= 1.1.1",
+		"seq": ">= 0.3.2"
 	},
 	"engines": {
 	"node": "0.4"

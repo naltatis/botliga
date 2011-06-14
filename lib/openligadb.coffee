@@ -39,12 +39,12 @@ class MatchImporter
   _match: (result) ->
     {
       id: result.match_id
-      team1: result.id_team1
-      team2: result.id_team2
-      team1Name: result.name_team1
-      team2Name: result.name_team2
-      team1Goals: result.points_team1
-      team2Goals: result.points_team2
+      hostId: result.id_team1
+      guestId: result.id_team2
+      hostName: result.name_team1
+      guestName: result.name_team2
+      hostGoals: result.points_team1
+      guestGoals: result.points_team2
       season: result.league_saison
       group: result.group_id
       date: result.match_date_time

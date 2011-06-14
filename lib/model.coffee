@@ -7,16 +7,14 @@ ObjectId = Schema.ObjectId
 Bot = new Schema(
   id: { type: String, unique: true }
   name: String
-  guesses: [Guess]
 )
 
 Guess = new Schema(
   hostGoals: Number
   guestGoals: Number
   match: ObjectId
+  bot: ObjectId
 )
-
-mongoose.model('Bot', Bot);
 
 Match = new Schema(
   id: { type: String, unique: true }
@@ -31,8 +29,12 @@ Match = new Schema(
   date: Date
 )
 
+
+mongoose.model('Bot', Bot);
+mongoose.model('Guess', Guess);
 mongoose.model('Match', Match);
 
-(exports ? this).Match = mongoose.model('Match');
-(exports ? this).Bot = mongoose.model('Bot');
+(exports ? this).Match = mongoose.model 'Match'
+(exports ? this).Guess = mongoose.model 'Guess'
+(exports ? this).Bot = mongoose.model 'Bot'
 (exports ? this).db = mongoose.connection.db
