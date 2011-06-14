@@ -2,15 +2,30 @@ mongoose = require 'mongoose'
 mongoose.connect 'mongodb://localhost/botliga'
 
 Schema = mongoose.Schema
+ObjectId = Schema.ObjectId
+
+Bot = new Schema(
+  id: { type: String, unique: true }
+  name: String
+  guesses: [Guess]
+)
+
+Guess = new Schema(
+  hostGoals: Number
+  guestGoals: Number
+  match: ObjectId
+)
+
+mongoose.model('Bot', Bot);
 
 Match = new Schema(
   id: { type: String, unique: true }
-  team1: Number
-  team2: Number
-  team1Name: String
-  team2Name: String
-  team1Goals: Number
-  team2Goals: Number
+  hostId: Number
+  guestId: Number
+  hostName: String
+  guestName: String
+  hostGoals: Number
+  guestGoals: Number
   season: String
   group: Number
   date: Date
@@ -19,4 +34,5 @@ Match = new Schema(
 mongoose.model('Match', Match);
 
 (exports ? this).Match = mongoose.model('Match');
+(exports ? this).Bot = mongoose.model('Bot');
 (exports ? this).db = mongoose.connection.db
