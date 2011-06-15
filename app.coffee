@@ -1,7 +1,6 @@
 express = require "express"
 openligadb = require "./lib/openligadb"
 stats = require "./lib/stats"
-model = require "./lib/model"
 s = require "./lib/service"
 require "express-namespace"
 
@@ -32,22 +31,21 @@ app.namespace "/api", ->
     matchId = req.param 'match_id'
     result = req.param('result').split ':'
     
-    s.guess.set botId, matchId, result[0], result[1], ->
-      res.send 'ok'
+    s.guess.set botId, matchId, result[0], result[1], (err, created)->
+      if err
+        res.send 500
+      else
+        res.send if created then 201 else 200
 
   app.get "/guess", (req, res) ->
     botId = req.param "bot_id"
     matchId = req.param "match_id"
-
-    model.Bot.findOne {id: botId}, (err, bot) ->
-      return res.send("bot ##{botId} does not exist", 404) unless bot?
-      model.Match.findOne {id: matchId}, (err, match) ->
-        return res.send("match ##{matchId} does not exist", 404) unless match?
-        model.Guess.findOne {match: match._id, bot: bot._id}, (err, guess) ->
-          if guess.length == 0
-            res.send "not found", 404
-          else
-            res.send "#{guess.hostGoals}:#{guess.guestGoals}"
+    
+    s.guess.get botId, matchId, (err, guess)->
+      if err
+        res.send 404
+      else
+        res.send "#{guess.hostGoals}:#{guess.guestGoals}", 200
 
   app.get "/import", (req, res) ->
     importer = new openligadb.MatchImporter()
@@ -61,7 +59,6 @@ app.namespace "/api", ->
     app.get "/tendency", (req, res) ->
       stats.tendency (data) ->
         res.send data
-
 
   app.get "/evaluate", (req, res) ->
     res.send "Hello World"
