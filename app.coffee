@@ -1,4 +1,5 @@
 express = require "express"
+auth = require('./lib/auth').auth
 openligadb = require "./lib/openligadb"
 stats = require "./lib/stats"
 s = require "./lib/service"
@@ -7,11 +8,16 @@ require "express-namespace"
 app = express.createServer()
 app.set 'view engine', 'jade'
 app.use express.bodyParser()
+app.use express.cookieParser()
+app.use express.session(secret: "soadh89g2OHA")
 app.use app.router
 app.use express.static(__dirname + '/public')
+app.use auth.middleware()
+
+auth.helpExpress app
 
 app.get "/", (req, res) ->
-  res.send "Hello World"
+  res.render 'index'
   
 app.get "/stats", (req, res) ->
   stats.popularResults (data) ->
