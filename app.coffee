@@ -20,10 +20,15 @@ app.get "/stats", (req, res) ->
     stats.tendency (data) ->
       tendency = for i, entry of data
         { result: entry._id, count: entry.value.count }
-      res.render 'stats', {
-        popularResults: JSON.stringify(popularResults)
-        tendency: JSON.stringify(tendency)
-      }
+      stats.tendencyHistory (data) ->
+        tendencyHistory = for i, entry of data
+          { year: entry._id, tendency: entry.value }
+          
+        res.render 'stats', {
+          popularResults: JSON.stringify(popularResults)
+          tendency: JSON.stringify(tendency)
+          tendencyHistory: JSON.stringify(tendencyHistory[2..])
+        }
 
 app.namespace "/api", ->
   app.post "/guess", (req, res) ->
@@ -52,12 +57,16 @@ app.namespace "/api", ->
     importer.importBySeason season for season in [2003..2010]
 
   app.namespace "/stats", ->
-    app.get "/popular_results", (req, res) ->
+    app.get "/popular-results", (req, res) ->
       stats.popularResults (data) ->
         res.send data
 
     app.get "/tendency", (req, res) ->
       stats.tendency (data) ->
+        res.send data
+
+    app.get "/tendency-history", (req, res) ->
+      stats.tendencyHistory (data) ->
         res.send data
 
   app.get "/evaluate", (req, res) ->

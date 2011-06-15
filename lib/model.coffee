@@ -1,5 +1,5 @@
 mongoose = require 'mongoose'
-mongoose.connect process.env.MONGOHQ_URL || 'mongodb://localhost/botliga'
+mongoose.connect (process.env.MONGOHQ_URL || 'mongodb://localhost/botliga')
 
 Schema = mongoose.Schema
 ObjectId = Schema.ObjectId
