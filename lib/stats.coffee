@@ -8,8 +8,8 @@ _mapReduce = (map, reduce, cb) ->
 
 popularResults = (cb) ->
   map = ->
-    if this.team1Goals >= 0 && this.team2Goals >= 0 && this.team1Goals? && this.team2Goals?
-      emit "#{this.team1Goals}:#{this.team2Goals}", {count: 1}
+    if this.hostGoals >= 0 && this.guestGoals >= 0 && this.hostGoals? && this.guestGoals?
+      emit "#{this.hostGoals}:#{this.guestGoals}", {count: 1}
   
   reduce = (key, values) ->
     count = 0
@@ -21,9 +21,9 @@ popularResults = (cb) ->
 
 tendency = (cb) ->
   map = ->
-    if this.team1Goals > this.team2Goals
+    if this.hostGoals > this.guestGoals
       tendency = "home"
-    else if this.team1Goals < this.team2Goals
+    else if this.hostGoals < this.guestGoals
       tendency = "guest"
     else
       tendency = "draw"
