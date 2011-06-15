@@ -63,4 +63,6 @@ app.namespace "/api", ->
   app.get "/evaluate", (req, res) ->
     res.send "Hello World"
 
-app.listen(process.env.PORT || 3000)
+port = process.env.PORT || 3000;
+app.listen port, ->
+  console.log "Listening on #{port}"
