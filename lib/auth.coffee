@@ -12,7 +12,7 @@ UserSchema.plugin mongooseAuth, {
       User: -> User
   github:
     everyauth:
-      myHostname: 'http://localhost:3000'
+      myHostname: process.env.DOMAIN || 'http://localhost:3000'
       appId: process.env.GITHUB_APP_ID || 1
       appSecret: process.env.GITHUB_APP_SECRET || "geheim"
       redirectPath: '/'
