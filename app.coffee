@@ -1,4 +1,5 @@
 express = require "express"
+stylus = require "stylus"
 auth = require('./lib/auth').auth
 openligadb = require "./lib/openligadb"
 stats = require "./lib/stats"
@@ -14,6 +15,13 @@ app.use app.router
 app.use express.static(__dirname + '/public')
 app.use auth.middleware()
 
+app.use stylus.middleware(
+  src: "#{__dirname}/views"
+  dest: "#{__dirname}/public"
+  compile: (str, path, fn) ->
+    console.log str
+    stylus(str).set('compress', false)
+)
 auth.helpExpress app
 
 app.get "/", (req, res) ->
