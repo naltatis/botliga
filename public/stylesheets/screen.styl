@@ -1,0 +1,81 @@
+@import 'nib/reset'
+@import 'nib/vendor'
+@import 'curl'
+
+global-reset()
+reset-html5()
+
+body
+  margin 0
+  padding 0
+  background url(/images/black_denim.png)
+  text-align center
+  z-index 1
+  font-size 14px
+  font-family 'Helvetica Neue', Helvetica, Arial, sans-serif
+
+header
+  position relative
+  text-align left
+  margin 0 auto
+  background-color #bdbdbd
+  width 840px
+  padding 5px 30px
+  box-shadow 0 1px 4px rgba(0, 0, 0, 0.2), 0 0 40px rgba(0, 0, 0, 0.1) inset
+  border-radius 0 0 2px 2px
+  curl-down()
+  
+  h1
+    font-size 60px
+    text-shadow 1px 1px 1px #888  
+    font-family 'Cabin Sketch', serif
+    strong
+      color green
+  .login
+    position absolute
+    right 30px
+    top 25px
+
+#overall
+  position relative
+  margin 30px auto 0
+  background-color #bdbdbd
+  width 840px
+  text-align left
+  padding 30px
+  box-shadow 0 1px 4px rgba(0, 0, 0, 0.2), 0 0 40px rgba(0, 0, 0, 0.1) inset
+  border-radius 2px 2px 0 0
+  curl-up()
+  .gist
+    .gist-file
+      border none
+    .gist-meta
+      font-family 'Helvetica Neue', Helvetica, Arial, sans-serif
+      font-size 10px
+      padding 2px 2px 15px
+      color #000
+      background-color #bdbdbd
+      a
+        color #000
+    .gist-data
+      padding-top 5px
+      padding-bottom 5px
+      border none
+      background-color #fff
+h2
+  font-weight bold
+  font-size 24px
+  margin-bottom 20px
+h3
+  font-weight bold
+  font-size 18px
+  margin-bottom 18px
+p
+ul
+  margin-bottom 14px
+  line-height 17px
+  
+#dotChart
+#lineChart
+  background #fff
+  margin-bottom 14px

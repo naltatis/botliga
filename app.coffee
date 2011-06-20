@@ -1,10 +1,18 @@
 express = require "express"
 stylus = require "stylus"
+nib = require "nib"
 auth = require('./lib/auth').auth
 openligadb = require "./lib/openligadb"
 stats = require "./lib/stats"
 s = require "./lib/service"
 require "express-namespace"
+
+
+# stylus compiler
+compile = (str, path) ->
+  stylus(str)
+    .set('filename', path)
+    .include(nib.path)
 
 app = express.createServer()
 app.set 'view engine', 'jade'
@@ -12,6 +20,7 @@ app.use express.bodyParser()
 app.use express.cookieParser()
 app.use express.session(secret: "soadh89g2OHA")
 app.use app.router
+app.use stylus.middleware(src: __dirname + '/public', compile: compile)
 app.use express.static(__dirname + '/public')
 app.use auth.middleware()
 

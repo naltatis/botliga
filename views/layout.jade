@@ -3,8 +3,22 @@ html(lang="de")
   head
     title botliga
     script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js")
-    script(src="https://www.google.com/jsapi")
+    script(src="/javascripts/raphael-min.js")
+    script(src="/javascripts/g.raphael-min.js")
+    script(src="/javascripts/g.dot-min.js")
+    script(src="/javascripts/g.line-min.js")
     script(src="/javascripts/basis.js")
+    link(rel="stylesheet", href="/stylesheets/screen.css", type="text/css")
+    link(rel="stylesheet", href="http://fonts.googleapis.com/css?family=Cabin+Sketch:bold&v1", type="text/css")
   body
+    header
+      h1 
+        em bot
+        strong Liga
+      .login
+        - if (everyauth.loggedIn)
+          p= "Hallo " + everyauth.github.user.login
+        - else
+          a(href='/auth/github') mit github anmelden
     #overall
       !{body}

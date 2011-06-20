@@ -1,0 +1,37 @@
+curl-down()
+  &:before
+  &:after
+    content ''
+    z-index -1
+    position absolute
+    left: 5px
+    bottom: 8px
+    width: 90%
+    max-width 400px // avoid rotation causing ugly appearance at large container widths 
+    height: 50px  
+    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.6)
+    transform: skew(-10deg) rotate(-2deg)
+
+  &:after
+    left auto
+    right 5px
+    transform: skew(10deg) rotate(2deg)
+
+curl-up()
+  &:before
+  &:after
+    content ''
+    z-index -1
+    position absolute
+    left: 5px
+    top: 8px
+    width: 90%
+    max-width 400px // avoid rotation causing ugly appearance at large container widths 
+    height: 50px
+    box-shadow: 0 -8px 10px rgba(0, 0, 0, 0.6)
+    transform: skew(10deg) rotate(2deg)
+
+  &:after
+    left auto
+    right 5px
+    transform: skew(-10deg) rotate(-2deg)

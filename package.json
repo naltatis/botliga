@@ -17,7 +17,8 @@
 		"coffee-script": ">= 1.1.1",
 		"seq": ">= 0.3.2",
 		"mongoose-auth": ">= 0.0.10",
-		"stylus": ">= 0.13.3"
+		"stylus": ">= 0.13.3",
+		"nib": ">= 0.0.8"
 	},
 	"engines": {
 	  "node": "0.4"

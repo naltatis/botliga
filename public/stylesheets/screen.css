@@ -1,3 +1,248 @@
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+font,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-family: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+body {
+  line-height: 1;
+  color: #000;
+  background: #fff;
+}
+ol,
+ul {
+  list-style: none;
+}
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  vertical-align: middle;
+}
+caption,
+th,
+td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+a img {
+  border: none;
+}
+article,
+aside,
+canvas,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section,
+summary {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  display: block;
+}
 body {
   margin: 0;
+  padding: 0;
+  background: url("/images/black_denim.png");
+  text-align: center;
+  z-index: 1;
+  font-size: 14px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+header {
+  position: relative;
+  text-align: left;
+  margin: 0 auto;
+  background-color: #bdbdbd;
+  width: 840px;
+  padding: 5px 30px;
+  -webkit-box-shadow: 0 1px 4px rgba(0,0,0,0.2), 0 0 40px rgba(0,0,0,0.1) inset;
+  -moz-box-shadow: 0 1px 4px rgba(0,0,0,0.2), 0 0 40px rgba(0,0,0,0.1) inset;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2), 0 0 40px rgba(0,0,0,0.1) inset;
+  -webkit-border-radius: 0 0 2px 2px;
+  -moz-border-radius: 0 0 2px 2px;
+  border-radius: 0 0 2px 2px;
+}
+header:before,
+header:after {
+  content: "";
+  z-index: -1;
+  position: absolute;
+  left: 5px;
+  bottom: 8px;
+  width: 90%;
+  max-width: 400px;
+  height: 50px;
+  -webkit-box-shadow: 0 8px 10px rgba(0,0,0,0.6);
+  -moz-box-shadow: 0 8px 10px rgba(0,0,0,0.6);
+  box-shadow: 0 8px 10px rgba(0,0,0,0.6);
+  -webkit-transform: skew(-10deg) rotate(-2deg);
+  -moz-transform: skew(-10deg) rotate(-2deg);
+  transform: skew(-10deg) rotate(-2deg);
+}
+header:after {
+  left: auto;
+  right: 5px;
+  -webkit-transform: skew(10deg) rotate(2deg);
+  -moz-transform: skew(10deg) rotate(2deg);
+  transform: skew(10deg) rotate(2deg);
+}
+header h1 {
+  font-size: 60px;
+  text-shadow: 1px 1px 1px #888;
+  font-family: "Cabin Sketch", serif;
+}
+header h1 strong {
+  color: #008000;
+}
+header .login {
+  position: absolute;
+  right: 30px;
+  top: 25px;
+}
+#overall {
+  position: relative;
+  margin: 30px auto 0;
+  background-color: #bdbdbd;
+  width: 840px;
+  text-align: left;
+  padding: 30px;
+  -webkit-box-shadow: 0 1px 4px rgba(0,0,0,0.2), 0 0 40px rgba(0,0,0,0.1) inset;
+  -moz-box-shadow: 0 1px 4px rgba(0,0,0,0.2), 0 0 40px rgba(0,0,0,0.1) inset;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2), 0 0 40px rgba(0,0,0,0.1) inset;
+  -webkit-border-radius: 2px 2px 0 0;
+  -moz-border-radius: 2px 2px 0 0;
+  border-radius: 2px 2px 0 0;
+}
+#overall:before,
+#overall:after {
+  content: "";
+  z-index: -1;
+  position: absolute;
+  left: 5px;
+  top: 8px;
+  width: 90%;
+  max-width: 400px;
+  height: 50px;
+  -webkit-box-shadow: 0 -8px 10px rgba(0,0,0,0.6);
+  -moz-box-shadow: 0 -8px 10px rgba(0,0,0,0.6);
+  box-shadow: 0 -8px 10px rgba(0,0,0,0.6);
+  -webkit-transform: skew(10deg) rotate(2deg);
+  -moz-transform: skew(10deg) rotate(2deg);
+  transform: skew(10deg) rotate(2deg);
+}
+#overall:after {
+  left: auto;
+  right: 5px;
+  -webkit-transform: skew(-10deg) rotate(-2deg);
+  -moz-transform: skew(-10deg) rotate(-2deg);
+  transform: skew(-10deg) rotate(-2deg);
+}
+#overall .gist .gist-file {
+  border: none;
+}
+#overall .gist .gist-meta {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 10px;
+  padding: 2px 2px 15px;
+  color: #000;
+  background-color: #bdbdbd;
+}
+#overall .gist .gist-meta a {
+  color: #000;
+}
+#overall .gist .gist-data {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border: none;
+  background-color: #fff;
+}
+h2 {
+  font-weight: bold;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+h3 {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 18px;
+}
+p,
+ul {
+  margin-bottom: 14px;
+  line-height: 17px;
+}
+#dotChart,
+#lineChart {
+  background: #fff;
+  margin-bottom: 14px;
 }
