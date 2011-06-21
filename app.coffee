@@ -4,7 +4,8 @@ nib = require "nib"
 auth = require('./lib/auth').auth
 openligadb = require "./lib/openligadb"
 stats = require "./lib/stats"
-s = require "./lib/service"
+api = require "./lib/api"
+github = require "./lib/github"
 require "express-namespace"
 
 
@@ -35,45 +36,18 @@ auth.helpExpress app
 
 app.get "/", (req, res) ->
   res.render 'index'
-  
-app.get "/stats", (req, res) ->
-  stats.popularResults (data) ->
-    popularResults = for i, entry of data
-      { result: entry._id, count: entry.value.count }
-    stats.tendency (data) ->
-      tendency = for i, entry of data
-        { result: entry._id, count: entry.value.count }
-      stats.tendencyHistory (data) ->
-        tendencyHistory = for i, entry of data
-          { year: entry._id, tendency: entry.value }
-          
-        res.render 'stats', {
-          popularResults: JSON.stringify(popularResults)
-          tendency: JSON.stringify(tendency)
-          tendencyHistory: JSON.stringify(tendencyHistory[2..])
-        }
+
+app.get "/settings", (req, res) ->
+  if req.session && req.session.auth && req.session.auth.loggedIn
+    github.repositories req.session.auth.github.user.login, (err, repositories) ->
+      res.render 'settings', {repositories: repositories}
+  else
+    res.redirect('/auth/github');
+
 
 app.namespace "/api", ->
-  app.post "/guess", (req, res) ->
-    botId = req.param 'bot_id'
-    matchId = req.param 'match_id'
-    result = req.param('result').split ':'
-    
-    s.guess.set botId, matchId, result[0], result[1], (err, created)->
-      if err
-        res.send 500
-      else
-        res.send if created then 201 else 200
-
-  app.get "/guess", (req, res) ->
-    botId = req.param "bot_id"
-    matchId = req.param "match_id"
-    
-    s.guess.get botId, matchId, (err, guess)->
-      if err
-        res.send 404
-      else
-        res.send "#{guess.hostGoals}:#{guess.guestGoals}", 200
+  app.post "/guess", api.guess.post
+  app.get "/guess", api.guess.get
 
   app.get "/import", (req, res) ->
     importer = new openligadb.MatchImporter()
@@ -81,19 +55,13 @@ app.namespace "/api", ->
 
   app.namespace "/stats", ->
     app.get "/popular-results", (req, res) ->
-      stats.popularResults (data) ->
-        res.send data
+      stats.popularResults (data) -> res.send data
 
     app.get "/tendency", (req, res) ->
-      stats.tendency (data) ->
-        res.send data
+      stats.tendency (data) -> res.send data
 
     app.get "/tendency-history", (req, res) ->
-      stats.tendencyHistory (data) ->
-        res.send data
-
-  app.get "/evaluate", (req, res) ->
-    res.send "Hello World"
+      stats.tendencyHistory (data) -> res.send data
 
 port = process.env.PORT || 3000
 app.listen port, ->

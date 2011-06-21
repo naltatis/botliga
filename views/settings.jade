@@ -1,0 +1,11 @@
+form
+  ul
+    li
+      label(for="botName") Bot-Name
+      input#botName(type="text")
+    li
+      label(for="botRepository") Github Repository
+      select#botRepository
+        - each repository in repositories
+          option - Repository wählen -
+          option= repository.name
