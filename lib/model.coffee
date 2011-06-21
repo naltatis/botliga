@@ -14,6 +14,7 @@ Guess = new Schema(
   guestGoals: Number
   match: ObjectId
   bot: ObjectId
+  points: Number
 )
 
 Match = new Schema(
