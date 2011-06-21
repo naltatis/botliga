@@ -5,7 +5,7 @@ class MatchScorer
     real = @_analyse real
     
     if estimated[0] == real[0] && estimated[1] == real[1]
-      points = 4 # exact match
+      points = 5 # exact match
     else if estimated.draw && real.draw
       points = 2 # draw tendency
     else if estimated.diff == real.diff
