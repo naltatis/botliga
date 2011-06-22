@@ -39,8 +39,7 @@ app.get "/", (req, res) ->
 
 app.get "/settings", (req, res) ->
   if req.session && req.session.auth && req.session.auth.loggedIn
-    github.repositories req.session.auth.github.user.login, (err, repositories) ->
-      res.render 'settings', {repositories: repositories}
+    res.render 'settings'
   else
     res.redirect('/auth/github');
 

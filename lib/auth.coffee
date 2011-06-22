@@ -1,5 +1,6 @@
 mongoose = require 'mongoose'
 mongooseAuth = require 'mongoose-auth'
+model = require './model'
 mongoose.connect (process.env.MONGOHQ_URL || 'mongodb://localhost/botliga')
 
 Schema = mongoose.Schema
@@ -17,6 +18,11 @@ UserSchema.plugin mongooseAuth, {
       appSecret: process.env.GITHUB_APP_SECRET || "geheim"
       redirectPath: '/settings'
 }
+UserSchema.pre 'init', (next) ->
+  bot = new model.Bot()
+  bot.user = this
+  bot.save ->
+    next()
 
 mongoose.model('User', UserSchema);
 

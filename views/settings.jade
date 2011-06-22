@@ -1,11 +1,23 @@
 form
+  h2 Deine Bots
+  h3 naltatis-bot
   ul
     li
-      label(for="botName") Bot-Name
-      input#botName(type="text")
+      p API-Key: FIOENWOIEFW
+    li
+      label(for="apiMethodPull") API-Methode
+      br
+      input#apiMethodPull(type="radio", name="api", value="pull", checked=true)
+      label(for="apiMethodPull") pull
+      br
+      input#apiMethodPush(type="radio", name="api", value="push")
+      label(for="apiMethodPush") push
     li
       label(for="botRepository") Github Repository
       select#botRepository
         option - Repository wählen -
-        - each repository in repositories
-          option= repository.name
+        //- each repository in repositories
+        //  option= repository.name
+    li
+      label(for="botUrl") URL
+      input#botUrl(type="url")

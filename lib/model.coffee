@@ -1,4 +1,5 @@
 mongoose = require 'mongoose'
+uuid = require("uuid-pure").newId
 mongoose.connect (process.env.MONGOHQ_URL || 'mongodb://localhost/botliga')
 
 Schema = mongoose.Schema
@@ -7,7 +8,12 @@ ObjectId = Schema.ObjectId
 Bot = new Schema(
   id: { type: String, unique: true }
   name: String
+  user: ObjectId
 )
+
+Bot.pre 'save', (next) ->
+  this.id or= uuid(30,60)
+  next()
 
 Guess = new Schema(
   hostGoals: Number
