@@ -15,10 +15,19 @@ html(lang="de")
       h1 
         em bot
         strong Liga
+      ul.navigation
+        li
+          a(href='/', class= (navigation == 'home') ? 'active' : '') Home
+        li
+          a(href='/ergebnisse', class= (navigation == 'result') ? 'active' : '') Ergebnisse
+        li
+          a(href='/einstellungen', class= (navigation == 'settings') ? 'active' : '') Einstellungen
       .login
         - if (everyauth.loggedIn)
           p= "Hallo " + everyauth.github.user.login
         - else
-          a(href='/auth/github') mit github anmelden
+          a(href='/auth/github') anmelden mit
+          a(href='/auth/github')
+            img(src='/images/github.png')
     #overall
       !{body}

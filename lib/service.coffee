@@ -39,6 +39,9 @@ class GuessService
         else
           callback(new Error 'not found')
           
+  getByUser: (userId, callback) ->
+    m.Bot.find user: userId, callback
+
 class RatingService
   constructor: ->
     @scorer = new MatchScorer()

@@ -14,6 +14,11 @@ body
   font-size 14px
   font-family 'Helvetica Neue', Helvetica, Arial, sans-serif
 
+a
+  text-decoration none
+  &:hover
+    text-decoration underline
+
 header
   position relative
   text-align left
@@ -31,10 +36,21 @@ header
     font-family 'Cabin Sketch', serif
     strong
       color green
+  .navigation
+    a
+      color #000
+      &.active
+        color green
   .login
+    text-align right
     position absolute
     right 30px
-    top 25px
+    top 10px
+    a
+      text-decoration underline
+      margin-bottom 4px
+      display block
+      color #000
 
 #overall
   position relative

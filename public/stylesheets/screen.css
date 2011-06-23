@@ -118,6 +118,12 @@ body {
   font-size: 14px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
 header {
   position: relative;
   text-align: left;
@@ -164,10 +170,23 @@ header h1 {
 header h1 strong {
   color: #008000;
 }
+header .navigation a {
+  color: #000;
+}
+header .navigation a.active {
+  color: #008000;
+}
 header .login {
+  text-align: right;
   position: absolute;
   right: 30px;
-  top: 25px;
+  top: 10px;
+}
+header .login a {
+  text-decoration: underline;
+  margin-bottom: 4px;
+  display: block;
+  color: #000;
 }
 #overall {
   position: relative;

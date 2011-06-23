@@ -5,6 +5,7 @@ auth = require('./lib/auth').auth
 openligadb = require "./lib/openligadb"
 stats = require "./lib/stats"
 api = require "./lib/api"
+web = require "./lib/web"
 github = require "./lib/github"
 require "express-namespace"
 
@@ -20,10 +21,10 @@ app.set 'view engine', 'jade'
 app.use express.bodyParser()
 app.use express.cookieParser()
 app.use express.session(secret: "soadh89g2OHA")
+app.use auth.middleware()
 app.use app.router
 app.use stylus.middleware(src: __dirname + '/public', compile: compile)
 app.use express.static(__dirname + '/public')
-app.use auth.middleware()
 
 app.use stylus.middleware(
   src: "#{__dirname}/views"
@@ -35,14 +36,9 @@ app.use stylus.middleware(
 auth.helpExpress app
 
 app.get "/", (req, res) ->
-  res.render 'index'
+  res.render 'index', navigation: 'home'
 
-app.get "/settings", (req, res) ->
-  if req.session && req.session.auth && req.session.auth.loggedIn
-    res.render 'settings'
-  else
-    res.redirect('/auth/github');
-
+app.get "/einstellungen", web.settings
 
 app.namespace "/api", ->
   app.post "/guess", api.guess.post
@@ -50,7 +46,7 @@ app.namespace "/api", ->
 
   app.get "/import", (req, res) ->
     importer = new openligadb.MatchImporter()
-    importer.importBySeason season for season in [2003..2010]
+    importer.importBySeason season for season in [2011]
 
   app.namespace "/stats", ->
     app.get "/popular-results", (req, res) ->

@@ -8,11 +8,12 @@ ObjectId = Schema.ObjectId
 Bot = new Schema(
   id: { type: String, unique: true }
   name: String
+  repository: String
   user: ObjectId
 )
 
 Bot.pre 'save', (next) ->
-  this.id or= uuid(30,60)
+  this.id or= uuid(24,60)
   next()
 
 Guess = new Schema(
