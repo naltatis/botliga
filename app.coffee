@@ -47,19 +47,22 @@ app.namespace "/api", ->
   app.post "/guess", api.guess.post
   app.get "/guess", api.guess.get
 
-  app.get "/import", (req, res) ->
+  app.get "/:season/import", (req, res) ->
     importer = new openligadb.MatchImporter()
-    importer.importBySeason season for season in [2011]
+    importer.importBySeason season for season in [req.params.season]
 
   app.namespace "/stats", ->
     app.get "/popular-results", (req, res) ->
-      stats.popularResults (data) -> res.send data
+      stats.popularResults (err, data) -> res.send data
 
     app.get "/tendency", (req, res) ->
-      stats.tendency (data) -> res.send data
+      stats.tendency (err, data) -> res.send data
 
     app.get "/tendency-history", (req, res) ->
-      stats.tendencyHistory (data) -> res.send data
+      stats.tendencyHistory (err, data) -> res.send data
+
+    app.get "/:season/bot-rating-by-group", (req, res) ->
+      stats.botRatingByGroup req.params.season, (err, data) -> res.send data
 
 port = process.env.PORT || 3000
 app.listen port, ->

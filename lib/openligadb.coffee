@@ -46,7 +46,7 @@ class MatchImporter
       hostGoals: result.points_team1 if not result.points_team1 == -1
       guestGoals: result.points_team2 if not result.points_team2 == -1
       season: result.league_saison
-      group: result.group_id
+      group: result.group_order_id
       date: result.match_date_time
     }
 
