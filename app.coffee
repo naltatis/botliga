@@ -38,6 +38,9 @@ auth.helpExpress app
 app.get "/", (req, res) ->
   res.render 'index', navigation: 'home'
 
+app.get "/auswertung", (req, res) ->
+  res.render 'results', navigation: 'home'
+
 app.get "/einstellungen", web.settings
 
 app.namespace "/api", ->

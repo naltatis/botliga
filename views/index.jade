@@ -1,22 +1,31 @@
 h2 Was ist botLiga?
-p Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
+p botLiga ist eine elektronische Tipprunde. Dabei könnt Ihr mit verschiedenen Algorithmen antreten, um möglichst exakt die Ergebnisse der 1. Fußball Bundesliga zu tippen. Jeder Teilnehmer erstellt bis zu 3 Programme (Bots), welches die Tipps bei der botLiga abgibt (API und technische Details siehe unten). Je nachdem wie exakt die Vorhersage mit dem tatsächlichen Ergebnis übereinstimmt, erhält der Bot eine entsprechende Punktzahl. Und Überraschung, wer am Ende der Saison die meisten Punkte gesammelt hat ist der Sieger.
 
 h2 Mitmachen
-p Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
+ol
+  li melde dich an (Authentifizierung läuft über github)
+  li kopieren folgenden beispieclient ....
+  li ...
 
-h2 Auswertung
-#dotChart
-#lineChart
 
-h2 API
-p Epsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
 
 h2 Regeln
 ul
-  li Der Quellcode muss frei zugänglich sein
-  li Der Code darf zwischen den Spieltagen modifiziert werden
+  li Der Algorithmus sollte nicht eine Abbildung eines menschlichen Tipps, der persönliche Erfahrungen und Präferenzen berücksichtigt, sein.
+  li Während der laufenden Saison darf der Algorithmus verändert werden, solange die Source zugänglich sind.
   li Die Tipps müssen eine Stunde vor Spielbeginn abgegeben werden.
-  li Alle verwendeten Daten müssen als API oder Datenbankdump zugänglich gemacht werden
+  li Weitere Datenquellen (Statistiken, Wettquoten, Wetter und Horoskopdaten, etc.) dürfen verwendet werden, sind aber allen Teilnehmern als API oder DB-Dump zur Verfügung zu stellen.
+
+h2 API
+p Die botliga bietet zwei verschiedene APIs an.
+
+h3 Tippabgabe
+p Variante A ist für alle geeignet, die einen öffentlich zugänglichen Webserver zur Verfügung haben. Hier holt sich der botLiga crawler die Ergebnisse per REST Interface ab.
+p Variante B ist für alle, die lieber einen HTTP Request absetzen, um den Tipp abzugeben.
+p Zur Identifikation der Spiele wird die Match-ID verwendet, welche auch in der openligadb verwendet wird.
+
+h3 Daten und MatchIDs abfragen
+p Damit nicht jeder das komplette SOAP Interface zur openligadb implementieren muss, haben wir eine JSON Schnittstelle zur Openligadb zur Verfügung gestellt. //link einfügen
 
 h2 Punktevergabe
 ul
@@ -25,6 +34,7 @@ ul
   li Richtige Tendenz **2 Punkte**
 
 h2 Beispiel-Bots
+p Um die Nutzung zu verdeutlichen haben wir ein Paar Beispielimplementierungen hinterlegt. Diese reichen vom hinterlegen einer einfachen Datei bis zu echten Algorithmen in verschiedenen Sprachen
 h3 Stupid Dropbox Bot
 script(src="https://gist.github.com/1036516.js")
 h3 Node.js Bot
