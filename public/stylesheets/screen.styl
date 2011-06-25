@@ -6,9 +6,10 @@ global-reset()
 reset-html5()
 
 body
+  font-size 13px
   margin 0
   padding 0
-  background url(/images/black_denim.png)
+  background url(/images/black_paper.png)
   text-align center
   z-index 1
   font-size 14px
@@ -18,17 +19,19 @@ a
   text-decoration none
   &:hover
     text-decoration underline
+    
+pre
+  font-family 'Bitstream Vera Sans Mono', 'Menlo', 'Monaco', 'Courier', monospace
 
 header
   position relative
   text-align left
   margin 0 auto
-  background-color #bdbdbd
+  background-color rgba(255,255,255,0.8)
   width 840px
   padding 5px 30px
-  box-shadow 0 1px 4px rgba(0, 0, 0, 0.2), 0 0 40px rgba(0, 0, 0, 0.1) inset
-  border-radius 0 0 2px 2px
-  curl-down()
+  box-shadow 0 1px 4px rgba(0, 0, 0, 0.9), 0 -10px 40px rgba(0, 0, 0, 0.4) inset
+  border-radius 0 0 10px 10px
   
   h1
     font-size 60px
@@ -55,13 +58,12 @@ header
 #overall
   position relative
   margin 30px auto 0
-  background-color #bdbdbd
+  background-color rgba(255,255,255,0.8)
   width 840px
   text-align left
   padding 30px
-  box-shadow 0 1px 4px rgba(0, 0, 0, 0.2), 0 0 40px rgba(0, 0, 0, 0.1) inset
-  border-radius 2px 2px 0 0
-  curl-up()
+  box-shadow 0 0 4px rgba(0, 0, 0, 0.9), 0 0 20px rgba(0, 0, 0, 0.5) inset
+  border-radius 10px 10px 0 0
   .gist
     .gist-file
       border none
@@ -95,3 +97,65 @@ ul
 #lineChart
   background #fff
   margin-bottom 14px
+  
+#botList
+  li
+    margin-bottom 20px
+  h3
+    font-size 20px
+    color green
+  .api span
+  .repository label
+  .noApi label
+  .example label
+    font-weight bold
+    width 160px
+    display inline-block
+    em
+      font-weight normal
+      font-size 13px
+  .api
+    margin-bottom 10px
+    pre
+      display inline-block
+  .repository
+    margin-bottom 10px
+    select
+      width 200px
+  .example
+    margin-bottom 10px
+    label
+      display block
+      margin-bottom 5px
+  .noApi
+    margin-bottom 10px
+    label
+      width auto
+      font-weight normal
+    input
+      display inline-block
+      margin-right 5px
+  .noApiDetails
+    display none
+    margin-bottom 20px
+    margin-left 20px
+    margin-right 10px
+    label
+      display inline-block
+      margin-right 10px
+    input
+      display inline-block
+      width: 300px
+      padding 2px
+      border 1px solid #aaa
+  .example
+  .noApiDetails
+    p
+      margin-bottom 5px
+    pre
+      display inline-block
+      padding 3px
+      font-size 12px
+      background-color #fff
+      strong
+        font-weight bold

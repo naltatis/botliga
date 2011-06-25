@@ -42,6 +42,7 @@ app.get "/auswertung", (req, res) ->
   res.render 'results', navigation: 'home'
 
 app.get "/einstellungen", web.settings
+app.post "/einstellungen/bot", web.updateBot
 
 app.namespace "/api", ->
   app.post "/guess", api.guess.post

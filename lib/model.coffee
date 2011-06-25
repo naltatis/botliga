@@ -6,14 +6,16 @@ Schema = mongoose.Schema
 ObjectId = Schema.ObjectId
 
 Bot = new Schema(
-  id: { type: String, unique: true }
+  apiToken: { type: String, unique: true }
   name: String
   repository: String
+  usePullApi: Boolean
+  url: String
   user: ObjectId
 )
 
 Bot.pre 'save', (next) ->
-  this.id or= uuid(24,60)
+  this.apiToken or= uuid(24,35).toLowerCase()
   next()
 
 Guess = new Schema(

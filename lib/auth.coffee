@@ -17,13 +17,12 @@ createBots = (user, number, callback) ->
     finished = ->
       callback() if diff <= 0
       
-
     # create missing bots
     for i in [1..diff]
       bot = new model.Bot()
       bot.user = user._id
       bot.save (err, bot) ->
-        console.log "bot #{bot.id} saved"
+        console.log "bot #{bot._id} saved"
         diff = diff - 1
         finished()
 

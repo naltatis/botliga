@@ -13,7 +13,7 @@ GET /api/next_matches
 POST /api/guess
   match_id=112
   result=2:3
-  bot_id=[API-KEY]
+  token=[API-KEY]
 
 // custom url
 ...script1.php?match_id=447&host_id=1&host_name=Werder&guest_id=2&guest_name=Hamburg  #=> 3:4

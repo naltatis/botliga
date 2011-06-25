@@ -1,26 +1,28 @@
-form
-  h2 Deine Bots
-  ul
-    - each bot in bots
-      li
-        h3 naltatis-bot
-        p
-          span API-Key:
-          pre= bot.id
-      li
-        label(for="apiMethodPull") API-Methode
-        br
-        input#apiMethodPull(type="radio", name="api", value="pull", checked=true)
-        label(for="apiMethodPull") pull
-        br
-        input#apiMethodPush(type="radio", name="api", value="push")
-        label(for="apiMethodPush") push
-      li
-        label(for="botRepository") Github Repository
-        select#botRepository
-          option - Repository wählen -
-          //- each repository in repositories
-          //  option= repository.name
-      li
-        label(for="botUrl") URL
-        input#botUrl(type="url")
+h2 Deine Bots
+ul#botList
+  - each bot, i in bots
+    li.bot(data-id=bot._id, data-name=bot.name)
+      h3.name= (bot.name || "bot-" + (i+1))
+      .repository
+        label(for="botRepository" + i) Github Repository
+        select(id="botRepository" + i)
+          option(value="bot-"+ (i+1)) - Repository wählen -
+      .api
+        span API-Token
+        pre= bot.apiToken
+      .example
+        label API-Aufruf 
+          em (Beispiel)
+        pre= 'curl -X POST --data "match_id=14181&result=2:1&token=' + bot.apiToken + '" http:\/\/botliga.de/api/guess'
+      .noApi
+        input(id="apiMethodPull" + i, type="checkbox", value="true", checked=bot.usePullApi)
+        label(for="apiMethodPull" + i) Ergebnisse abholen lassen 
+          em (alternativ zur API)
+      .noApiDetails
+        p Dein Script wird täglich für jedes Spiel des nächsten Spieltages mit folgenden Parameter aufgerufen.
+        pre.example
+          strong= "http://domain.de/bot" + (i+1) + ".php"
+          span ?match_id=14181&host_id=112&host_name=SC%20Freiburg&guest_id=134&guest_name=Werder%20Bremen
+
+        label(for="botUrl" + i) URL
+        input(id="botUrl" + i, type="url", placeholder="http://domain.de/bot" + (i+1) + ".php")

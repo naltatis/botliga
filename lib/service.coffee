@@ -3,10 +3,10 @@ MatchScorer = require("./rating").MatchScorer
 Seq = require "seq"
 
 class GuessService
-  set: (botId, matchId, hostGoals, guestGoals, callback) ->
+  set: (token, matchId, hostGoals, guestGoals, callback) ->
     Seq()
       .par ->
-        m.Bot.findOne {id: botId}, @
+        m.Bot.findOne {apiToken: token}, @
       .par ->
         m.Match.findOne {id: matchId}, @
       .seq (bot, match) ->
@@ -38,9 +38,12 @@ class GuessService
           m.Guess.findOne {match: match._id, bot: bot._id}, callback
         else
           callback(new Error 'not found')
-          
+    
+class BotService
   getByUser: (userId, callback) ->
-    m.Bot.find user: userId, callback
+    m.Bot.find({user: userId}).sort('id', 'ascending').find callback
+  getByUserAndId: (userId, botId, callback) ->
+    m.Bot.findOne {user: userId, _id: botId}, callback
 
 class RatingService
   constructor: ->
@@ -59,3 +62,4 @@ class RatingService
 
 (exports ? this).guess = new GuessService()
 (exports ? this).rating = new RatingService()
+(exports ? this).bot = new BotService()

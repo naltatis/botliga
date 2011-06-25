@@ -3,11 +3,11 @@ s = require "./service"
 guess = {}
 
 guess.post = (req, res) ->
-  botId = req.param 'bot_id'
+  token = req.param 'token'
   matchId = req.param 'match_id'
   result = req.param('result').split ':'
   
-  s.guess.set botId, matchId, result[0], result[1], (err, guess, created)->
+  s.guess.set token, matchId, result[0], result[1], (err, guess, created)->
     if err
       res.send 500
     else

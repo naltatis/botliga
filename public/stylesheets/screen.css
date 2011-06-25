@@ -110,9 +110,10 @@ summary {
   display: block;
 }
 body {
+  font-size: 13px;
   margin: 0;
   padding: 0;
-  background: url("/images/black_denim.png");
+  background: url("/images/black_paper.png");
   text-align: center;
   z-index: 1;
   font-size: 14px;
@@ -124,43 +125,22 @@ a {
 a:hover {
   text-decoration: underline;
 }
+pre {
+  font-family: "Bitstream Vera Sans Mono", "Menlo", "Monaco", "Courier", monospace;
+}
 header {
   position: relative;
   text-align: left;
   margin: 0 auto;
-  background-color: #bdbdbd;
+  background-color: rgba(255,255,255,0.8);
   width: 840px;
   padding: 5px 30px;
-  -webkit-box-shadow: 0 1px 4px rgba(0,0,0,0.2), 0 0 40px rgba(0,0,0,0.1) inset;
-  -moz-box-shadow: 0 1px 4px rgba(0,0,0,0.2), 0 0 40px rgba(0,0,0,0.1) inset;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.2), 0 0 40px rgba(0,0,0,0.1) inset;
-  -webkit-border-radius: 0 0 2px 2px;
-  -moz-border-radius: 0 0 2px 2px;
-  border-radius: 0 0 2px 2px;
-}
-header:before,
-header:after {
-  content: "";
-  z-index: -1;
-  position: absolute;
-  left: 5px;
-  bottom: 8px;
-  width: 90%;
-  max-width: 400px;
-  height: 50px;
-  -webkit-box-shadow: 0 8px 10px rgba(0,0,0,0.6);
-  -moz-box-shadow: 0 8px 10px rgba(0,0,0,0.6);
-  box-shadow: 0 8px 10px rgba(0,0,0,0.6);
-  -webkit-transform: skew(-10deg) rotate(-2deg);
-  -moz-transform: skew(-10deg) rotate(-2deg);
-  transform: skew(-10deg) rotate(-2deg);
-}
-header:after {
-  left: auto;
-  right: 5px;
-  -webkit-transform: skew(10deg) rotate(2deg);
-  -moz-transform: skew(10deg) rotate(2deg);
-  transform: skew(10deg) rotate(2deg);
+  -webkit-box-shadow: 0 1px 4px rgba(0,0,0,0.9), 0 -10px 40px rgba(0,0,0,0.4) inset;
+  -moz-box-shadow: 0 1px 4px rgba(0,0,0,0.9), 0 -10px 40px rgba(0,0,0,0.4) inset;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.9), 0 -10px 40px rgba(0,0,0,0.4) inset;
+  -webkit-border-radius: 0 0 10px 10px;
+  -moz-border-radius: 0 0 10px 10px;
+  border-radius: 0 0 10px 10px;
 }
 header h1 {
   font-size: 60px;
@@ -191,40 +171,16 @@ header .login a {
 #overall {
   position: relative;
   margin: 30px auto 0;
-  background-color: #bdbdbd;
+  background-color: rgba(255,255,255,0.8);
   width: 840px;
   text-align: left;
   padding: 30px;
-  -webkit-box-shadow: 0 1px 4px rgba(0,0,0,0.2), 0 0 40px rgba(0,0,0,0.1) inset;
-  -moz-box-shadow: 0 1px 4px rgba(0,0,0,0.2), 0 0 40px rgba(0,0,0,0.1) inset;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.2), 0 0 40px rgba(0,0,0,0.1) inset;
-  -webkit-border-radius: 2px 2px 0 0;
-  -moz-border-radius: 2px 2px 0 0;
-  border-radius: 2px 2px 0 0;
-}
-#overall:before,
-#overall:after {
-  content: "";
-  z-index: -1;
-  position: absolute;
-  left: 5px;
-  top: 8px;
-  width: 90%;
-  max-width: 400px;
-  height: 50px;
-  -webkit-box-shadow: 0 -8px 10px rgba(0,0,0,0.6);
-  -moz-box-shadow: 0 -8px 10px rgba(0,0,0,0.6);
-  box-shadow: 0 -8px 10px rgba(0,0,0,0.6);
-  -webkit-transform: skew(10deg) rotate(2deg);
-  -moz-transform: skew(10deg) rotate(2deg);
-  transform: skew(10deg) rotate(2deg);
-}
-#overall:after {
-  left: auto;
-  right: 5px;
-  -webkit-transform: skew(-10deg) rotate(-2deg);
-  -moz-transform: skew(-10deg) rotate(-2deg);
-  transform: skew(-10deg) rotate(-2deg);
+  -webkit-box-shadow: 0 0 4px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.5) inset;
+  -moz-box-shadow: 0 0 4px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.5) inset;
+  box-shadow: 0 0 4px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.5) inset;
+  -webkit-border-radius: 10px 10px 0 0;
+  -moz-border-radius: 10px 10px 0 0;
+  border-radius: 10px 10px 0 0;
 }
 #overall .gist .gist-file {
   border: none;
@@ -264,4 +220,87 @@ ul {
 #lineChart {
   background: #fff;
   margin-bottom: 14px;
+}
+#botList li {
+  margin-bottom: 20px;
+}
+#botList h3 {
+  font-size: 20px;
+  color: #008000;
+}
+#botList .api span,
+#botList .repository label,
+#botList .noApi label,
+#botList .example label {
+  font-weight: bold;
+  width: 160px;
+  display: inline-block;
+}
+#botList .api span em,
+#botList .repository label em,
+#botList .noApi label em,
+#botList .example label em {
+  font-weight: normal;
+  font-size: 13px;
+}
+#botList .api {
+  margin-bottom: 10px;
+}
+#botList .api pre {
+  display: inline-block;
+}
+#botList .repository {
+  margin-bottom: 10px;
+}
+#botList .repository select {
+  width: 200px;
+}
+#botList .example {
+  margin-bottom: 10px;
+}
+#botList .example label {
+  display: block;
+  margin-bottom: 5px;
+}
+#botList .noApi {
+  margin-bottom: 10px;
+}
+#botList .noApi label {
+  width: auto;
+  font-weight: normal;
+}
+#botList .noApi input {
+  display: inline-block;
+  margin-right: 5px;
+}
+#botList .noApiDetails {
+  display: none;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  margin-right: 10px;
+}
+#botList .noApiDetails label {
+  display: inline-block;
+  margin-right: 10px;
+}
+#botList .noApiDetails input {
+  display: inline-block;
+  width: 300px;
+  padding: 2px;
+  border: 1px solid #aaa;
+}
+#botList .example p,
+#botList .noApiDetails p {
+  margin-bottom: 5px;
+}
+#botList .example pre,
+#botList .noApiDetails pre {
+  display: inline-block;
+  padding: 3px;
+  font-size: 12px;
+  background-color: #fff;
+}
+#botList .example pre strong,
+#botList .noApiDetails pre strong {
+  font-weight: bold;
 }

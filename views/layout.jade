@@ -8,9 +8,10 @@ html(lang="de")
     script(src="/javascripts/g.dot-min.js")
     script(src="/javascripts/g.line-min.js")
     script(src="/javascripts/basis.js")
+    script(src="/javascripts/settings.js")
     link(rel="stylesheet", href="/stylesheets/screen.css", type="text/css")
     link(rel="stylesheet", href="http://fonts.googleapis.com/css?family=Cabin+Sketch:bold&v1", type="text/css")
-  body
+  body(data-login=(everyauth.loggedIn ? everyauth.github.user.login : ''))
     header
       h1 
         em bot

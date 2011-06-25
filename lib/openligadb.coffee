@@ -18,7 +18,6 @@ class MatchImporter
     rest.get(url, options).on 'complete', (data) =>
       console.log "--------------->", season, group
       _(data.matchdata).each (result, i) =>
-        console.log result
         if result?
           data = @_match result
           console.log data
@@ -37,14 +36,16 @@ class MatchImporter
         cb(group.group_order_id for group in data.group)
              
   _match: (result) ->
+    result.points_team1 = parseInt(result.points_team1, 10)
+    result.points_team2 = parseInt(result.points_team2, 10)
     {
       id: result.match_id
       hostId: result.id_team1
       guestId: result.id_team2
       hostName: result.name_team1
       guestName: result.name_team2
-      hostGoals: result.points_team1 if not result.points_team1 == -1
-      guestGoals: result.points_team2 if not result.points_team2 == -1
+      hostGoals: result.points_team1 if result.points_team1 >= 0
+      guestGoals: result.points_team2 if  result.points_team2 >= 0
       season: result.league_saison
       group: result.group_order_id
       date: result.match_date_time
