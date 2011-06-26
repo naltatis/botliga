@@ -30,7 +30,6 @@ app.use stylus.middleware(
   src: "#{__dirname}/views"
   dest: "#{__dirname}/public"
   compile: (str, path, fn) ->
-    console.log str
     stylus(str).set('compress', false)
 )
 auth.helpExpress app
@@ -38,11 +37,9 @@ auth.helpExpress app
 app.get "/", (req, res) ->
   res.render 'index', navigation: 'home'
 
-app.get "/auswertung", (req, res) ->
-  res.render 'results', navigation: 'home'
-
+app.get "/auswertung", web.results
 app.get "/einstellungen", web.settings
-app.post "/einstellungen/bot", web.updateBot
+app.post "/bot", web.updateBot
 
 app.namespace "/api", ->
   app.post "/guess", api.guess.post

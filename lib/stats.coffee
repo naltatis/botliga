@@ -16,8 +16,8 @@ _matchesPerGroupBySeason = (season, cb) ->
 
 _pointsPerBotAndGroup = (matches, cb) ->
   map = ->
-    return if not matches[this.match]?
-    emit this.bot, {group: matches[this.match], points: this.points}
+    if matches[this.match]?
+      emit this.bot, {group: matches[this.match], points: this.points}
   reduce = (key, values) ->
     res = {}
     for value in values

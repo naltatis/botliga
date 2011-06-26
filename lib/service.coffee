@@ -44,6 +44,8 @@ class BotService
     m.Bot.find({user: userId}).sort('id', 'ascending').find callback
   getByUserAndId: (userId, botId, callback) ->
     m.Bot.findOne {user: userId, _id: botId}, callback
+  getAll: (callback) ->
+    m.Bot.find callback
 
 class RatingService
   constructor: ->

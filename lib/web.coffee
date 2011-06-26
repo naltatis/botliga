@@ -1,4 +1,6 @@
 s = require "./service"
+stats = require "./stats"
+Seq = require "seq"
 
 requireLogin = (req, res, callback) ->
   if req.loggedIn
@@ -25,5 +27,21 @@ updateBot = (req, res) ->
       bot.save (err, bot) ->
         res.send if err then 500 else 200
 
+results = (req, res) ->
+  Seq()
+    .par ->
+      stats.botRatingByGroup "2010", @
+    .par ->
+      s.bot.getAll @
+    .seq (botsByGroups, bots) ->
+      data = 
+        navigation: 'results'
+        botsByGroups: botsByGroups
+        groups: [1..34]
+        bots: bots
+      console.log botsByGroups
+      res.render 'results', data
+
 (exports ? this).settings = settings
 (exports ? this).updateBot = updateBot
+(exports ? this).results = results

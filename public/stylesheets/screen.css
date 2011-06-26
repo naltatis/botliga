@@ -304,3 +304,30 @@ ul {
 #botList .noApiDetails pre strong {
   font-weight: bold;
 }
+table.result {
+  margin-bottom: 20px;
+  width: 100%;
+  background-color: #fff;
+  border-collapse: collapse;
+}
+table.result caption {
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+table.result th,
+table.result td {
+  font-size: 11px;
+  padding: 4px 3px;
+  border: 1px solid #aaa;
+  text-align: center;
+}
+table.result th {
+  width: 3%;
+  font-weight: bold;
+  background-color: #f4f4f4;
+}
+table.result th.bot {
+  text-align: left;
+  width: 15%;
+}

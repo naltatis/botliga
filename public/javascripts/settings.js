@@ -22,7 +22,7 @@
         id: $bot.data('id'),
         usePullApi: $el.prop("checked")
       };
-      $.post("/einstellungen/bot", data, function() {
+      $.post("/bot", data, function() {
         var animation;
         animation = $el.prop("checked") ? "slideDown" : "slideUp";
         return $bot.find('.noApiDetails')[animation]('fast');
@@ -32,7 +32,7 @@
           id: $el.closest('.bot').data('id'),
           url: $(this).val()
         };
-        return $.post("/einstellungen/bot", data);
+        return $.post("/bot", data);
       });
     });
     $('#botList .noApi input:checked').each(function() {
@@ -47,7 +47,7 @@
         name: $select.val(),
         repository: $select.find('option:selected').data('repository') || ''
       };
-      return $.post("/einstellungen/bot", data, function() {
+      return $.post("/bot", data, function() {
         return $bot.find('.name').text(data.name);
       });
     });

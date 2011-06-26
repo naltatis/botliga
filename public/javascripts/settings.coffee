@@ -15,7 +15,7 @@ $ ->
       id: $bot.data('id')
       usePullApi: $el.prop("checked")
       
-    $.post "/einstellungen/bot", data, ->
+    $.post "/bot", data, ->
       animation = if $el.prop("checked") then "slideDown" else "slideUp"
       $bot.find('.noApiDetails')[animation]('fast')
 
@@ -24,7 +24,7 @@ $ ->
         id: $el.closest('.bot').data('id')
         url: $(@).val()
 
-      $.post "/einstellungen/bot", data
+      $.post "/bot", data
 
   $('#botList .noApi input:checked').each ->
     $(@).closest('.bot').find('.noApiDetails').show()
@@ -38,5 +38,5 @@ $ ->
       name: $select.val()
       repository: $select.find('option:selected').data('repository') || ''
 
-    $.post "/einstellungen/bot", data, ->
+    $.post "/bot", data, ->
       $bot.find('.name').text(data.name)
