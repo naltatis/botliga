@@ -110,14 +110,14 @@ summary {
   display: block;
 }
 body {
-  font-size: 13px;
+  font-size: 15px;
   margin: 0;
   padding: 0;
   background: url("/images/black_paper.png");
   text-align: center;
   z-index: 1;
   font-size: 14px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Helvetica", Helvetica, Arial, sans-serif;
 }
 a {
   text-decoration: none;
@@ -134,7 +134,7 @@ header {
   margin: 0 auto;
   background-color: rgba(255,255,255,0.8);
   width: 840px;
-  padding: 5px 30px;
+  padding: 5px 30px 5px;
   -webkit-box-shadow: 0 1px 4px rgba(0,0,0,0.9), 0 -10px 40px rgba(0,0,0,0.4) inset;
   -moz-box-shadow: 0 1px 4px rgba(0,0,0,0.9), 0 -10px 40px rgba(0,0,0,0.4) inset;
   box-shadow: 0 1px 4px rgba(0,0,0,0.9), 0 -10px 40px rgba(0,0,0,0.4) inset;
@@ -150,23 +150,42 @@ header h1 {
 header h1 strong {
   color: #008000;
 }
-header .navigation a {
+header h2 {
+  font-family: "Droid Sans Mono", serif;
+  font-size: 11px;
+  line-height: 13px;
+  margin-top: -8px;
   color: #000;
-}
-header .navigation a.active {
-  color: #008000;
+  margin-bottom: 4px;
 }
 header .login {
   text-align: right;
   position: absolute;
-  right: 30px;
-  top: 10px;
+  right: 20px;
+  bottom: 14px;
 }
 header .login a {
-  text-decoration: underline;
-  margin-bottom: 4px;
   display: block;
   color: #000;
+}
+header .login .logo {
+  margin-bottom: 8px;
+}
+header .navigation {
+  position: absolute;
+  bottom: 10px;
+  left: 300px;
+}
+header .navigation li {
+  display: inline-block;
+}
+header .navigation a {
+  display: block;
+  padding: 4px 20px;
+  color: #000;
+}
+header .navigation a.active {
+  color: #008000;
 }
 #overall {
   position: relative;
@@ -201,20 +220,40 @@ header .login a {
   border: none;
   background-color: #fff;
 }
-h2 {
-  font-weight: bold;
+.copy h2 {
+  color: #008000;
   font-size: 24px;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
-h3 {
+.copy h3 {
   font-weight: bold;
   font-size: 18px;
   margin-bottom: 18px;
 }
-p,
-ul {
-  margin-bottom: 14px;
-  line-height: 17px;
+.copy p,
+.copy ul,
+.copy ol {
+  margin-bottom: 15px;
+  line-height: 16px;
+}
+.copy ul {
+  list-style-type: disc;
+}
+.copy ol {
+  list-style-type: decimal;
+}
+.copy li {
+  margin-bottom: 4px;
+  margin-left: 20px;
+}
+.copy .rules strong {
+  display: block;
+  font-weight: bold;
+}
+.copy .rules em {
+  display: block;
+  font-size: 12px;
+  color: #444;
 }
 #dotChart,
 #lineChart {
@@ -330,4 +369,7 @@ table.result th {
 table.result th.bot {
   text-align: left;
   width: 15%;
+}
+#botsByGroupsChart {
+  background-color: #fff;
 }

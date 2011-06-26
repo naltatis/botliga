@@ -39,6 +39,7 @@ app.get "/", (req, res) ->
 
 app.get "/auswertung", web.results
 app.get "/einstellungen", web.settings
+app.get "/datenquellen", web.datasources
 app.post "/bot", web.updateBot
 
 app.namespace "/api", ->

@@ -11,24 +11,30 @@ html(lang="de")
     script(src="/javascripts/settings.js")
     link(rel="stylesheet", href="/stylesheets/screen.css", type="text/css")
     link(rel="stylesheet", href="http://fonts.googleapis.com/css?family=Cabin+Sketch:bold&v1", type="text/css")
+    link(rel="stylesheet", href="http://fonts.googleapis.com/css?family=Droid+Sans+Mono:regular&v1", type="text/css")
   body(data-login=(everyauth.loggedIn ? everyauth.github.user.login : ''))
     header
       h1 
         em bot
         strong Liga
+      h2 ein algorithmisches
+        br
+        | Fussball-Bundesliga-Tipps
       ul.navigation
         li
           a(href='/', class= (navigation == 'home') ? 'active' : '') Home
         li
           a(href='/auswertung', class= (navigation == 'results') ? 'active' : '') Auswertung
         li
+          a(href='/datenquellen', class= (navigation == 'results') ? 'active' : '') Datenquellen
+        li
           a(href='/einstellungen', class= (navigation == 'settings') ? 'active' : '') Einstellungen
       .login
         - if (everyauth.loggedIn)
           p= "Hallo " + everyauth.github.user.login
         - else
-          a(href='/auth/github') anmelden mit
-          a(href='/auth/github')
+          a.logo(href='/auth/github')
             img(src='/images/github.png')
+          a(href='/auth/github') anmelden
     #overall
       !{body}

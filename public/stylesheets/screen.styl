@@ -1,19 +1,19 @@
 @import 'nib/reset'
 @import 'nib/vendor'
-@import 'curl'
+@import 'nib/positions'
 
 global-reset()
 reset-html5()
 
 body
-  font-size 13px
+  font-size 15px
   margin 0
   padding 0
   background url(/images/black_paper.png)
   text-align center
   z-index 1
   font-size 14px
-  font-family 'Helvetica Neue', Helvetica, Arial, sans-serif
+  font-family 'Helvetica', Helvetica, Arial, sans-serif
 
 a
   text-decoration none
@@ -29,7 +29,7 @@ header
   margin 0 auto
   background-color rgba(255,255,255,0.8)
   width 840px
-  padding 5px 30px
+  padding 5px 30px 5px
   box-shadow 0 1px 4px rgba(0, 0, 0, 0.9), 0 -10px 40px rgba(0, 0, 0, 0.4) inset
   border-radius 0 0 10px 10px
   
@@ -39,21 +39,31 @@ header
     font-family 'Cabin Sketch', serif
     strong
       color green
-  .navigation
+  h2
+    font-family 'Droid Sans Mono', serif;
+    font-size 11px
+    line-height 13px
+    margin-top -8px
+    color black
+    margin-bottom 4px
+  .login
+    text-align right
+    absolute right 20px bottom 14px
     a
+      display block
+      color #000
+    .logo
+      margin-bottom 8px
+  .navigation
+    absolute bottom 10px left 300px
+    li
+      display inline-block
+    a
+      display block
+      padding 4px 20px
       color #000
       &.active
         color green
-  .login
-    text-align right
-    position absolute
-    right 30px
-    top 10px
-    a
-      text-decoration underline
-      margin-bottom 4px
-      display block
-      color #000
 
 #overall
   position relative
@@ -80,18 +90,34 @@ header
       padding-bottom 5px
       border none
       background-color #fff
-h2
-  font-weight bold
-  font-size 24px
-  margin-bottom 20px
-h3
-  font-weight bold
-  font-size 18px
-  margin-bottom 18px
-p
-ul
-  margin-bottom 14px
-  line-height 17px
+      
+.copy
+  h2
+    color green
+    font-size 24px
+    margin-bottom 12px
+  h3
+    font-weight bold
+    font-size 18px
+    margin-bottom 18px
+  p, ul, ol
+    margin-bottom 15px
+    line-height 16px
+  ul
+    list-style-type disc
+  ol
+    list-style-type decimal
+  li
+    margin-bottom 4px
+    margin-left 20px
+  .rules
+    strong
+      display block
+      font-weight bold
+    em
+      display block
+      font-size 12px
+      color #444
   
 #dotChart
 #lineChart
@@ -181,3 +207,6 @@ table.result
   th.bot
     text-align left
     width 15%
+    
+#botsByGroupsChart
+  background-color white

@@ -1,7 +1,7 @@
 # Lines starting with pound sign (#) are ignored.
 
 # additional extensions to monitor
-#config.exts << 'haml'
+config.exts << 'jade styl'
 
 # exclude files with NAMES matching this mask
 #config.exclusions << '~*'
@@ -11,7 +11,7 @@
 #config.exclusions << /somedir.*(ab){2,4}.(css|js)$/
 
 # reload the whole page when .js changes
-#config.apply_js_live = false
+config.apply_js_live = false
 # reload the whole page when .css changes
 #config.apply_css_live = false
 # reload the whole page when images (png, jpg, gif) change

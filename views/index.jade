@@ -1,53 +1,56 @@
-h2 Was ist botLiga?
-p botLiga ist eine elektronische Tipprunde. Dabei könnt Ihr mit verschiedenen Algorithmen antreten, um möglichst exakt die Ergebnisse der 1. Fußball Bundesliga zu tippen. Jeder Teilnehmer erstellt bis zu 3 Programme (Bots), welches die Tipps bei der botLiga abgibt (API und technische Details siehe unten). Je nachdem wie exakt die Vorhersage mit dem tatsächlichen Ergebnis übereinstimmt, erhält der Bot eine entsprechende Punktzahl. Und Überraschung, wer am Ende der Saison die meisten Punkte gesammelt hat ist der Sieger.
+#index.copy
+  h2 Was ist botLiga?
+  p botLiga ist eine elektronische Tipprunde. Dabei kannst du mit verschiedenen Algorithmen antreten, um möglichst exakt die Ergebnisse der 1. Fußball Bundesliga zu tippen.
+  //Jeder Teilnehmer erstellt bis zu 3 Programme (Bots), welches die Tipps bei der botLiga abgibt (API und technische Details siehe unten). Je nachdem wie exakt die Vorhersage mit dem tatsächlichen Ergebnis übereinstimmt, erhält der Bot eine entsprechende Punktzahl. Und Überraschung, wer am Ende der Saison die meisten Punkte gesammelt hat ist der Sieger.
 
-h2 Mitmachen
-ol
-  li melde dich an (Authentifizierung läuft über github)
-  li kopieren folgenden beispieclient ....
-  li ...
+  h2 Regeln
+  ul.rules
+    li 
+      strong offener Quellcode 
+      em die gesamten Sourcen deiner Bots müssen zugänglich auf github liegen
+    li 
+      strong offene Daten 
+      em Du darfst beliebige externe Datenquellen (z.B. historische Statistiken, Wettquoten, Wetter und Horoskopdaten, etc.) verwenden. Diese Daten müssen aber allen Teilnehmern als Datenbank-Dump, CSV, API oder ähnlichem zur Verfügung gestellt werden.
+    li
+      strong nur algorithmische Tipps 
+      em und kein manuelles Tippen über die API
+    li
+      strong jeder hat 3 Bots
+      em du kannst parallel bis zu 3 verschiedene Algorithmen/Strategien laufen lassen, die unabhängig gewertet werden
+    li
+      strong der Bot darf während der Saison geändert werden
+      em hast du neue Ideen, Bugfixes oder Inspirationen von gegnerischen Bots, dürft ihr euren Bot jederzeit überarbeiten
+    li
+      strong Tipps müssen eine Stunde vor Spielbeginn abgegeben sein
 
+  h2 API
+  p Die botliga bietet zwei verschiedene APIs an.
 
+  h3 Tippabgabe
+  p Variante A ist für alle geeignet, die einen öffentlich zugänglichen Webserver zur Verfügung haben. Hier holt sich der botLiga crawler die Ergebnisse per REST Interface ab.
+  p Variante B ist für alle, die lieber einen HTTP Request absetzen, um den Tipp abzugeben.
+  p Zur Identifikation der Spiele wird die Match-ID verwendet, welche auch in der openligadb verwendet wird.
 
-h2 Regeln
-ul
-  li Der Algorithmus sollte nicht eine Abbildung eines menschlichen Tipps, der persönliche Erfahrungen und Präferenzen berücksichtigt, sein.
-  li Während der laufenden Saison darf der Algorithmus verändert werden, solange die Source zugänglich sind.
-  li Die Tipps müssen eine Stunde vor Spielbeginn abgegeben werden.
-  li Weitere Datenquellen (Statistiken, Wettquoten, Wetter und Horoskopdaten, etc.) dürfen verwendet werden, sind aber allen Teilnehmern als API oder DB-Dump zur Verfügung zu stellen.
+  h3 Daten und MatchIDs abfragen
+  p Damit nicht jeder das komplette SOAP Interface zur openligadb implementieren muss, haben wir eine JSON Schnittstelle zur Openligadb zur Verfügung gestellt. //link einfügen
 
-h2 API
-p Die botliga bietet zwei verschiedene APIs an.
+  h2 Getting Started
+  ol
+    li melde dich an (Authentifizierung läuft über github)
+    li kopieren folgenden beispieclient ....
+    li ...
 
-h3 Tippabgabe
-p Variante A ist für alle geeignet, die einen öffentlich zugänglichen Webserver zur Verfügung haben. Hier holt sich der botLiga crawler die Ergebnisse per REST Interface ab.
-p Variante B ist für alle, die lieber einen HTTP Request absetzen, um den Tipp abzugeben.
-p Zur Identifikation der Spiele wird die Match-ID verwendet, welche auch in der openligadb verwendet wird.
+  h2 Punktevergabe
+  ul
+    li Richtiges Ergebnis **5 Punkte**
+    li Richtige Tordifferenz (außer Unentschieden) **3 Punkte**
+    li Richtige Tendenz **2 Punkte**
 
-h3 Daten und MatchIDs abfragen
-p Damit nicht jeder das komplette SOAP Interface zur openligadb implementieren muss, haben wir eine JSON Schnittstelle zur Openligadb zur Verfügung gestellt. //link einfügen
+  h2 Beispiel-Bots
+  p Um die Nutzung zu verdeutlichen haben wir ein Paar Beispielimplementierungen hinterlegt. Diese reichen vom hinterlegen einer einfachen Datei bis zu echten Algorithmen in verschiedenen Sprachen
+  h3 Stupid Dropbox Bot
+  script(src="https://gist.github.com/1036516.js")
+  h3 Node.js Bot
+  script(src="https://gist.github.com/1036501.js")
 
-h2 Punktevergabe
-ul
-  li Richtiges Ergebnis **5 Punkte**
-  li Richtige Tordifferenz (außer Unentschieden) **3 Punkte**
-  li Richtige Tendenz **2 Punkte**
-
-h2 Beispiel-Bots
-p Um die Nutzung zu verdeutlichen haben wir ein Paar Beispielimplementierungen hinterlegt. Diese reichen vom hinterlegen einer einfachen Datei bis zu echten Algorithmen in verschiedenen Sprachen
-h3 Stupid Dropbox Bot
-script(src="https://gist.github.com/1036516.js")
-h3 Node.js Bot
-script(src="https://gist.github.com/1036501.js")
-
-h2 Datenquellen
-dl
-  dt openLigaDB
-  dd
-    a(href="http://openligadb-json.heroku.com/") http://openligadb.de
-    br
-    a(href="http://openligadb-json.heroku.com/") http://openligadb-json.heroku.com
-  dt openLigaDB
-  dd
-    a(href="#")
     

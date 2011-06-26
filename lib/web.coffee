@@ -27,6 +27,9 @@ updateBot = (req, res) ->
       bot.save (err, bot) ->
         res.send if err then 500 else 200
 
+datasources = (req, res) ->
+  res.render 'datasources', navigation: 'datasources'
+
 results = (req, res) ->
   Seq()
     .par ->
@@ -45,3 +48,4 @@ results = (req, res) ->
 (exports ? this).settings = settings
 (exports ? this).updateBot = updateBot
 (exports ? this).results = results
+(exports ? this).datasources = datasources
