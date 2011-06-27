@@ -21,7 +21,14 @@ a
     text-decoration underline
     
 pre
-  font-family 'Bitstream Vera Sans Mono', 'Menlo', 'Monaco', 'Courier', monospace
+  font-family 'Droid Sans Mono', 'Menlo', 'Monaco', 'Courier', monospace
+
+.highlight1
+  color #ec7721
+.highlight2
+  color green
+.highlight3
+  color #d14
 
 header
   position relative
@@ -78,7 +85,6 @@ header
     .gist-file
       border none
     .gist-meta
-      font-family 'Helvetica Neue', Helvetica, Arial, sans-serif
       font-size 10px
       padding 2px 2px 15px
       color #000
@@ -90,6 +96,7 @@ header
       padding-bottom 5px
       border none
       background-color #fff
+      font-family 'Droid Sans Mono', serif;
       
 .copy
   h2
@@ -107,6 +114,8 @@ header
     list-style-type disc
   ol
     list-style-type decimal
+  strong
+    font-weight bold
   li
     margin-bottom 4px
     margin-left 20px
@@ -118,6 +127,18 @@ header
       display block
       font-size 12px
       color #444
+  pre
+    color #666
+    background-color #fff
+    padding 5px
+    display inline-block
+    margin-bottom 15px
+  a
+    color green
+    text-decoration underline
+    &:hover
+      text-decoration none
+  
   
 #dotChart
 #lineChart

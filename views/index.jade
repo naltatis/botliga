@@ -24,33 +24,60 @@
       strong Tipps müssen eine Stunde vor Spielbeginn abgegeben sein
 
   h2 API
-  p Die botliga bietet zwei verschiedene APIs an.
+  
+  h3 Tippabgabe über die API
+  
+  p Die Tippabgabe erfolt über unsere REST API. Folgende Parameter müssen übergeben werden.
+  
+  ul
+    li
+      strong match_id: 
+      span die eindeutige ID des Spiels. Siehe 
+        a(href="/datenquellen") Datenquellen
+        |  für mehr Details.
+    li
+      strong token: 
+      span das API-Token deines Bots. Dies findest du unter 
+        a(href="/einstellungen") Einstellungen.
+    li
+      strong result: 
+      span das getippte Ergebnis
+  h4 Beispiele
+  pre
+    span curl -X POST --data "
+    span.highlight1 match_id=14181
+    span &
+    span.highlight2 token=[bot-token]
+    span &
+    span.highlight3 result=2:1
+    span " http:\/\/botliga.de/api/guess
+    
+  p Du kannst für die komplette Saison vortippen. Deine Tipps werden aber wahrscheinlich besser, die Ergenisse der letzten Spieltag mit berücksichtigst. Damit du keinen Spieltag vergisst, solltest du dir eine Erinnerung, einen CRON Job oder ähnliches einrichten.
 
-  h3 Tippabgabe
-  p Variante A ist für alle geeignet, die einen öffentlich zugänglichen Webserver zur Verfügung haben. Hier holt sich der botLiga crawler die Ergebnisse per REST Interface ab.
-  p Variante B ist für alle, die lieber einen HTTP Request absetzen, um den Tipp abzugeben.
-  p Zur Identifikation der Spiele wird die Match-ID verwendet, welche auch in der openligadb verwendet wird.
+  h3 Alternativ: Ergebnisse abholen lassen
+  p Wenn dein Algorithmus auf einem öffentlich zugänglichen Webserver gehostet hast, kann sich der botLiga Crawler die Ergebnisse für den nächsten Spieltag regelmäßig abholen.
 
-  h3 Daten und MatchIDs abfragen
-  p Damit nicht jeder das komplette SOAP Interface zur openligadb implementieren muss, haben wir eine JSON Schnittstelle zur Openligadb zur Verfügung gestellt. //link einfügen
+  h4 Beispiel Bots
 
-  h2 Getting Started
-  ol
-    li melde dich an (Authentifizierung läuft über github)
-    li kopieren folgenden beispieclient ....
-    li ...
+  h5 Stupid Dropbox Bot
+  script(src="https://gist.github.com/1036516.js")
+
+  h3 Node.js Bot
+  script(src="https://gist.github.com/1036501.js")
 
   h2 Punktevergabe
   ul
-    li Richtiges Ergebnis **5 Punkte**
-    li Richtige Tordifferenz (außer Unentschieden) **3 Punkte**
-    li Richtige Tendenz **2 Punkte**
+    li
+      strong 5 Punkte 
+      span für ein exaktes Ergebnis
+    li
+      strong 3 Punkte 
+      span für die richtige Tordifferenz (außer Unentschieden) 
+    li
+      strong 2 Punkte 
+      span die richtige Tendenz (Heimsieg, Auswärtssieg, Unentschieden)
 
   h2 Beispiel-Bots
   p Um die Nutzung zu verdeutlichen haben wir ein Paar Beispielimplementierungen hinterlegt. Diese reichen vom hinterlegen einer einfachen Datei bis zu echten Algorithmen in verschiedenen Sprachen
-  h3 Stupid Dropbox Bot
-  script(src="https://gist.github.com/1036516.js")
-  h3 Node.js Bot
-  script(src="https://gist.github.com/1036501.js")
 
     
