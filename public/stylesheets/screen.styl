@@ -21,6 +21,7 @@ a
     text-decoration underline
     
 pre
+.code
   font-family 'Droid Sans Mono', 'Menlo', 'Monaco', 'Courier', monospace
 
 .highlight1
@@ -36,23 +37,30 @@ header
   margin 0 auto
   background-color rgba(255,255,255,0.8)
   width 840px
-  padding 5px 30px 5px
+  padding 5px 30px 10px
   box-shadow 0 1px 4px rgba(0, 0, 0, 0.9), 0 -10px 40px rgba(0, 0, 0, 0.4) inset
   border-radius 0 0 10px 10px
   
-  h1
+  h1 a
+    &:hover
+      text-decoration none
     font-size 60px
     text-shadow 1px 1px 1px #888  
     font-family 'Cabin Sketch', serif
+    text-decoration none
+    color #000
     strong
       color green
   h2
-    font-family 'Droid Sans Mono', serif;
-    font-size 11px
-    line-height 13px
     margin-top -8px
-    color black
-    margin-bottom 4px
+    a
+      &:hover
+        text-decoration none
+      font-family 'Droid Sans Mono', serif;
+      font-size 11px
+      line-height 13px
+      color black
+      margin-bottom 4px
   .login
     text-align right
     absolute right 20px bottom 14px
@@ -82,11 +90,13 @@ header
   box-shadow 0 0 4px rgba(0, 0, 0, 0.9), 0 0 20px rgba(0, 0, 0, 0.5) inset
   border-radius 10px 10px 0 0
   .gist
+    margin-bottom 5px
     .gist-file
+      font inherit
       border none
     .gist-meta
       font-size 10px
-      padding 2px 2px 15px
+      padding 5px
       color #000
       background-color #bdbdbd
       a
@@ -97,16 +107,27 @@ header
       border none
       background-color #fff
       font-family 'Droid Sans Mono', serif;
-      
+
 .copy
+  
   h2
+    &:first-child
+      margin-top 0
     color green
     font-size 24px
-    margin-bottom 12px
+    margin-bottom 20px
+    margin-top 40px
   h3
     font-weight bold
     font-size 18px
+    margin-top 25px
     margin-bottom 18px
+  h4
+    font-weight bold
+    font-size 14px
+    margin-top 20px
+    margin-bottom 10px
+    color green
   p, ul, ol
     margin-bottom 15px
     line-height 16px

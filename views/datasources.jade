@@ -1,5 +1,53 @@
 #datasources.copy
   h2 Datenquellen
+  
+  h3 Spiele der aktuellen Saison 2011/2012
+  table#currentSeason.result
+    thead
+      tr
+        th ID
+        th Spieltag
+        th(colspan=2) Heim-Mannschaft
+        th(colspan=2) Gast-Mannschaft
+        th Datum
+        th Ergebnis
+    tbody
+      -each match in currentMatches
+        tr
+          td= match.id
+          td= match.group
+          td= match.hostId
+          td= match.hostName
+          td= match.guestId
+          td= match.guestName
+          td= (new Date(match.date)).toFormat('DD.MM.YYYY HH24:MI:SS')
+          td= match.hostGoals || '-' + ":" + (match.guestGoals || '-')
+  p
+    a(href="/api/stats/2011/matches") diese Daten als JSON abrufen
+
+  h3 Spiele der letzten Saison 2010/2011 (zum Test-Tippen)
+  table#currentSeason.result
+    thead
+      tr
+        th ID
+        th Spieltag
+        th(colspan=2) Heim-Mannschaft
+        th(colspan=2) Gast-Mannschaft
+        th Datum
+        th Ergebnis
+    tbody
+      -each match in lastMatches
+        tr
+          td= match.id
+          td= match.group
+          td= match.hostId
+          td= match.hostName
+          td= match.guestId
+          td= match.guestName
+          td= (new Date(match.date)).toFormat('DD.MM.YYYY HH24:MI:SS')
+          td= (match.hostGoals || '-') + ":" + (match.guestGoals || '-')
+  p
+    a(href="/api/stats/2010/matches") diese Daten als JSON abrufen
   dl
     dt openLigaDB
     dd

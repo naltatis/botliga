@@ -8,6 +8,7 @@ api = require "./lib/api"
 web = require "./lib/web"
 github = require "./lib/github"
 require "express-namespace"
+require "date-utils"
 
 
 # stylus compiler
@@ -62,6 +63,8 @@ app.namespace "/api", ->
 
     app.get "/:season/bot-rating-by-group", (req, res) ->
       stats.botRatingByGroup req.params.season, (err, data) -> res.send data
+
+    app.get "/:season/matches", web.matchesBySeason
 
 port = process.env.PORT || 3000
 app.listen port, ->

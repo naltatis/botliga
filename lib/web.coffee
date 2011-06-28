@@ -28,7 +28,18 @@ updateBot = (req, res) ->
         res.send if err then 500 else 200
 
 datasources = (req, res) ->
-  res.render 'datasources', navigation: 'datasources'
+  Seq()
+    .par ->
+      s.match.getBySeason "2011", @
+    .par ->
+      s.match.getBySeason "2010", @
+    .seq (currentMatches, lastMatches) ->
+      data = 
+        navigation: 'datasources'
+        currentMatches: currentMatches
+        lastMatches: lastMatches
+    
+      res.render 'datasources', data
 
 results = (req, res) ->
   Seq()
@@ -44,8 +55,12 @@ results = (req, res) ->
         bots: bots
       console.log botsByGroups
       res.render 'results', data
+      
+matchesBySeason = (req, res) ->
+  s.match.getBySeason req.params.season, (err, data) -> res.send data
 
 (exports ? this).settings = settings
 (exports ? this).updateBot = updateBot
 (exports ? this).results = results
 (exports ? this).datasources = datasources
+(exports ? this).matchesBySeason = matchesBySeason

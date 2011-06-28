@@ -46,6 +46,10 @@ class BotService
     m.Bot.findOne {user: userId, _id: botId}, callback
   getAll: (callback) ->
     m.Bot.find callback
+    
+class MatchService
+  getBySeason: (season, callback) ->
+    m.Match.find({season: season}).sort('date', 'ascending').find callback
 
 class RatingService
   constructor: ->
@@ -65,3 +69,4 @@ class RatingService
 (exports ? this).guess = new GuessService()
 (exports ? this).rating = new RatingService()
 (exports ? this).bot = new BotService()
+(exports ? this).match = new MatchService()

@@ -14,19 +14,22 @@ html(lang="de")
     link(rel="stylesheet", href="http://fonts.googleapis.com/css?family=Droid+Sans+Mono:regular&v1", type="text/css")
   body(data-login=(everyauth.loggedIn ? everyauth.github.user.login : ''))
     header
-      h1 
-        em bot
-        strong Liga
-      h2 ein algorithmisches
-        br
-        | Fussball-Bundesliga-Tipps
+      h1
+        a(href='/')
+          em bot
+          strong Liga
+      h2
+        a(href='/')
+          | ein algorithmisches
+          br
+          | Fussball-Bundesliga-Tipps
       ul.navigation
         li
           a(href='/', class= (navigation == 'home') ? 'active' : '') Home
         li
           a(href='/auswertung', class= (navigation == 'results') ? 'active' : '') Auswertung
         li
-          a(href='/datenquellen', class= (navigation == 'results') ? 'active' : '') Datenquellen
+          a(href='/datenquellen', class= (navigation == 'datasources') ? 'active' : '') Datenquellen
         li
           a(href='/einstellungen', class= (navigation == 'settings') ? 'active' : '') Einstellungen
       .login
