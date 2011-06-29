@@ -1,4 +1,4 @@
-s = require "./service"
+s = require "../service/service"
 
 guess = {}
 

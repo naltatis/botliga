@@ -1,5 +1,5 @@
-s = require "./service"
-stats = require "./stats"
+s = require "../service/service"
+stats = require "../service/stats"
 Seq = require "seq"
 
 requireLogin = (req, res, callback) ->
@@ -18,6 +18,7 @@ settings = (req, res) ->
 updateBot = (req, res) ->
   requireLogin req, res, ->
     s.bot.getByUserAndId req.user._id, req.param('id'), (err, bot) ->
+      console.log req.user._id, req.param('id'), bot
       return res.send 500 if err
       return res.send 404 if not bot?
       bot.name = req.param('name') if req.param('name')?

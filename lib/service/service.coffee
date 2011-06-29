@@ -1,5 +1,5 @@
-m = require "./model"
-MatchScorer = require("./rating").MatchScorer
+m = require "../model/model"
+MatchScorer = require("../rating").MatchScorer
 Seq = require "seq"
 
 class GuessService
@@ -46,6 +46,8 @@ class BotService
     m.Bot.findOne {user: userId, _id: botId}, callback
   getAll: (callback) ->
     m.Bot.find callback
+  getAllWithPull: (callback) ->
+    m.Bot.find({url: {'$exists': true}, url: {'$ne': ''}, usePullApi: true}).find callback
     
 class MatchService
   getBySeason: (season, callback) ->

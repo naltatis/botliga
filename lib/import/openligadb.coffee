@@ -1,4 +1,4 @@
-model = require "./model"
+model = require "../model/model"
 rest = require "restler"
 _ = require "underscore"
 

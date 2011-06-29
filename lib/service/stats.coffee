@@ -1,4 +1,4 @@
-model = require "./model"
+model = require "../model/model"
 
 _mapReduce = (collection, map, reduce, opt, sort, cb) ->
   model.db.collection collection, (err, matches) ->

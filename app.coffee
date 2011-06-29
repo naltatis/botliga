@@ -1,12 +1,12 @@
 express = require "express"
 stylus = require "stylus"
 nib = require "nib"
-auth = require('./lib/auth').auth
-openligadb = require "./lib/openligadb"
-stats = require "./lib/stats"
-api = require "./lib/api"
-web = require "./lib/web"
-github = require "./lib/github"
+auth = require('./lib/model/auth').auth
+openligadb = require "./lib/import/openligadb"
+crawler = require("./lib/import/crawler").crawler
+stats = require "./lib/service/stats"
+api = require "./lib/controller/api"
+web = require "./lib/controller/web"
 require "express-namespace"
 require "date-utils"
 
@@ -46,6 +46,10 @@ app.post "/bot", web.updateBot
 app.namespace "/api", ->
   app.post "/guess", api.guess.post
   app.get "/guess", api.guess.get
+
+  app.get "/crawl", (req, res) ->
+    crawler.updateAll ->
+      res.send(200)
 
   app.get "/:season/import", (req, res) ->
     importer = new openligadb.MatchImporter()

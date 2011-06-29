@@ -25,7 +25,6 @@ $ ->
   axisy = []
   $table.find("tr:gt(0) th").each ->
     axisy.push $(@).text()
-  console.log axisy
   
   options =
     symbol: "o"
