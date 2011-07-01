@@ -1,7 +1,6 @@
 #index.copy
   h2 Was ist botLiga?
   p botLiga ist eine elektronische Tipprunde. Dabei kannst du mit verschiedenen Algorithmen antreten, um möglichst exakt die Ergebnisse der 1. Fußball Bundesliga zu tippen.
-  //Jeder Teilnehmer erstellt bis zu 3 Programme (Bots), welches die Tipps bei der botLiga abgibt (API und technische Details siehe unten). Je nachdem wie exakt die Vorhersage mit dem tatsächlichen Ergebnis übereinstimmt, erhält der Bot eine entsprechende Punktzahl. Und Überraschung, wer am Ende der Saison die meisten Punkte gesammelt hat ist der Sieger.
 
   h2 Regeln
   ul.rules
@@ -61,24 +60,26 @@
 
   p Du kannst für die komplette Saison vortippen. Deine Tipps werden aber wahrscheinlich besser, die Ergenisse der letzten Spieltag mit berücksichtigst. Damit du keinen Spieltag vergisst, solltest du dir eine Erinnerung, einen CRON Job oder ähnliches einrichten.
 
-  h3 Alternativ: Ergebnisse vom botLiga Crawler abholen lassen
-  p Wenn dein Algorithmus auf einem öffentlich zugänglichen Webserver gehostet hast, kann sich der botLiga Crawler die Ergebnisse für den nächsten Spieltag regelmäßig abholen.
-  p
-    | Den HTTP-Pfade zu deinem kannst du in den
-    a(href="/einstellungen") Einstellungen
-    |  deines Bots hinterlegen.
-  p.highlight3 Hinweis: Der Crawler ist momentan noch nicht aktiv. 
-
-  h4 Stupid Text-File Bot
-  p Die einfachste aber sicher auch lahmste Methode mitzumachen ist, eine Text-Datei mit einem konstanten Ergebnis auf einen Webserver zu legen und den Pfad beim Bot einzutragen.
-  
-  script(src="https://gist.github.com/1036516.js")
-  
-  h4 php Bot
-  script(src="https://gist.github.com/1052074.js")
-
-  h4 Node.js Bot
-  script(src="https://gist.github.com/1036501.js")
+  // temporary disabled crawler
+  //
+  //  h3 Alternativ: Ergebnisse vom botLiga Crawler abholen lassen
+  //  p Wenn dein Algorithmus auf einem öffentlich zugänglichen Webserver gehostet hast, kann sich der botLiga Crawler die Ergebnisse für den nächsten Spieltag regelmäßig abholen.
+  //  p
+  //    | Den HTTP-Pfade zu deinem kannst du in den
+  //    a(href="/einstellungen") Einstellungen
+  //    |  deines Bots hinterlegen.
+  //  p.highlight3 Hinweis: Der Crawler ist momentan noch nicht aktiv. 
+  //
+  //  h4 Stupid Text-File Bot
+  //  p Die einfachste aber sicher auch lahmste Methode mitzumachen ist, eine Text-Datei mit einem konstanten Ergebnis auf einen Webserver zu legen und den Pfad beim Bot einzutragen.
+  //  
+  //  script(src="https://gist.github.com/1036516.js")
+  //  
+  //  h4 php Bot
+  //  script(src="https://gist.github.com/1052074.js")
+  //
+  //  h4 Node.js Bot
+  //  script(src="https://gist.github.com/1036501.js")
 
   h2 Punktevergabe
   ul

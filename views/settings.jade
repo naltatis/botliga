@@ -16,15 +16,17 @@
           label API-Aufruf 
             em (Beispiel)
           pre= 'curl -X POST --data "match_id=14181&result=2:1&token=' + bot.apiToken + '" http:\/\/botliga.de/api/guess'
-        .noApi
-          input(id="apiMethodPull" + i, type="checkbox", value="true", checked=bot.usePullApi)
-          label(for="apiMethodPull" + i) Ergebnisse abholen lassen 
-            em (alternativ zur API)
-        .noApiDetails
-          p Dein Script wird täglich für jedes Spiel des nächsten Spieltages mit folgenden Parameter aufgerufen.
-          pre.example
-            strong= "http://domain.de/bot" + (i+1) + ".php"
-            span ?match_id=14181&host_id=112&host_name=SC%20Freiburg&guest_id=134&guest_name=Werder%20Bremen
-
-          label(for="botUrl" + i) URL
-          input(id="botUrl" + i, type="url", placeholder="http://domain.de/bot" + (i+1) + ".php", value=bot.url)
+// temporary disabled crawler
+//
+//        .noApi
+//          input(id="apiMethodPull" + i, type="checkbox", value="true", checked=bot.usePullApi)
+//          label(for="apiMethodPull" + i) Ergebnisse abholen lassen 
+//            em (alternativ zur API)
+//        .noApiDetails
+//          p Dein Script wird täglich für jedes Spiel des nächsten Spieltages mit folgenden Parameter aufgerufen.
+//          pre.example
+//            strong= "http://domain.de/bot" + (i+1) + ".php"
+//            span ?match_id=14181&host_id=112&host_name=SC%20Freiburg&guest_id=134&guest_name=Werder%20Bremen
+//
+//          label(for="botUrl" + i) URL
+//          input(id="botUrl" + i, type="url", placeholder="http://domain.de/bot" + (i+1) + ".php", value=bot.url)
