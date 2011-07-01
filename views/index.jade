@@ -2,50 +2,64 @@
   h2 Was ist botLiga?
   p botLiga ist eine elektronische Tipprunde. Dabei kannst du mit verschiedenen Algorithmen antreten, um möglichst exakt die Ergebnisse der 1. Fußball Bundesliga zu tippen.
 
-  h2 Regeln
-  ul.rules
-    li 
-      strong offener Quellcode 
-      em die gesamten Sourcen deiner Bots müssen zugänglich auf github liegen
-    li 
-      strong offene Daten 
-      em Du darfst beliebige externe Datenquellen (z.B. historische Statistiken, Wettquoten, Wetter und Horoskopdaten, etc.) verwenden. Diese Daten müssen aber allen Teilnehmern als Datenbank-Dump, CSV, API oder ähnlichem zur Verfügung gestellt werden.
-    li
-      strong nur algorithmische Tipps 
-      em und kein manuelles Tippen über die API
-    li
-      strong jeder hat 3 Bots
-      em du kannst parallel bis zu 3 verschiedene Algorithmen/Strategien laufen lassen, die unabhängig gewertet werden
-    li
-      strong der Bot darf während der Saison geändert werden
-      em hast du neue Ideen, Bugfixes oder Inspirationen von gegnerischen Bots, dürft ihr euren Bot jederzeit überarbeiten
-    li
-      strong Tipps müssen eine Stunde vor Spielbeginn abgegeben sein
+  .leftCol
+    h2 Regeln
+    ul
+      li 
+        strong offener Quellcode 
+        em die gesamten Sourcen deiner Bots müssen zugänglich auf github liegen
+      li 
+        strong offene Daten 
+        em Du darfst beliebige externe Datenquellen (z.B. historische Statistiken, Wettquoten, Wetter und Horoskopdaten, etc.) verwenden. Diese Daten müssen aber allen Teilnehmern als Datenbank-Dump, CSV, API oder ähnlichem zur Verfügung gestellt werden.
+      li
+        strong nur algorithmische Tipps 
+        em und kein manuelles Tippen über die API
+      li
+        strong jeder hat 3 Bots
+        em du kannst parallel bis zu 3 verschiedene Algorithmen/Strategien laufen lassen, die unabhängig gewertet werden
+      li
+        strong der Bot darf während der Saison geändert werden
+        em hast du neue Ideen, Bugfixes oder Inspirationen von gegnerischen Bots, dürft ihr euren Bot jederzeit überarbeiten
+      li
+        strong Tipps müssen eine Stunde vor Spielbeginn abgegeben sein
 
-  h2 API
+  .rightCol
+    h2 Punktevergabe
+    ul
+      li
+        strong 5 Punkte 
+        em für ein exaktes Ergebnis
+      li
+        strong 3 Punkte 
+        em für die richtige Tordifferenz (außer Unentschieden) 
+      li
+        strong 2 Punkte 
+        em die richtige Tendenz (Heimsieg, Auswärtssieg, Unentschieden)
+    h2 API
+
+    p Folgende Parameter müssen per 
+      strong.code POST
+      span= ' an ' 
+      strong.code http:/\/botliga.de/api/guess 
+      span übergeben werden:
+
+    ul
+      li
+        strong match_id
+        em die eindeutige ID des Spiels. Siehe 
+          a(href="/datenquellen") Datenquellen
+          |  für mehr Details.
+      li
+        strong token
+        em das API-Token deines Bots. Dies findest du unter 
+          a(href="/einstellungen") Einstellungen.
+      li
+        strong result
+        em das getippte Ergebnis
+
   
-  h3 Tippabgabe über die REST API
-  
-  p Folgende Parameter müssen per 
-    strong.code POST 
-    span an 
-    strong.code http:/\/botliga.de/api/guess 
-    span übergeben werden:
-  
-  ul
-    li
-      strong match_id: 
-      span die eindeutige ID des Spiels. Siehe 
-        a(href="/datenquellen") Datenquellen
-        |  für mehr Details.
-    li
-      strong token: 
-      span das API-Token deines Bots. Dies findest du unter 
-        a(href="/einstellungen") Einstellungen.
-    li
-      strong result: 
-      span das getippte Ergebnis
-  h4 Beispiele Aufruf mit curl
+  h2 Beispiele
+  h3 Aufruf mit curl
   pre
     span curl -X POST --data "
     span.highlight1 match_id=14181
@@ -55,7 +69,7 @@
     span.highlight3 result=2:1
     span " http:\/\/botliga.de/api/guess
 
-  h4 Beispiele Bot in Ruby
+  h3 Bot in Ruby
   script(src="https://gist.github.com/1051944.js")
 
   p Du kannst für die komplette Saison vortippen. Deine Tipps werden aber wahrscheinlich besser, die Ergenisse der letzten Spieltag mit berücksichtigst. Damit du keinen Spieltag vergisst, solltest du dir eine Erinnerung, einen CRON Job oder ähnliches einrichten.
@@ -80,17 +94,4 @@
   //
   //  h4 Node.js Bot
   //  script(src="https://gist.github.com/1036501.js")
-
-  h2 Punktevergabe
-  ul
-    li
-      strong 5 Punkte 
-      span für ein exaktes Ergebnis
-    li
-      strong 3 Punkte 
-      span für die richtige Tordifferenz (außer Unentschieden) 
-    li
-      strong 2 Punkte 
-      span die richtige Tendenz (Heimsieg, Auswärtssieg, Unentschieden)
-
     
