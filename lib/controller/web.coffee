@@ -60,8 +60,13 @@ results = (req, res) ->
 matchesBySeason = (req, res) ->
   s.match.getBySeason req.params.season, (err, data) -> res.send data
 
+guessesBySeasonAndGroup = (req, res) ->
+  s.guess.getBySeasonAndGroup req.params.season, req.params.group, (err, data) -> res.send data
+
+
 (exports ? this).settings = settings
 (exports ? this).updateBot = updateBot
 (exports ? this).results = results
 (exports ? this).datasources = datasources
 (exports ? this).matchesBySeason = matchesBySeason
+(exports ? this).guessesBySeasonAndGroup = guessesBySeasonAndGroup

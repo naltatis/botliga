@@ -14,6 +14,7 @@ html(lang="de")
     link(rel="stylesheet", href="http://fonts.googleapis.com/css?family=Droid+Sans+Mono:regular&v1", type="text/css")
   body(data-login=(everyauth.loggedIn ? everyauth.github.user.login : ''))
     header
+      img.logo(src="/images/logo.png", height=80)
       h1
         a(href='/')
           em bot
@@ -36,7 +37,7 @@ html(lang="de")
         - if (everyauth.loggedIn)
           p= "Hallo " + everyauth.github.user.login
         - else
-          a.logo(href='/auth/github')
+          a.github(href='/auth/github')
             img(src='/images/github.png')
           a(href='/auth/github') anmelden
     #overall

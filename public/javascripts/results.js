@@ -33,7 +33,6 @@
     $table.find("tr:gt(0) th").each(function() {
       return axisy.push($(this).text());
     });
-    console.log(axisy);
     options = {
       symbol: "o",
       heat: true,

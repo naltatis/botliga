@@ -7,37 +7,29 @@
       _ref = data.repositories;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         repo = _ref[_i];
-        $option = $("<option>").text(repo.name).attr('value', repo.name).data('repository', repo.url);
+        $option = $("<option>").text(repo.name).attr('value', repo.owner + "/" + repo.name).data('repository', repo.url);
         $('#botList select').append($option);
       }
       return $('#botList select').val(function() {
         return $(this).closest('.bot').data('name');
       });
     });
-    $('#botList .noApi input').live('change', function() {
-      var $bot, $el, data;
-      $el = $(this);
-      $bot = $el.closest('.bot');
-      data = {
-        id: $bot.data('id'),
-        usePullApi: $el.prop("checked")
-      };
-      $.post("/bot", data, function() {
-        var animation;
-        animation = $el.prop("checked") ? "slideDown" : "slideUp";
-        return $bot.find('.noApiDetails')[animation]('fast');
-      });
-      return $('#botList .noApiDetails input').live('change', function() {
-        data = {
-          id: $el.closest('.bot').data('id'),
-          url: $(this).val()
-        };
-        return $.post("/bot", data);
-      });
+    $('#settings .addBot').live('click', function(e) {
+      var $hidden;
+      e.preventDefault();
+      $hidden = $("#botList > li.hidden");
+      if ($hidden.length === 1) {
+        $(this).fadeOut('fast');
+      }
+      if ($hidden.length > 0) {
+        return $hidden.first().slideDown('slow', function() {
+          return $(this).removeClass('hidden');
+        });
+      }
     });
-    $('#botList .noApi input:checked').each(function() {
-      return $(this).closest('.bot').find('.noApiDetails').show();
-    });
+    if ($('#botList > li.hidden').length === 0) {
+      $('#settings .addBot').hide();
+    }
     return $('#botList select').live('change', function() {
       var $bot, $select, data;
       $select = $(this);

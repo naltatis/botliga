@@ -1,34 +1,25 @@
 $ ->
   login = $('body').data('login')
+  
   $.getJSON "https://github.com/api/v2/json/repos/show/#{login}?callback=?", (data) ->
     for repo in data.repositories
-      $option = $("<option>").text(repo.name).attr('value', repo.name).data('repository', repo.url)
+      $option = $("<option>").text(repo.name).attr('value', repo.owner + "/" + repo.name).data('repository', repo.url)
       $('#botList select').append $option
     $('#botList select').val ->
       $(@).closest('.bot').data('name')
-
-  $('#botList .noApi input').live 'change', ->
-    $el = $(@)
-    $bot = $el.closest('.bot')
+      
+  $('#settings .addBot').live 'click', (e) ->
+    e.preventDefault()
+    $hidden = $("#botList > li.hidden")
+    if $hidden.length == 1
+      $(@).fadeOut 'fast'
     
-    data = 
-      id: $bot.data('id')
-      usePullApi: $el.prop("checked")
-      
-    $.post "/bot", data, ->
-      animation = if $el.prop("checked") then "slideDown" else "slideUp"
-      $bot.find('.noApiDetails')[animation]('fast')
+    if $hidden.length > 0
+      $hidden.first().slideDown 'slow', ->
+        $(@).removeClass 'hidden'
+        
+  $('#settings .addBot').hide() if $('#botList > li.hidden').length == 0
 
-    $('#botList .noApiDetails input').live 'change', ->
-      data = 
-        id: $el.closest('.bot').data('id')
-        url: $(@).val()
-
-      $.post "/bot", data
-
-  $('#botList .noApi input:checked').each ->
-    $(@).closest('.bot').find('.noApiDetails').show()
-      
   $('#botList select').live 'change', ->
     $select = $(@)
     $bot = $select.closest('.bot')

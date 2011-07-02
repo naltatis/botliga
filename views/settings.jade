@@ -3,12 +3,12 @@
     h2 Deine Bots
   ul#botList
     - each bot, i in bots
-      li.bot(data-id=bot._id, data-name=bot.name)
-        h3.name= (bot.name || "bot-" + (i+1))
+      li.bot(data-id=bot._id, data-name=bot.name, class= (i > 0 && bot.name === undefined) ? 'hidden' : '')
+        h3.name= (bot.name || everyauth.github.user.login+"/bot-" + (i+1))
         .repository
           label(for="botRepository" + i) Github Repository
           select(id="botRepository" + i)
-            option(value="bot-"+ (i+1)) - Repository wählen -
+            option(value=everyauth.github.user.login+"/bot-"+ (i+1)) - Repository wählen -
         .api
           span API-Token
           pre= bot.apiToken
@@ -16,6 +16,8 @@
           label API-Aufruf 
             em (Beispiel)
           pre= 'curl -X POST --data "match_id=14181&result=2:1&token=' + bot.apiToken + '" http:\/\/botliga.de/api/guess'
+  a.addBot(href="#") weiteren Bot hinzufügen
+
 // temporary disabled crawler
 //
 //        .noApi

@@ -121,6 +121,7 @@ body {
 }
 a {
   text-decoration: none;
+  color: #000;
 }
 a:hover {
   text-decoration: underline;
@@ -139,6 +140,7 @@ pre,
   color: #d14;
 }
 header {
+  height: 80px;
   position: relative;
   text-align: left;
   margin: 0 auto;
@@ -152,9 +154,18 @@ header {
   -moz-border-radius: 0 0 10px 10px;
   border-radius: 0 0 10px 10px;
 }
+header .logo {
+  position: absolute;
+  left: 10px;
+  bottom: 0;
+}
+header h1 {
+  position: absolute;
+  left: 90px;
+  top: 10px;
+}
 header h1 a {
   font-size: 60px;
-  text-shadow: 1px 1px 1px #888;
   font-family: "Cabin Sketch", serif;
   text-decoration: none;
   color: #000;
@@ -166,7 +177,9 @@ header h1 a strong {
   color: #008000;
 }
 header h2 {
-  margin-top: -8px;
+  position: absolute;
+  left: 90px;
+  top: 60px;
 }
 header h2 a {
   display: block;
@@ -183,14 +196,14 @@ header h2 a:hover {
 header .login {
   text-align: right;
   position: absolute;
-  right: 20px;
+  right: 60px;
   bottom: 14px;
 }
 header .login a {
   display: block;
   color: #000;
 }
-header .login .logo {
+header .login .github {
   margin-bottom: 8px;
 }
 header .navigation {
@@ -219,9 +232,9 @@ header .navigation a.active {
   -webkit-box-shadow: 0 0 4px rgba(0,0,0,0.5), 0 0 20px rgba(0,0,0,0.2) inset;
   -moz-box-shadow: 0 0 4px rgba(0,0,0,0.5), 0 0 20px rgba(0,0,0,0.2) inset;
   box-shadow: 0 0 4px rgba(0,0,0,0.5), 0 0 20px rgba(0,0,0,0.2) inset;
-  -webkit-border-radius: 10px 10px 0 0;
-  -moz-border-radius: 10px 10px 0 0;
-  border-radius: 10px 10px 0 0;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
 }
 #overall .gist {
   margin-bottom: 5px;
@@ -324,30 +337,36 @@ header .navigation a.active {
   background: #fff;
   margin-bottom: 14px;
 }
+#botList {
+  margin-top: 20px;
+}
 #botList li {
-  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+#botList li.hidden {
+  display: none;
 }
 #botList h3 {
   font-size: 20px;
   color: #008000;
+  margin-bottom: 10px;
 }
 #botList .api span,
 #botList .repository label,
-#botList .noApi label,
 #botList .example label {
   font-weight: bold;
   width: 160px;
   display: inline-block;
+  vertical-align: middle;
 }
 #botList .api span em,
 #botList .repository label em,
-#botList .noApi label em,
 #botList .example label em {
   font-weight: normal;
   font-size: 13px;
 }
 #botList .api {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 #botList .api pre {
   display: inline-block;
@@ -359,53 +378,18 @@ header .navigation a.active {
   width: 200px;
 }
 #botList .example {
-  margin-bottom: 10px;
+  margin-bottom: 40px;
 }
 #botList .example label {
   display: block;
   margin-bottom: 5px;
 }
-#botList .noApi {
-  margin-bottom: 10px;
-}
-#botList .noApi label {
-  width: auto;
-  font-weight: normal;
-}
-#botList .noApi input {
-  display: inline-block;
-  margin-right: 5px;
-}
-#botList .noApiDetails {
-  display: none;
-  margin-bottom: 20px;
-  margin-left: 20px;
-  margin-right: 10px;
-}
-#botList .noApiDetails label {
-  display: inline-block;
-  margin-right: 10px;
-}
-#botList .noApiDetails input {
-  display: inline-block;
-  width: 300px;
-  padding: 2px;
-  border: 1px solid #aaa;
-}
-#botList .example p,
-#botList .noApiDetails p {
-  margin-bottom: 5px;
-}
-#botList .example pre,
-#botList .noApiDetails pre {
+#botList .example pre {
   display: inline-block;
   padding: 3px;
   font-size: 12px;
   background-color: #fff;
-}
-#botList .example pre strong,
-#botList .noApiDetails pre strong {
-  font-weight: bold;
+strong
 }
 table.result {
   margin-bottom: 20px;

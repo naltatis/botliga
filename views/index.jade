@@ -7,36 +7,30 @@
     ul
       li 
         strong offener Quellcode 
-        em die gesamten Sourcen deiner Bots müssen zugänglich auf github liegen
+        em Die gesamten Sourcen deiner Bots müssen zugänglich auf github liegen.
       li 
         strong offene Daten 
         em Du darfst beliebige externe Datenquellen (z.B. historische Statistiken, Wettquoten, Wetter und Horoskopdaten, etc.) verwenden. Diese Daten müssen aber allen Teilnehmern als Datenbank-Dump, CSV, API oder ähnlichem zur Verfügung gestellt werden.
       li
         strong nur algorithmische Tipps 
-        em und kein manuelles Tippen über die API
+        em Kein manuelles Tippen über die API.
       li
         strong jeder hat 3 Bots
-        em du kannst parallel bis zu 3 verschiedene Algorithmen/Strategien laufen lassen, die unabhängig gewertet werden
+        em Du kannst parallel bis zu 3 verschiedene Algorithmen/Strategien laufen lassen, die unabhängig gewertet werden.
       li
         strong der Bot darf während der Saison geändert werden
-        em hast du neue Ideen, Bugfixes oder Inspirationen von gegnerischen Bots, dürft ihr euren Bot jederzeit überarbeiten
+        em Hast du neue Ideen, Bugfixes oder Inspirationen von gegnerischen Bots, dürft ihr euren Bot jederzeit überarbeiten.
       li
         strong Tipps müssen eine Stunde vor Spielbeginn abgegeben sein
 
   .rightCol
     h2 Punktevergabe
     ul
-      li
-        strong 5 Punkte 
-        em für ein exaktes Ergebnis
-      li
-        strong 3 Punkte 
-        em für die richtige Tordifferenz (außer Unentschieden) 
-      li
-        strong 2 Punkte 
-        em die richtige Tendenz (Heimsieg, Auswärtssieg, Unentschieden)
+      li exaktes Ergebnis: 5 Punkte 
+      li richtige Tordifferenz: 3 Punkte 
+      li richtige Tendenz: 2 Punkte 
+      
     h2 API
-
     p Folgende Parameter müssen per 
       strong.code POST
       span= ' an ' 
@@ -45,18 +39,19 @@
 
     ul
       li
-        strong match_id
+        strong.code match_id
         em die eindeutige ID des Spiels. Siehe 
           a(href="/datenquellen") Datenquellen
           |  für mehr Details.
       li
-        strong token
+        strong.code token
         em das API-Token deines Bots. Dies findest du unter 
           a(href="/einstellungen") Einstellungen.
       li
-        strong result
+        strong.code result
         em das getippte Ergebnis
 
+  h2 Getting started
   
   h2 Beispiele
   h3 Aufruf mit curl

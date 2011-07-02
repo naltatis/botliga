@@ -24,7 +24,6 @@ _pointsPerBotAndGroup = (matches, cb) ->
       res[value.group] or= 0
       res[value.group] = res[value.group] + parseInt(value.points, 10)
     res
-  console.log matches
   _mapReduce 'guesses', map, reduce, scope: {matches: matches}, {}, cb
 
 
@@ -41,42 +40,21 @@ botRatingByGroup = (season, cb) ->
         res[bot._id] = bot.value
       cb err, res
 
-popularResults = (cb) ->
+popularResults = (season, cb) ->
   map = ->
-    if this.hostGoals >= 0 && this.guestGoals >= 0 && this.hostGoals? && this.guestGoals?
-      emit "#{this.hostGoals}:#{this.guestGoals}", {count: 1}
+    if this.hostGoals? && this.guestGoals?
+      emit "#{this.hostGoals}:#{this.guestGoals}", count: 1
 
   reduce = (key, values) ->
-    count = 0
-    values.forEach (value) ->
-      count += value.count
-    {count: count}
+    {count: values.length}
 
-  _mapReduce 'matches', map, reduce, {}, 'value.count': -1, cb
+  _mapReduce 'matches', map, reduce, query: {season: season}, ['_id'], (err, data) ->
+    data = ({result: entry._id, count: entry.value.count} for entry in data)
+    cb err, data
 
-tendency = (cb) ->
+tendency = (season, cb) ->
   map = ->
-    return unless this.hostGoals >= 0 && this.guestGoals >= 0 && this.hostGoals? && this.guestGoals?
-    if this.hostGoals > this.guestGoals
-      tendency = "home"
-    else if this.hostGoals < this.guestGoals
-      tendency = "guest"
-    else
-      tendency = "draw"
-    emit tendency, {count: 1}
-
-  reduce = (key, values) ->
-    count = 0
-    values.forEach (value) ->
-      count += value.count
-    {count: count}
-    
-  _mapReduce 'matches', map, reduce, {}, 'value.count': -1, cb
-  
-
-tendencyHistory = (cb) ->
-  map = ->
-    return unless this.hostGoals >= 0 && this.guestGoals >= 0 && this.hostGoals? && this.guestGoals?
+    return unless this.hostGoals? && this.guestGoals?
     
     if this.hostGoals > this.guestGoals
       tendency = "home"
@@ -85,22 +63,15 @@ tendencyHistory = (cb) ->
     else
       tendency = "draw"
       
-    emit this.season, tendency: tendency if this.season?
+    emit tendency, count: 1
 
   reduce = (key, values) ->
-    result =
-      home: 0
-      draw: 0
-      guest: 0
-                  
-    values.forEach (value) ->
-      result[value.tendency]++ if tendency in ["draw", "home", "guest"]
-      
-    result
+    {count: values.length}
 
-  _mapReduce 'matches', map, reduce, {}, '_id': 1, cb
+  _mapReduce 'matches', map, reduce, query: {season: season}, [], (err, data) ->
+    data = ({tendency: entry._id, count: entry.value.count} for entry in data)
+    cb err, data
 
 (exports ? this).popularResults = popularResults
 (exports ? this).tendency = tendency
-(exports ? this).tendencyHistory = tendencyHistory
 (exports ? this).botRatingByGroup = botRatingByGroup

@@ -21,7 +21,7 @@ app = express.createServer()
 app.set 'view engine', 'jade'
 app.use express.bodyParser()
 app.use express.cookieParser()
-app.use express.session(secret: "soadh89g2OHA")
+app.use express.session(secret: process.env.SECRET || "soadh89g2OHA")
 app.use auth.middleware()
 app.use app.router
 app.use stylus.middleware(src: __dirname + '/public', compile: compile)
@@ -47,28 +47,27 @@ app.namespace "/api", ->
   app.post "/guess", api.guess.post
   app.get "/guess", api.guess.get
 
-  app.get "/crawl", (req, res) ->
-    crawler.updateAll ->
-      res.send(200)
+  #app.get "/crawl", (req, res) ->
+  #  crawler.updateAll ->
+  #    res.send(200)
+  
+  app.get "/guesses/:season/:group", web.guessesBySeasonAndGroup
 
-  app.get "/:season/import", (req, res) ->
+  app.get "/matches/:season", web.matchesBySeason
+
+  app.get "/import/:season", (req, res) ->
     importer = new openligadb.MatchImporter()
     importer.importBySeason season for season in [req.params.season]
 
   app.namespace "/stats", ->
-    app.get "/popular-results", (req, res) ->
-      stats.popularResults (err, data) -> res.send data
+    app.get "/popular-results/:season", (req, res) ->
+      stats.popularResults req.params.season, (err, data) -> res.send data || err
 
-    app.get "/tendency", (req, res) ->
-      stats.tendency (err, data) -> res.send data
+    app.get "/tendency/:season", (req, res) ->
+      stats.tendency req.params.season, (err, data) -> res.send data || err
 
-    app.get "/tendency-history", (req, res) ->
-      stats.tendencyHistory (err, data) -> res.send data
-
-    app.get "/:season/bot-rating-by-group", (req, res) ->
+    app.get "/bot-rating-by-group/:season", (req, res) ->
       stats.botRatingByGroup req.params.season, (err, data) -> res.send data
-
-    app.get "/:season/matches", web.matchesBySeason
 
 port = process.env.PORT || 3000
 app.listen port, ->

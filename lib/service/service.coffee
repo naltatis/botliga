@@ -38,6 +38,32 @@ class GuessService
           m.Guess.findOne {match: match._id, bot: bot._id}, callback
         else
           callback(new Error 'not found')
+  getBySeasonAndGroup: (season, group, callback) ->
+    matchKeys = ['id', 'hostName', 'hostId', 'hostGoals', 'guestName', 'guestId', 'guestGoals', 'date']
+    guessKeys = ['bot', 'hostGoals', 'guestGoals', 'points']
+    Seq()
+      .seq ->
+        m.Match.find {season: season, group: group}, @
+      .flatten()
+      .seqMap (match) ->
+        self = @
+        m.Guess.find {match: match._id}, (err, guesses) ->
+          _match = {}
+          for key in matchKeys
+            _match[key] = match[key] 
+          
+          # only include guesses for passed matches
+          if match.date.isBefore(new Date())  
+            _match.guesses = []
+            for guess in guesses
+              _guess = {}
+              for key in guessKeys
+                _guess[key] = guess[key]
+              _match.guesses.push _guess
+            
+          self null, _match
+      .seq (matches...) ->
+        callback null, matches
     
 class BotService
   getByUser: (userId, callback) ->

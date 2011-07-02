@@ -17,6 +17,7 @@ body
 
 a
   text-decoration none
+  color #000
   &:hover
     text-decoration underline
     
@@ -32,6 +33,7 @@ pre
   color #d14
 
 header
+  height 80px
   position relative
   text-align left
   margin 0 auto
@@ -40,19 +42,21 @@ header
   padding 5px 30px 10px
   box-shadow 0 1px 3px rgba(0, 0, 0, 0.5), 0 -10px 30px rgba(0, 0, 0, 0.2) inset
   border-radius 0 0 10px 10px
-  
-  h1 a
-    &:hover
+  .logo
+    absolute left 10px bottom 0
+  h1
+    absolute left 90px top 10px
+    a
+      &:hover
+        text-decoration none
+      font-size 60px
+      font-family 'Cabin Sketch', serif
       text-decoration none
-    font-size 60px
-    text-shadow 1px 1px 1px #888  
-    font-family 'Cabin Sketch', serif
-    text-decoration none
-    color #000
-    strong
-      color green
+      color #000
+      strong
+        color green
   h2
-    margin-top -8px
+    absolute left 90px top 60px
     a
       display block
       text-indent 35px
@@ -65,11 +69,11 @@ header
       margin-bottom 4px
   .login
     text-align right
-    absolute right 20px bottom 14px
+    absolute right 60px bottom 14px
     a
       display block
       color #000
-    .logo
+    .github
       margin-bottom 8px
   .navigation
     absolute bottom 10px left 300px
@@ -90,7 +94,7 @@ header
   text-align left
   padding 30px
   box-shadow 0 0 4px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 0, 0, 0.2) inset
-  border-radius 10px 10px 0 0
+  border-radius 10px
   .gist
     margin-bottom 5px
     .gist-file
@@ -174,23 +178,28 @@ header
   margin-bottom 14px
   
 #botList
+  margin-top 20px
   li
-    margin-bottom 20px
+    padding-bottom 10px
+    &.hidden
+      display none
   h3
     font-size 20px
     color green
+    margin-bottom 10px
+    
   .api span
   .repository label
-  .noApi label
   .example label
     font-weight bold
     width 160px
     display inline-block
+    vertical-align middle
     em
       font-weight normal
       font-size 13px
   .api
-    margin-bottom 10px
+    margin-bottom 15px
     pre
       display inline-block
   .repository
@@ -198,34 +207,9 @@ header
     select
       width 200px
   .example
-    margin-bottom 10px
+    margin-bottom 40px
     label
       display block
-      margin-bottom 5px
-  .noApi
-    margin-bottom 10px
-    label
-      width auto
-      font-weight normal
-    input
-      display inline-block
-      margin-right 5px
-  .noApiDetails
-    display none
-    margin-bottom 20px
-    margin-left 20px
-    margin-right 10px
-    label
-      display inline-block
-      margin-right 10px
-    input
-      display inline-block
-      width: 300px
-      padding 2px
-      border 1px solid #aaa
-  .example
-  .noApiDetails
-    p
       margin-bottom 5px
     pre
       display inline-block
@@ -233,7 +217,6 @@ header
       font-size 12px
       background-color #fff
       strong
-        font-weight bold
         
 table.result
   margin-bottom 20px
