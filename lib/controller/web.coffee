@@ -54,7 +54,6 @@ results = (req, res) ->
         botsByGroups: botsByGroups
         groups: [1..34]
         bots: bots
-      console.log botsByGroups
       res.render 'results', data
       
 matchesBySeason = (req, res) ->
