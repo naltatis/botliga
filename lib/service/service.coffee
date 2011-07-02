@@ -71,7 +71,7 @@ class BotService
   getByUserAndId: (userId, botId, callback) ->
     m.Bot.findOne {user: userId, _id: botId}, callback
   getAll: (callback) ->
-    m.Bot.find callback
+    m.Bot.find({name: {'$exists': true}}).find callback
   getAllWithPull: (callback) ->
     m.Bot.find({url: {'$exists': true}, url: {'$ne': ''}, usePullApi: true}).find callback
     

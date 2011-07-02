@@ -37,7 +37,7 @@ botRatingByGroup = (season, cb) ->
     _pointsPerBotAndGroup matches, (err, points) ->
       res = {}
       for bot in points
-        res[bot._id] = bot.value if bot.name? && bot.name != ''
+        res[bot._id] = bot.value
       cb err, res
 
 popularResults = (season, cb) ->
