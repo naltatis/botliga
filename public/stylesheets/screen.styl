@@ -43,7 +43,7 @@ header
   box-shadow 0 1px 3px rgba(0, 0, 0, 0.5), 0 -10px 30px rgba(0, 0, 0, 0.2) inset
   border-radius 0 0 10px 10px
   .logo
-    absolute left 10px bottom 0
+    absolute left 10px top 17px
   h1
     absolute left 90px top 10px
     a
@@ -87,8 +87,10 @@ header
       height 30px
     .logout
       color #999
+    .loggedIn
+      width 105px
   .navigation
-    absolute bottom 10px left 300px
+    absolute bottom 10px left 320px
     li
       display inline-block
     a
@@ -97,6 +99,19 @@ header
       color #000
       &.active
         color green
+
+#footer
+  background-color rgba(255,255,255,0.4)
+  margin 30px 0 0
+  padding 5px
+  font-size 11px
+  text-align right
+  li
+    display inline-block
+    margin-left 20px
+    a
+      color #666
+    
 
 #overall
   position relative
@@ -139,6 +154,9 @@ header
     font-size 18px
     margin-top 25px
     margin-bottom 18px
+    .small
+      font-weight normal
+      font-size 12px
   h4
     font-weight bold
     font-size 14px

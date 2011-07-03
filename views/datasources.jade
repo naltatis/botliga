@@ -11,7 +11,9 @@
     a(href="http://openligadb-json.heroku.com", target="blank") JSON API für openLigaDB
   p Um den Zugriff auf diese Daten zu vereinfachen, haben wir einen JSON API für openLigaDB bereitgestellt, welche die SOAP Methoden per REST verfügbar macht.
   
-  h3#currentSeason Spiele der aktuellen Saison 2011/2012
+  h3#currentSeason
+    | Spiele der aktuellen Saison 2011/2012
+    a.small(href="/api/matches/2011") Download JSON
   table.result
     thead
       tr
@@ -33,9 +35,11 @@
           td= (new Date(match.date)).toFormat('DD.MM.YYYY HH24:MI:SS')
           td= match.hostGoals || '-' + ":" + (match.guestGoals || '-')
   p
-    a(href="/api/stats/2011/matches") diese Daten als JSON abrufen
+    
 
-  h3#lastSeason Spiele der letzten Saison 2010/2011 (zum Test-Tippen)
+  h3#lastSeason
+    | Spiele der letzten Saison 2010/2011 (zum Test-Tippen)
+    a.small(href="/api/matches/2010") Download JSON
   table.result
     thead
       tr
@@ -56,5 +60,3 @@
           td= match.guestName
           td= (new Date(match.date)).toFormat('DD.MM.YYYY HH24:MI:SS')
           td= (match.hostGoals || '-') + ":" + (match.guestGoals || '-')
-  p
-    a(href="/api/stats/2010/matches") diese Daten als JSON abrufen

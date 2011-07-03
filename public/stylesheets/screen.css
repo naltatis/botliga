@@ -157,7 +157,7 @@ header {
 header .logo {
   position: absolute;
   left: 10px;
-  bottom: 0;
+  top: 17px;
 }
 header h1 {
   position: absolute;
@@ -221,10 +221,13 @@ header .login .profilePicture {
 header .login .logout {
   color: #999;
 }
+header .login .loggedIn {
+  width: 105px;
+}
 header .navigation {
   position: absolute;
   bottom: 10px;
-  left: 300px;
+  left: 320px;
 }
 header .navigation li {
   display: inline-block;
@@ -236,6 +239,20 @@ header .navigation a {
 }
 header .navigation a.active {
   color: #008000;
+}
+#footer {
+  background-color: rgba(255,255,255,0.4);
+  margin: 30px 0 0;
+  padding: 5px;
+  font-size: 11px;
+  text-align: right;
+}
+#footer li {
+  display: inline-block;
+  margin-left: 20px;
+}
+#footer li a {
+  color: #666;
 }
 #overall {
   position: relative;
@@ -288,6 +305,10 @@ header .navigation a.active {
   font-size: 18px;
   margin-top: 25px;
   margin-bottom: 18px;
+}
+.copy h3 .small {
+  font-weight: normal;
+  font-size: 12px;
 }
 .copy h4 {
   font-weight: bold;

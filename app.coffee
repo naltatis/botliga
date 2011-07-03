@@ -42,6 +42,7 @@ app.get "/auswertung", web.results
 app.get "/einstellungen", web.settings
 app.get "/datenquellen", web.datasources
 app.post "/bot", web.updateBot
+app.get "/impressum", (req, res) -> res.render 'impressum', navigation: 'impressum'
 
 app.namespace "/api", ->
   app.post "/guess", api.guess.post
