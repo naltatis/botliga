@@ -196,7 +196,7 @@ header h2 a:hover {
 header .login {
   text-align: right;
   position: absolute;
-  right: 60px;
+  right: 20px;
   bottom: 14px;
 }
 header .login a {
@@ -205,6 +205,21 @@ header .login a {
 }
 header .login .github {
   margin-bottom: 8px;
+}
+header .login .loggedIn,
+header .login .profilePicture {
+  display: inline-block;
+  vertical-align: bottom;
+  line-height: 1.2em;
+}
+header .login .profilePicture {
+  margin-left: 10px;
+  margin-bottom: 2px;
+  width: 30px;
+  height: 30px;
+}
+header .login .logout {
+  color: #999;
 }
 header .navigation {
   position: absolute;
@@ -417,6 +432,29 @@ table.result th {
 table.result th.bot {
   text-align: left;
   width: 15%;
+}
+.google-visualization-table-table .google-visualization-table-tr-head {
+  text-align: center;
+}
+.google-visualization-table-table .google-visualization-table-th {
+  border: none;
+  background: none;
+}
+.google-visualization-table-table .google-visualization-table-td {
+  text-align: center;
+}
+#guessesByGroup .options {
+  margin-bottom: 10px;
+}
+#guessesByGroup .google-visualization-table-th {
+  width: 70px;
+  padding: 4px 0;
+}
+#guessesByGroup .google-visualization-table-th:first-child {
+  width: 150px;
+}
+#guessesByGroup .google-visualization-table-sortind {
+  display: none;
 }
 #botsByGroupsChart {
   background-color: #fff;

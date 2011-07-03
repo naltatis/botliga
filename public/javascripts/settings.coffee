@@ -1,5 +1,7 @@
 $ ->
   login = $('body').data('login')
+
+  return unless login
   
   $.getJSON "https://github.com/api/v2/json/repos/show/#{login}?callback=?", (data) ->
     for repo in data.repositories

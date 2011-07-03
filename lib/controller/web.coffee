@@ -60,6 +60,8 @@ matchesBySeason = (req, res) ->
   s.match.getBySeason req.params.season, (err, data) -> res.send data
 
 guessesBySeasonAndGroup = (req, res) ->
+  return res.send 400 if !parseInt(req.params.season, 10) || !parseInt(req.params.group, 10)
+  return res.send 404 if not req.params.season? && req.params.group?
   s.guess.getBySeasonAndGroup req.params.season, req.params.group, (err, data) -> res.send data
 
 

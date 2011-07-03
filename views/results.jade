@@ -1,22 +1,34 @@
 #results.copy
   h2 Auswertung
+  
+  #guessesByGroup
+    h3 Ergebnisse pro Spieltag
+    .options
+      select#guessesByGroupGroup.group
+        - for (i=1; i<34; i++)
+          option(value=i)= i + ". Spieltag"
+      select#guessesByGroupSeason.season
+        option(value=2010) Saison 2010/2011 (Training)
+        option(value=2011, selected=true) Saison 2011/2012
+    .table
 
-  table#botsByGroups.result
-    caption Spieltag-Übersicht 2010/2011
-    thead
-      tr
-        td
-        - each group in groups
-          th(scope="col")= group
-    tbody
-      -each bot in bots
-        tr
-          th.bot(scope="col")= bot.name
-          - each group in groups
-            - if (botsByGroups[bot._id] === undefined || botsByGroups[bot._id][group] === undefined)
-              td.points -
-            - else
-              td.points= botsByGroups[bot._id][group]
 
-  #botsByGroupsChart
-  #lineChart
+  //table#botsByGroups.result
+  //  caption Spieltag-Übersicht 2010/2011
+  //  thead
+  //    tr
+  //      td
+  //      - each group in groups
+  //        th(scope="col")= group
+  //  tbody
+  //    -each bot in bots
+  //      tr
+  //        th.bot(scope="col")= bot.name
+  //        - each group in groups
+  //          - if (botsByGroups[bot._id] === undefined || botsByGroups[bot._id][group] === undefined)
+  //            td.points -
+  //          - else
+  //            td.points= botsByGroups[bot._id][group]
+  //
+  //#botsByGroupsChart
+  //#lineChart

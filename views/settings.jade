@@ -1,6 +1,6 @@
 #settings
   .copy
-    h2 Deine Bots
+    h2 Meine Bots
   ul#botList
     - each bot, i in bots
       li.bot(data-id=bot._id, data-name=bot.name, class= (i > 0 && bot.name === undefined) ? 'hidden' : '')

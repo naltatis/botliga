@@ -1,0 +1,2 @@
+head ->
+  $('#guessesByGroup').guessesByGroup()

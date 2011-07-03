@@ -1,17 +1,22 @@
 !!! 5
 html(lang="de")
   head
-    title botliga
-    script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js")
-    script(src="/javascripts/raphael-min.js")
-    script(src="/javascripts/g.raphael-min.js")
-    script(src="/javascripts/g.dot-min.js")
-    script(src="/javascripts/g.line-min.js")
-    script(src="/javascripts/results.js")
-    script(src="/javascripts/settings.js")
+    title botLiga - algorithmische Fussball-Bundesliga-Vorhersagen
     link(rel="stylesheet", href="/stylesheets/screen.css", type="text/css")
     link(rel="stylesheet", href="http://fonts.googleapis.com/css?family=Cabin+Sketch:bold&v1", type="text/css")
     link(rel="stylesheet", href="http://fonts.googleapis.com/css?family=Droid+Sans+Mono:regular&v1", type="text/css")
+    script(src="/javascripts/lib/head.js")
+    script(type='text/javascript')
+      head.js(
+        ["https://www.google.com/jsapi?key=ABQIAAAA3koe9AclG3A9QsxITBYYcxSuT4o5rNhZx7igNQKhoCG2L3QwSxTdOq6rOrdmh99sq2tIVZSq6cUTSw"],
+        ["/javascripts/lib/jquery.js"],
+        ["/javascripts/lib/jquery.ui.widget.js"],
+        ["/javascripts/lib/underscore.js"],
+        ["/javascripts/lib/hashchange.js"],
+        ["/javascripts/results.js"],
+        ["/javascripts/settings.js"],
+        ["/javascripts/main.js"]
+      )
   body(data-login=(everyauth.loggedIn ? everyauth.github.user.login : ''))
     header
       img.logo(src="/images/logo.png", height=80)
@@ -23,7 +28,7 @@ html(lang="de")
         a(href='/')
           | algorithmische
           br
-          | Fussball-Bundesliga-Tipps
+          | Fussball-Bundesliga-Vorhersagen
       ul.navigation
         li
           a(href='/', class= (navigation == 'home') ? 'active' : '') Home
@@ -32,10 +37,14 @@ html(lang="de")
         li
           a(href='/datenquellen', class= (navigation == 'datasources') ? 'active' : '') Datenquellen
         li
-          a(href='/einstellungen', class= (navigation == 'settings') ? 'active' : '') Einstellungen
+          a(href='/einstellungen', class= (navigation == 'settings') ? 'active' : '') Meine Bots
       .login
         - if (everyauth.loggedIn)
-          p= "Hallo " + everyauth.github.user.login
+          .loggedIn
+            p= "Hallo " + everyauth.github.user.login
+            a.logout(href='/logout') abmelden
+          .profilePicture
+            img(src='http://www.gravatar.com/avatar/' + everyauth.github.user.gravatar_id + '?s=30&d=retro')
         - else
           a.github(href='/auth/github')
             img(src='/images/github.png')

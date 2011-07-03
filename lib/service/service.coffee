@@ -39,9 +39,17 @@ class GuessService
         else
           callback(new Error 'not found')
   getBySeasonAndGroup: (season, group, callback) ->
-    matchKeys = ['id', 'hostName', 'hostId', 'hostGoals', 'guestName', 'guestId', 'guestGoals', 'date']
-    guessKeys = ['bot', 'hostGoals', 'guestGoals', 'points']
+    matchKeys = ['id', 'hostName', 'hostId', 'guestName', 'guestId', 'date']
+    guessKeys = ['hostGoals', 'guestGoals', 'points']
+    botIds = []
     Seq()
+      .seq 'bots', ->
+        self = @
+        m.Bot.find({name: {'$exists': true}}).find (err, bots) ->
+          result = {}
+          for bot in bots
+            result[bot._id] = bot.name
+          self null, result
       .seq ->
         m.Match.find {season: season, group: group}, @
       .flatten()
@@ -50,16 +58,22 @@ class GuessService
         m.Guess.find {match: match._id}, (err, guesses) ->
           _match = {}
           for key in matchKeys
-            _match[key] = match[key] 
+            _match[key] = match[key]
+          _match.hostGoals = if match.hostGoals? then match.hostGoals else '-'
+          _match.guestGoals = if match.guestGoals? then match.guestGoals else '-'
           
-          # only include guesses for passed matches
-          if match.date.isBefore(new Date())  
-            _match.guesses = []
-            for guess in guesses
-              _guess = {}
-              for key in guessKeys
-                _guess[key] = guess[key]
-              _match.guesses.push _guess
+          _match.guesses = []
+          for guess in guesses
+            _guess = {}
+            for key in guessKeys
+              _guess[key] = guess[key]
+            
+            # only include guesses for passed matches
+            if not match.date.isBefore(new Date())  
+              _guess.hostGoals = _guess.guestGoals = '-'
+              
+            _guess.bot = self.vars.bots[guess.bot]
+            _match.guesses.push _guess
             
           self null, _match
       .seq (matches...) ->

@@ -7,7 +7,7 @@
     ul
       li 
         strong offener Quellcode 
-        em Die gesamten Sourcen deiner Bots müssen zugänglich auf github liegen.
+        em Die gesamten Sourcen deiner Bots müssen zugänglich auf GitHub liegen.
       li 
         strong offene Daten 
         em Du darfst beliebige externe Datenquellen (z.B. historische Statistiken, Wettquoten, Wetter und Horoskopdaten, etc.) verwenden. Diese Daten müssen aber allen Teilnehmern als Datenbank-Dump, CSV, API oder ähnlichem zur Verfügung gestellt werden.
@@ -19,9 +19,29 @@
         em Du kannst parallel bis zu 3 verschiedene Algorithmen/Strategien laufen lassen, die unabhängig gewertet werden.
       li
         strong der Bot darf während der Saison geändert werden
-        em Hast du neue Ideen, Bugfixes oder Inspirationen von gegnerischen Bots, dürft ihr euren Bot jederzeit überarbeiten.
+        em Hast du neue Ideen, Bugfixes oder Inspirationen von gegnerischen Bots, darfst du deinen Bot jederzeit überarbeiten.
       li
         strong Tipps müssen eine Stunde vor Spielbeginn abgegeben sein
+        
+    h2 Getting started  
+    ol
+      li
+        | Mit GitHub OAuth 
+        a(href='/auth/github') einloggen 
+      li
+        | Unter 
+        a(href="/einstellungen") Meine Bots
+        |  findest du dein API Token
+      li Schreibe deinen Bot (siehe API und Beispiele)
+      li
+        | Lade Ihn in ein  
+        a(href="https://github.com/repositories/new") neues GitHub Repository
+      li
+        | Gebe den Repository Namen bei 
+        a(href="/einstellungen") Meine Bots
+        |  an
+      li Teste den Bot gegen die Spiele der 
+        a(href="/datenquellen#lastSeason") letzten Saison
 
   .rightCol
     h2 Punktevergabe
@@ -51,7 +71,31 @@
         strong.code result
         em das getippte Ergebnis
 
-  h2 Getting started
+    h2 Inspirationen
+    strong Machine Learning Bibliotheken:
+    p
+      a(href="http://harthur.github.com/brain/")
+        strong brain.js 
+        em JavaScript
+      |  
+      a(href="http://pybrain.org/")
+        strong PyBrain 
+        em Python
+      |  
+      a(href="http://mahout.apache.org/")
+        strong mahout 
+        em Java
+      |  
+      a(href="http://code.google.com/p/aforge/")
+        strong AForge.NET 
+        em C#
+      |  
+      a(href="http://scikit-learn.sourceforge.net/index.html")
+        strong scikits.learn 
+        em Python
+        
+      
+            
   
   h2 Beispiele
   h3 Aufruf mit curl
@@ -67,7 +111,8 @@
   h3 Bot in Ruby
   script(src="https://gist.github.com/1051944.js")
 
-  p Du kannst für die komplette Saison vortippen. Deine Tipps werden aber wahrscheinlich besser, die Ergenisse der letzten Spieltag mit berücksichtigst. Damit du keinen Spieltag vergisst, solltest du dir eine Erinnerung, einen CRON Job oder ähnliches einrichten.
+  h2 Tipps
+  p Du kannst für die komplette Saison vortippen. Deine Tipps werden aber wahrscheinlich besser, wenn du die Ergbenisse der letzten Spieltag mit berücksichtigst. Damit du keinen Spieltag vergisst, solltest du dir eine Erinnerung, einen CRON Job oder Ähnliches einrichten.
 
   // temporary disabled crawler
   //

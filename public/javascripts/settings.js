@@ -2,6 +2,9 @@
   $(function() {
     var login;
     login = $('body').data('login');
+    if (!login) {
+      return;
+    }
     $.getJSON("https://github.com/api/v2/json/repos/show/" + login + "?callback=?", function(data) {
       var $option, repo, _i, _len, _ref;
       _ref = data.repositories;
