@@ -1,7 +1,7 @@
 (function() {
   $(function() {
     var login;
-    login = $('body').data('login');
+    login = $('body').attr('data-login');
     if (!login) {
       return;
     }

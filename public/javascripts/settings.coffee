@@ -1,5 +1,5 @@
 $ ->
-  login = $('body').data('login')
+  login = $('body').attr('data-login')
 
   return unless login
   
