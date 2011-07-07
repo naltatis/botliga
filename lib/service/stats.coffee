@@ -32,23 +32,23 @@ botPointsBySeason = (season, cb) ->
     botMap = {}
     for bot in bots
       botMap[bot._id] = bot.name if bot.name?
-      
-    _matchesPerGroupBySeason season, (err, data) ->
-      matches = {}
-      for d in data
-        for match in d.value.matches
-          matches[match] = d._id
-        
-      _pointsPerBotAndGroup matches, (err, points) ->
+    
+    model.Match.find {season: season}, (err, matches) ->
+      matchIds = (match._id for match in matches)
+      matchToGroup = {}
+      for match in matches
+        matchToGroup[match._id] = match.group
+
+      model.Guess.find({match: {$in: matchIds}}).find (err, guesses) ->
         res = {}
-        for bot in points
-          botName = botMap[bot._id]
-          if botName?
-            res[botName] = bot.value 
-            total = 0
-            for g, p of bot.value
-              total += p 
-            res[botName].total = total
+        for guess in guesses
+          botName = botMap[guess.bot]
+          group = matchToGroup[guess.match]
+          if botName? && group?
+            res[botName] or= {total: 0}
+            res[botName][group] or= 0
+            res[botName][group] += guess.points || 0
+            res[botName].total += guess.points
         cb err, res
 
 popularResults = (season, cb) ->
