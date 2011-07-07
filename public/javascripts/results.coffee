@@ -156,12 +156,11 @@ $.widget 'stats.pointsBySeasonChart',
     result = []
     botNames = (bot for bot, points of data)
     botPoints = {}
-    for group, points of data[botNames[0]]
-      unless group == "total"
-        row = c: [{v: "#{group}."}]
-        for bot in botNames
-          botPoints[bot] or= 0
-          botPoints[bot] += data[bot][group]
-          row.c.push {v: botPoints[bot]}
+    for group in [1..34]
+      row = c: [{v: "#{group}."}]
+      for bot in botNames.sort()
+        botPoints[bot] or= 0
+        botPoints[bot] += data[bot][group] || 0
+        row.c.push {v: botPoints[bot]}
       result.push row
     result

@@ -315,25 +315,22 @@
         return _results;
       })();
       botPoints = {};
-      _ref = data[botNames[0]];
-      for (group in _ref) {
-        points = _ref[group];
-        if (group !== "total") {
-          row = {
-            c: [
-              {
-                v: "" + group + "."
-              }
-            ]
-          };
-          for (_i = 0, _len = botNames.length; _i < _len; _i++) {
-            bot = botNames[_i];
-            botPoints[bot] || (botPoints[bot] = 0);
-            botPoints[bot] += data[bot][group];
-            row.c.push({
-              v: botPoints[bot]
-            });
-          }
+      for (group = 1; group <= 34; group++) {
+        row = {
+          c: [
+            {
+              v: "" + group + "."
+            }
+          ]
+        };
+        _ref = botNames.sort();
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          bot = _ref[_i];
+          botPoints[bot] || (botPoints[bot] = 0);
+          botPoints[bot] += data[bot][group] || 0;
+          row.c.push({
+            v: botPoints[bot]
+          });
         }
         result.push(row);
       }
