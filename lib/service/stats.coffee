@@ -12,7 +12,7 @@ _matchesPerGroupBySeason = (season, cb) ->
   reduce = (key, values) ->
     matches = (val.match for val in values)
     {matches: matches}
-  _mapReduce 'matches', map, reduce, query: {season: season}, {}, cb
+  _mapReduce 'matches', map, reduce, {query: {season: season}, out: 'matchesPerGroupBySeason'}, {}, cb
 
 _pointsPerBotAndGroup = (matches, cb) ->
   map = ->
@@ -24,7 +24,7 @@ _pointsPerBotAndGroup = (matches, cb) ->
       res[value.group] or= 0
       res[value.group] = res[value.group] + parseInt(value.points, 10)
     res
-  _mapReduce 'guesses', map, reduce, scope: {matches: matches}, {}, cb
+  _mapReduce 'guesses', map, reduce, {scope: {matches: matches}, out: 'pointsPerBotAndGroup'}, {}, cb
 
 
 botPointsBySeason = (season, cb) ->
@@ -59,7 +59,7 @@ popularResults = (season, cb) ->
   reduce = (key, values) ->
     {count: values.length}
 
-  _mapReduce 'matches', map, reduce, query: {season: season}, ['_id'], (err, data) ->
+  _mapReduce 'matches', map, reduce, {query: {season: season}, out: 'popularResults'}, ['_id'], (err, data) ->
     data = ({result: entry._id, count: entry.value.count} for entry in data)
     cb err, data
 
@@ -79,7 +79,7 @@ tendency = (season, cb) ->
   reduce = (key, values) ->
     {count: values.length}
 
-  _mapReduce 'matches', map, reduce, query: {season: season}, [], (err, data) ->
+  _mapReduce 'matches', map, reduce, {query: {season: season}, out: 'tendency'}, [], (err, data) ->
     data = ({tendency: entry._id, count: entry.value.count} for entry in data)
     cb err, data
 
