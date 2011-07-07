@@ -2,11 +2,11 @@ $.widget 'stats.guessesByGroup',
   _create: ->
     google.load 'visualization', '1',
       packages: ['corechart', 'table']
-      callback: => @_load()
-    @element.find('.options select').change =>
-      location.hash = "#{@_group()}/#{@_season()}"
-    $(window).hashchange => @_hashchange()
-    @_hashchange()
+      callback: =>
+        @element.find('.options select').change =>
+          location.hash = "#{@_group()}/#{@_season()}"
+        $(window).hashchange => @_hashchange()
+        @_hashchange()
   _hashchange: ->
     [group, season] = location.hash.replace('#','').split '/'
     @season season
@@ -33,32 +33,30 @@ $.widget 'stats.guessesByGroup',
     formatter = new google.visualization.TableBarFormat width: 30
     formatter.format dataTable, data.cols.length-1
     table.draw dataTable, {allowHtml: true}
-  _cols: (matches) ->
+  _cols: (data) ->
     result = [{id:'bots', label: '', type: 'string'}]
-    for match in matches
+    for match in data.matches
       result.push
         id: "match_#{match.id}"
         label: "<img src='/images/teams/#{match.hostId}.gif' title='#{match.hostName}'><img src='/images/teams/#{match.guestId}.gif' title='#{match.guestName}'><br>#{match.hostGoals}:#{match.guestGoals}"
         type: 'number'
     result.push
-      id:'total'
+      id: 'total'
       label: 'gesamt'
       type: 'number'
     result
-  _rows: (matches) ->
+  _rows: (data) ->
     result = []
-    for bot in @_bots(matches)
+    for bot in @_bots(data.matches).sort()
       row = 
-        c: [v: bot]
-      total = 0
-      for match in matches
+        c: [v: "<a href='https://github.com/#{bot}'>#{bot}</a>"]
+      for match in data.matches
         guess = _(match.guesses).detect (guess) -> bot == guess.bot
         row.c.push
           v: guess.points
           f: "#{guess.hostGoals}:#{guess.guestGoals} <strong>#{guess.points}</strong>"
-        total += guess.points
       row.c.push
-        v: total
+        v: data.points[bot]
       result.push row
     result
   _bots: (matches) ->
@@ -67,53 +65,94 @@ $.widget 'stats.guessesByGroup',
       for guess in match.guesses
         result.push guess.bot if guess.bot? && !_(result).contains guess.bot
     result
-###
-$ ->
-  $('#guessesByGroup').each ->
-    $el = $(@)
-    $.get $el.data('url'), (matches) ->
 
-  $table = $("#botsByGroups")
-  return if $table.length == 0
-  
-  r = Raphael "botsByGroupsChart"
 
-  cols = $table.find("thead th").length
-  rows = $table.find("tr:gt(0)").length
-  
-  xs = []
-  for row in [0...rows]
-    for col in [0...cols]
-      xs.push col
-
-  ys = []
-  for row in [rows-1..0]
-    for col in [0...cols]
-      ys.push row
-
-  data = []
-  $table.find(".points").each ->
-    data.push parseInt($(@).text(), 10) || 0
-
-  axisx = [1..cols]
-  axisy = []
-  $table.find("tr:gt(0) th").each ->
-    axisy.push $(@).text()
-  
-  options =
-    symbol: "o"
-    heat: true
-    axis: "0 0 1 1"
-    axisxstep: cols
-    axisystep: rows-1
-    axisxlabels: axisx
-    axisxtype: " "
-    axisytype: " "
-    max: Math.max.apply(Math, data) - 10
-    axisylabels: axisy
-  r.g.dotchart(10, 10, 950, 400, xs, ys, data, options).hover ->
-    @tag = @tag || r.g.tag(@x, @y, @value, 0, this.r + 2).insertBefore(@)
-    @tag.show()
-  , ->
-    @tag && @tag.hide()
-  ###
+$.widget 'stats.pointsBySeasonTable',
+  _create: ->
+    google.load 'visualization', '1',
+      packages: ['corechart', 'table']
+      callback: => @_load()
+  _load: ->
+    url = "/api/points/2010"
+    $.get url, (data) =>
+      result =
+        cols: @_cols(data)
+        rows: @_rows(data)
+      @_render result
+  _render: (data) ->
+    dataTable = new google.visualization.DataTable data
+    table = new google.visualization.Table @element.find('.table')[0]
+    formatter = new google.visualization.TableBarFormat width: 30
+    formatter.format dataTable, data.cols.length-1
+    table.draw dataTable, {allowHtml: true}
+  _cols: (data) ->
+    result = [{id:'bots', label: '', type: 'string'}]
+    bots = (bot for bot, points of data)
+    for group, points of data[bots[0]]
+      result.push
+        id: "group_#{group}"
+        label: "<a href='##{group}/2010'>#{group}</a>"
+        type: 'number'
+    result
+  _rows: (data) ->
+    result = []
+    botNames = (bot for bot, points of data)
+    for bot in botNames.sort()
+      row = c: [v: "<a href='https://github.com/#{bot}'>#{bot}</a>"]
+      for group, point of data[bot]
+        row.c.push {v: point}
+      result.push row
+    result
+    
+$.widget 'stats.pointsBySeasonChart',
+  _create: ->
+    google.load 'visualization', '1',
+      packages: ['corechart', 'table']
+      callback: => @_load()
+  _load: ->
+    url = "/api/points/2010"
+    $.get url, (data) =>
+      result =
+        cols: @_cols(data)
+        rows: @_rows(data)
+      @_render result
+  _render: (data) ->
+    dataTable = new google.visualization.DataTable data
+    chart = new google.visualization.LineChart @element.find('.chart')[0]
+    chart.draw dataTable,
+      width: "100%"
+      height: 450
+      fontSize: 12
+      pointSize: 2
+      hAxis:
+        maxAlternation: 2
+        textStyle:
+          fontSize: 11
+      chartArea:
+        left: 60
+        top: 35
+        width: "90%"
+        height: 300
+      legend: "bottom"
+  _cols: (data) ->
+    result = [{id:'group', label: 'Spieltag', type: 'string'}]
+    botNames = (bot for bot, points of data)
+    for bot in botNames.sort()
+      result.push
+        id: "bot_#{bot}"
+        label: "#{bot}"
+        type: 'number'
+    result
+  _rows: (data) ->
+    result = []
+    botNames = (bot for bot, points of data)
+    botPoints = {}
+    for group, points of data[botNames[0]]
+      unless group == "total"
+        row = c: [{v: "#{group}."}]
+        for bot in botNames
+          botPoints[bot] or= 0
+          botPoints[bot] += data[bot][group]
+          row.c.push {v: botPoints[bot]}
+      result.push row
+    result

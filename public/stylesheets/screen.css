@@ -427,32 +427,21 @@ header .navigation a.active {
   background-color: #fff;
 strong
 }
-table.result {
+div.table,
+div.chart {
   margin-bottom: 20px;
+}
+div.table .loading,
+div.chart .loading {
   width: 100%;
+  padding: 30px 0;
   background-color: #fff;
-  border-collapse: collapse;
-}
-table.result caption {
-  font-size: 15px;
-  font-weight: bold;
-  margin-bottom: 8px;
-}
-table.result th,
-table.result td {
-  font-size: 11px;
-  padding: 4px 3px;
-  border: 1px solid #aaa;
   text-align: center;
 }
-table.result th {
-  width: 3%;
-  font-weight: bold;
-  background-color: #f4f4f4;
-}
-table.result th.bot {
-  text-align: left;
-  width: 15%;
+div.table .loading img,
+div.chart .loading img {
+  display: block;
+  margin: 40px auto;
 }
 .google-visualization-table-table .google-visualization-table-tr-head {
   text-align: center;
@@ -477,6 +466,22 @@ table.result th.bot {
 #guessesByGroup .google-visualization-table-sortind {
   display: none;
 }
-#botsByGroupsChart {
-  background-color: #fff;
+#pointsBySeasonTable .google-visualization-table-th,
+#pointsBySeasonTable .google-visualization-table-td-number {
+  font-size: 10px;
+  padding: 4px 0px;
+  font-weight: normal;
+}
+#pointsBySeasonTable .google-visualization-table-th {
+  font-weight: bold;
+  width: 13px;
+}
+#pointsBySeasonTable .google-visualization-table-th a {
+  text-align: center;
+  display: block;
+  color: #000;
+  text-decoration: none;
+}
+#pointsBySeasonTable .google-visualization-table-sortind {
+  display: none;
 }

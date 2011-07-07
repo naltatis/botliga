@@ -8,12 +8,24 @@
         - for (i=1; i<34; i++)
           option(value=i)= i + ". Spieltag"
       select#guessesByGroupSeason.season
-        option(value=2010) Saison 2010/2011 (Training)
-        option(value=2011, selected=true) Saison 2011/2012
+        option(value=2010, selected=true) Saison 2010/2011 (Training)
+        option(value=2011) Saison 2011/2012
     .table
+      p.loading
+        img(src='/images/loading.gif')
 
-  h3 Saison Übersicht
-  p Schöne bunte Grafiken und Tabellen folgen in Kürze ...
+  #pointsBySeasonTable
+    h3 Saison Übersicht 2010/2011 (Training)
+    .table
+      p.loading
+        img(src='/images/loading.gif')
+
+  #pointsBySeasonChart
+    .chart
+      p.loading
+        img(src='/images/loading.gif')
+
+
 
   //table#botsByGroups.result
   //  caption Spieltag-Übersicht 2010/2011

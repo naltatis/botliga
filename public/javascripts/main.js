@@ -1,5 +1,7 @@
 (function() {
   head(function() {
-    return $('#guessesByGroup').guessesByGroup();
+    $('#guessesByGroup').guessesByGroup();
+    $('#pointsBySeasonTable').pointsBySeasonTable();
+    return $('#pointsBySeasonChart').pointsBySeasonChart();
   });
 }).call(this);

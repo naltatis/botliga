@@ -64,20 +64,26 @@ class GuessService
           
           _match.guesses = []
           for guess in guesses
-            _guess = {}
-            for key in guessKeys
-              _guess[key] = guess[key]
+            if self.vars.bots[guess.bot]?
+              _guess = {}
+              for key in guessKeys
+                _guess[key] = guess[key]
             
-            # only include guesses for passed matches
-            if not match.date.isBefore(new Date())  
-              _guess.hostGoals = _guess.guestGoals = '-'
+              # only include guesses for passed matches
+              if not match.date.isBefore(new Date())  
+                _guess.hostGoals = _guess.guestGoals = '-'
               
-            _guess.bot = self.vars.bots[guess.bot]
-            _match.guesses.push _guess
+              _guess.bot = self.vars.bots[guess.bot]
+              _match.guesses.push _guess
             
           self null, _match
       .seq (matches...) ->
-        callback null, matches
+        points = {}
+        for match in matches
+          for guess in match.guesses
+            points[guess.bot] or= 0
+            points[guess.bot] += guess.points if guess.points?
+        callback null, {matches: matches, points: points}
     
 class BotService
   getByUser: (userId, callback) ->

@@ -45,7 +45,7 @@ datasources = (req, res) ->
 results = (req, res) ->
   Seq()
     .par ->
-      stats.botRatingByGroup "2010", @
+      stats.botPointsBySeason "2010", @
     .par ->
       s.bot.getAll @
     .seq (botsByGroups, bots) ->

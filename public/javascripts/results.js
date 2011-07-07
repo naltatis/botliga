@@ -2,19 +2,18 @@
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   $.widget('stats.guessesByGroup', {
     _create: function() {
-      google.load('visualization', '1', {
+      return google.load('visualization', '1', {
         packages: ['corechart', 'table'],
         callback: __bind(function() {
-          return this._load();
+          this.element.find('.options select').change(__bind(function() {
+            return location.hash = "" + (this._group()) + "/" + (this._season());
+          }, this));
+          $(window).hashchange(__bind(function() {
+            return this._hashchange();
+          }, this));
+          return this._hashchange();
         }, this)
       });
-      this.element.find('.options select').change(__bind(function() {
-        return location.hash = "" + (this._group()) + "/" + (this._season());
-      }, this));
-      $(window).hashchange(__bind(function() {
-        return this._hashchange();
-      }, this));
-      return this._hashchange();
     },
     _hashchange: function() {
       var group, season, _ref;
@@ -59,8 +58,8 @@
         allowHtml: true
       });
     },
-    _cols: function(matches) {
-      var match, result, _i, _len;
+    _cols: function(data) {
+      var match, result, _i, _len, _ref;
       result = [
         {
           id: 'bots',
@@ -68,8 +67,9 @@
           type: 'string'
         }
       ];
-      for (_i = 0, _len = matches.length; _i < _len; _i++) {
-        match = matches[_i];
+      _ref = data.matches;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        match = _ref[_i];
         result.push({
           id: "match_" + match.id,
           label: "<img src='/images/teams/" + match.hostId + ".gif' title='" + match.hostName + "'><img src='/images/teams/" + match.guestId + ".gif' title='" + match.guestName + "'><br>" + match.hostGoals + ":" + match.guestGoals,
@@ -83,22 +83,22 @@
       });
       return result;
     },
-    _rows: function(matches) {
-      var bot, guess, match, result, row, total, _i, _j, _len, _len2, _ref;
+    _rows: function(data) {
+      var bot, guess, match, result, row, _i, _j, _len, _len2, _ref, _ref2;
       result = [];
-      _ref = this._bots(matches);
+      _ref = this._bots(data.matches).sort();
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         bot = _ref[_i];
         row = {
           c: [
             {
-              v: bot
+              v: "<a href='https://github.com/" + bot + "'>" + bot + "</a>"
             }
           ]
         };
-        total = 0;
-        for (_j = 0, _len2 = matches.length; _j < _len2; _j++) {
-          match = matches[_j];
+        _ref2 = data.matches;
+        for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
+          match = _ref2[_j];
           guess = _(match.guesses).detect(function(guess) {
             return bot === guess.bot;
           });
@@ -106,10 +106,9 @@
             v: guess.points,
             f: "" + guess.hostGoals + ":" + guess.guestGoals + " <strong>" + guess.points + "</strong>"
           });
-          total += guess.points;
         }
         row.c.push({
-          v: total
+          v: data.points[bot]
         });
         result.push(row);
       }
@@ -131,54 +130,212 @@
       return result;
     }
   });
-  /*
-  $ ->
-    $('#guessesByGroup').each ->
-      $el = $(@)
-      $.get $el.data('url'), (matches) ->
-  
-    $table = $("#botsByGroups")
-    return if $table.length == 0
-    
-    r = Raphael "botsByGroupsChart"
-  
-    cols = $table.find("thead th").length
-    rows = $table.find("tr:gt(0)").length
-    
-    xs = []
-    for row in [0...rows]
-      for col in [0...cols]
-        xs.push col
-  
-    ys = []
-    for row in [rows-1..0]
-      for col in [0...cols]
-        ys.push row
-  
-    data = []
-    $table.find(".points").each ->
-      data.push parseInt($(@).text(), 10) || 0
-  
-    axisx = [1..cols]
-    axisy = []
-    $table.find("tr:gt(0) th").each ->
-      axisy.push $(@).text()
-    
-    options =
-      symbol: "o"
-      heat: true
-      axis: "0 0 1 1"
-      axisxstep: cols
-      axisystep: rows-1
-      axisxlabels: axisx
-      axisxtype: " "
-      axisytype: " "
-      max: Math.max.apply(Math, data) - 10
-      axisylabels: axisy
-    r.g.dotchart(10, 10, 950, 400, xs, ys, data, options).hover ->
-      @tag = @tag || r.g.tag(@x, @y, @value, 0, this.r + 2).insertBefore(@)
-      @tag.show()
-    , ->
-      @tag && @tag.hide()
-    */
+  $.widget('stats.pointsBySeasonTable', {
+    _create: function() {
+      return google.load('visualization', '1', {
+        packages: ['corechart', 'table'],
+        callback: __bind(function() {
+          return this._load();
+        }, this)
+      });
+    },
+    _load: function() {
+      var url;
+      url = "/api/points/2010";
+      return $.get(url, __bind(function(data) {
+        var result;
+        result = {
+          cols: this._cols(data),
+          rows: this._rows(data)
+        };
+        return this._render(result);
+      }, this));
+    },
+    _render: function(data) {
+      var dataTable, formatter, table;
+      dataTable = new google.visualization.DataTable(data);
+      table = new google.visualization.Table(this.element.find('.table')[0]);
+      formatter = new google.visualization.TableBarFormat({
+        width: 30
+      });
+      formatter.format(dataTable, data.cols.length - 1);
+      return table.draw(dataTable, {
+        allowHtml: true
+      });
+    },
+    _cols: function(data) {
+      var bot, bots, group, points, result, _ref;
+      result = [
+        {
+          id: 'bots',
+          label: '',
+          type: 'string'
+        }
+      ];
+      bots = (function() {
+        var _results;
+        _results = [];
+        for (bot in data) {
+          points = data[bot];
+          _results.push(bot);
+        }
+        return _results;
+      })();
+      _ref = data[bots[0]];
+      for (group in _ref) {
+        points = _ref[group];
+        result.push({
+          id: "group_" + group,
+          label: "<a href='#" + group + "/2010'>" + group + "</a>",
+          type: 'number'
+        });
+      }
+      return result;
+    },
+    _rows: function(data) {
+      var bot, botNames, group, point, points, result, row, _i, _len, _ref, _ref2;
+      result = [];
+      botNames = (function() {
+        var _results;
+        _results = [];
+        for (bot in data) {
+          points = data[bot];
+          _results.push(bot);
+        }
+        return _results;
+      })();
+      _ref = botNames.sort();
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        bot = _ref[_i];
+        row = {
+          c: [
+            {
+              v: "<a href='https://github.com/" + bot + "'>" + bot + "</a>"
+            }
+          ]
+        };
+        _ref2 = data[bot];
+        for (group in _ref2) {
+          point = _ref2[group];
+          row.c.push({
+            v: point
+          });
+        }
+        result.push(row);
+      }
+      return result;
+    }
+  });
+  $.widget('stats.pointsBySeasonChart', {
+    _create: function() {
+      return google.load('visualization', '1', {
+        packages: ['corechart', 'table'],
+        callback: __bind(function() {
+          return this._load();
+        }, this)
+      });
+    },
+    _load: function() {
+      var url;
+      url = "/api/points/2010";
+      return $.get(url, __bind(function(data) {
+        var result;
+        result = {
+          cols: this._cols(data),
+          rows: this._rows(data)
+        };
+        return this._render(result);
+      }, this));
+    },
+    _render: function(data) {
+      var chart, dataTable;
+      dataTable = new google.visualization.DataTable(data);
+      chart = new google.visualization.LineChart(this.element.find('.chart')[0]);
+      return chart.draw(dataTable, {
+        width: "100%",
+        height: 450,
+        fontSize: 12,
+        pointSize: 2,
+        hAxis: {
+          maxAlternation: 2,
+          textStyle: {
+            fontSize: 11
+          }
+        },
+        chartArea: {
+          left: 60,
+          top: 35,
+          width: "90%",
+          height: 300
+        },
+        legend: "bottom"
+      });
+    },
+    _cols: function(data) {
+      var bot, botNames, points, result, _i, _len, _ref;
+      result = [
+        {
+          id: 'group',
+          label: 'Spieltag',
+          type: 'string'
+        }
+      ];
+      botNames = (function() {
+        var _results;
+        _results = [];
+        for (bot in data) {
+          points = data[bot];
+          _results.push(bot);
+        }
+        return _results;
+      })();
+      _ref = botNames.sort();
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        bot = _ref[_i];
+        result.push({
+          id: "bot_" + bot,
+          label: "" + bot,
+          type: 'number'
+        });
+      }
+      return result;
+    },
+    _rows: function(data) {
+      var bot, botNames, botPoints, group, points, result, row, _i, _len, _ref;
+      result = [];
+      botNames = (function() {
+        var _results;
+        _results = [];
+        for (bot in data) {
+          points = data[bot];
+          _results.push(bot);
+        }
+        return _results;
+      })();
+      botPoints = {};
+      _ref = data[botNames[0]];
+      for (group in _ref) {
+        points = _ref[group];
+        if (group !== "total") {
+          row = {
+            c: [
+              {
+                v: "" + group + "."
+              }
+            ]
+          };
+          for (_i = 0, _len = botNames.length; _i < _len; _i++) {
+            bot = botNames[_i];
+            botPoints[bot] || (botPoints[bot] = 0);
+            botPoints[bot] += data[bot][group];
+            row.c.push({
+              v: botPoints[bot]
+            });
+          }
+        }
+        result.push(row);
+      }
+      return result;
+    }
+  });
 }).call(this);

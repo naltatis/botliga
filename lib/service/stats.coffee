@@ -27,18 +27,29 @@ _pointsPerBotAndGroup = (matches, cb) ->
   _mapReduce 'guesses', map, reduce, scope: {matches: matches}, {}, cb
 
 
-botRatingByGroup = (season, cb) ->
-  _matchesPerGroupBySeason season, (err, data) ->
-    matches = {}
-    for d in data
-      for match in d.value.matches
-        matches[match] = d._id
+botPointsBySeason = (season, cb) ->
+  model.Bot.find().find (err, bots) ->
+    botMap = {}
+    for bot in bots
+      botMap[bot._id] = bot.name if bot.name?
+      
+    _matchesPerGroupBySeason season, (err, data) ->
+      matches = {}
+      for d in data
+        for match in d.value.matches
+          matches[match] = d._id
         
-    _pointsPerBotAndGroup matches, (err, points) ->
-      res = {}
-      for bot in points
-        res[bot._id] = bot.value
-      cb err, res
+      _pointsPerBotAndGroup matches, (err, points) ->
+        res = {}
+        for bot in points
+          botName = botMap[bot._id]
+          if botName?
+            res[botName] = bot.value 
+            total = 0
+            for g, p of bot.value
+              total += p 
+            res[botName].total = total
+        cb err, res
 
 popularResults = (season, cb) ->
   map = ->
@@ -74,4 +85,4 @@ tendency = (season, cb) ->
 
 (exports ? this).popularResults = popularResults
 (exports ? this).tendency = tendency
-(exports ? this).botRatingByGroup = botRatingByGroup
+(exports ? this).botPointsBySeason = botPointsBySeason
