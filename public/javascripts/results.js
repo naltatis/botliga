@@ -171,7 +171,7 @@
       });
     },
     _cols: function(data) {
-      var bot, bots, group, points, result, _ref;
+      var group, result;
       result = [
         {
           id: 'bots',
@@ -179,28 +179,22 @@
           type: 'string'
         }
       ];
-      bots = (function() {
-        var _results;
-        _results = [];
-        for (bot in data) {
-          points = data[bot];
-          _results.push(bot);
-        }
-        return _results;
-      })();
-      _ref = data[bots[0]];
-      for (group in _ref) {
-        points = _ref[group];
+      for (group = 1; group <= 34; group++) {
         result.push({
           id: "group_" + group,
           label: "<a href='#" + group + "/2010'>" + group + "</a>",
           type: 'number'
         });
       }
+      result.push({
+        id: "group_total",
+        label: "gesamt",
+        type: 'number'
+      });
       return result;
     },
     _rows: function(data) {
-      var bot, botNames, group, point, points, result, row, _i, _len, _ref, _ref2;
+      var bot, botNames, group, points, result, row, _i, _len, _ref;
       result = [];
       botNames = (function() {
         var _results;
@@ -221,13 +215,14 @@
             }
           ]
         };
-        _ref2 = data[bot];
-        for (group in _ref2) {
-          point = _ref2[group];
+        for (group = 1; group <= 34; group++) {
           row.c.push({
-            v: point
+            v: data[bot][group] || 0
           });
         }
+        row.c.push({
+          v: data[bot].total || 0
+        });
         result.push(row);
       }
       return result;

@@ -5,7 +5,7 @@
     h3 Ergebnisse pro Spieltag
     .options
       select#guessesByGroupGroup.group
-        - for (i=1; i<34; i++)
+        - for (i=1; i<=34; i++)
           option(value=i)= i + ". Spieltag"
       select#guessesByGroupSeason.season
         option(value=2010, selected=true) Saison 2010/2011 (Training)

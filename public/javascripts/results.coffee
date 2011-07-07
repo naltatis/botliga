@@ -92,20 +92,24 @@ $.widget 'stats.pointsBySeasonTable',
     table.draw dataTable, {allowHtml: true}
   _cols: (data) ->
     result = [{id:'bots', label: '', type: 'string'}]
-    bots = (bot for bot, points of data)
-    for group, points of data[bots[0]]
+    for group in [1..34]
       result.push
         id: "group_#{group}"
         label: "<a href='##{group}/2010'>#{group}</a>"
         type: 'number'
+    result.push
+      id: "group_total"
+      label: "gesamt"
+      type: 'number'
     result
   _rows: (data) ->
     result = []
     botNames = (bot for bot, points of data)
     for bot in botNames.sort()
       row = c: [v: "<a href='https://github.com/#{bot}'>#{bot}</a>"]
-      for group, point of data[bot]
-        row.c.push {v: point}
+      for group in [1..34]
+        row.c.push {v: data[bot][group] || 0}
+      row.c.push {v: data[bot].total || 0}
       result.push row
     result
     
