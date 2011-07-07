@@ -102,10 +102,17 @@
           guess = _(match.guesses).detect(function(guess) {
             return bot === guess.bot;
           });
-          row.c.push({
-            v: guess.points,
-            f: "" + guess.hostGoals + ":" + guess.guestGoals + " <strong>" + guess.points + "</strong>"
-          });
+          if (guess != null) {
+            row.c.push({
+              v: guess.points,
+              f: "" + guess.hostGoals + ":" + guess.guestGoals + " <strong>" + guess.points + "</strong>"
+            });
+          } else {
+            row.c.push({
+              v: 0,
+              f: "-:- <strong>0</strong>"
+            });
+          }
         }
         row.c.push({
           v: data.points[bot]

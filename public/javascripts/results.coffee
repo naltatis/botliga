@@ -52,9 +52,14 @@ $.widget 'stats.guessesByGroup',
         c: [v: "<a href='https://github.com/#{bot}'>#{bot}</a>"]
       for match in data.matches
         guess = _(match.guesses).detect (guess) -> bot == guess.bot
-        row.c.push
-          v: guess.points
-          f: "#{guess.hostGoals}:#{guess.guestGoals} <strong>#{guess.points}</strong>"
+        if guess?
+          row.c.push
+            v: guess.points
+            f: "#{guess.hostGoals}:#{guess.guestGoals} <strong>#{guess.points}</strong>"
+        else
+          row.c.push
+            v: 0
+            f: "-:- <strong>0</strong>"
       row.c.push
         v: data.points[bot]
       result.push row
