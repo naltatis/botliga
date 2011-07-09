@@ -2,11 +2,11 @@ express = require "express"
 stylus = require "stylus"
 nib = require "nib"
 auth = require('./lib/model/auth').auth
-openligadb = require "./lib/import/openligadb"
 crawler = require("./lib/import/crawler").crawler
 stats = require "./lib/service/stats"
 api = require "./lib/controller/api"
 web = require "./lib/controller/web"
+maintenance = require "./lib/controller/maintenance"
 require "express-namespace"
 require "date-utils"
 
@@ -44,6 +44,10 @@ app.get "/datenquellen", web.datasources
 app.post "/bot", web.updateBot
 app.get "/impressum", (req, res) -> res.render 'impressum', navigation: 'impressum'
 
+app.namespace "/maintenance", ->
+  app.get "/refresh-points", maintenance.refreshPoints
+  app.get "/import/:season", maintenance.importer
+  
 app.namespace "/api", ->
   app.post "/guess", api.guess.post
   app.get "/guess", api.guess.get
@@ -58,10 +62,6 @@ app.namespace "/api", ->
     stats.botPointsBySeason req.params.season, (err, data) -> res.send data
 
   app.get "/matches/:season", web.matchesBySeason
-
-  app.get "/import/:season", (req, res) ->
-    importer = new openligadb.MatchImporter()
-    importer.importBySeason season for season in [req.params.season]
 
   app.namespace "/stats", ->
     app.get "/popular-results/:season", (req, res) ->

@@ -20,8 +20,8 @@ class MatchScorer
     
   _analyse: (result) ->
     {
-      0: result[0]
-      1: result[1]
+      0: parseInt(result[0], 10)
+      1: parseInt(result[1], 10)
       diff: result[0] - result[1]
       draw: result[0] == result[1]
       home: result[0] > result[1]
