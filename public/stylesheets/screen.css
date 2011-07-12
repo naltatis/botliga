@@ -368,6 +368,12 @@ header .navigation a.active {
 .copy .leftCol {
   margin-right: 8%;
 }
+#datasources p {
+  margin-bottom: 4px;
+}
+#datasources p + p {
+  margin-bottom: 15px;
+}
 #dotChart,
 #lineChart {
   background: #fff;
