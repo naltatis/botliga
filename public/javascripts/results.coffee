@@ -71,6 +71,61 @@ $.widget 'stats.guessesByGroup',
         result.push guess.bot if guess.bot? && !_(result).contains guess.bot
     result
 
+$.widget 'stats.resultScatter'
+  options:
+    botName: ''
+    
+  _create: ->
+    google.load 'visualization', '1',
+      packages: ['corechart']
+      callback: => @_load()
+  _load: ->
+    url = "/api/bot/#{@options.botName}/results/2010"
+    $.get url, (data) =>
+      model = @_model data
+      @_render model
+  _model: (data) ->
+    d = new google.visualization.DataTable()
+    d.addColumn 'number', 'Heim-Tore'
+    d.addColumn 'number', 'Auswärts-Tore'
+    for result, count of data
+      [home, guest] = result.split ':'
+      d.addRow [parseInt(home, 10), parseInt(guest, 10)]
+    d
+    
+  _render: (model) ->
+    chart = new google.visualization.ScatterChart @element.find('.chart')[0]
+    chart.draw model,
+      width: 300
+      height: 300
+      vAxis: 
+        title: "Heim-Tore"
+        minValue: 0
+        maxValue: 8
+      hAxis: 
+        title: "Auswärts-Tore"
+        minValue: 0
+        maxValue: 8
+
+$.widget 'bot.profile'
+  options:
+    botName: ''
+    
+  _create: ->
+    $.get "/bot/profil/#{@options.botName}", (data) => @_show data
+    
+  _show: (data) ->
+    @element.html data
+    @_details()
+    $("#botScatterChart").resultScatter botName: @options.botName
+  
+  _details: ->
+    $.getJSON "https://api.github.com/repos/#{@options.botName}?callback=?", (res) =>
+      @element.find('.description').text res.data.description
+    
+  _scatter: ->
+    #$.get "/api/bot/#{@options.botName}/results/2010", (data) => @_show data
+    
 
 $.widget 'stats.pointsBySeasonTable',
   _create: ->

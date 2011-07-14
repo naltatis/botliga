@@ -56,6 +56,14 @@ results = (req, res) ->
         bots: bots
       res.render 'results', data
       
+botProfileLayer = (req, res) ->
+  name = "#{req.params.user}/#{req.params.bot}"
+  s.bot.getByName name, (err, bot) ->
+    data = 
+      bot: bot
+      layout: false
+    res.render 'bot-profile-layer', data
+      
 matchesBySeason = (req, res) ->
   s.match.getBySeason req.params.season, (err, data) -> res.send data
 
@@ -71,3 +79,4 @@ guessesBySeasonAndGroup = (req, res) ->
 (exports ? this).datasources = datasources
 (exports ? this).matchesBySeason = matchesBySeason
 (exports ? this).guessesBySeasonAndGroup = guessesBySeasonAndGroup
+(exports ? this).botProfileLayer = botProfileLayer

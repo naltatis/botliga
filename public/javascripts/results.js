@@ -137,6 +137,81 @@
       return result;
     }
   });
+  $.widget('stats.resultScatter', {
+    options: {
+      botName: ''
+    },
+    _create: function() {
+      return google.load('visualization', '1', {
+        packages: ['corechart'],
+        callback: __bind(function() {
+          return this._load();
+        }, this)
+      });
+    },
+    _load: function() {
+      var url;
+      url = "/api/bot/" + this.options.botName + "/results/2010";
+      return $.get(url, __bind(function(data) {
+        var model;
+        model = this._model(data);
+        return this._render(model);
+      }, this));
+    },
+    _model: function(data) {
+      var count, d, guest, home, result, _ref;
+      d = new google.visualization.DataTable();
+      d.addColumn('number', 'Heim-Tore');
+      d.addColumn('number', 'Auswärts-Tore');
+      for (result in data) {
+        count = data[result];
+        _ref = result.split(':'), home = _ref[0], guest = _ref[1];
+        d.addRow([parseInt(home, 10), parseInt(guest, 10)]);
+      }
+      return d;
+    },
+    _render: function(model) {
+      var chart;
+      chart = new google.visualization.ScatterChart(this.element.find('.chart')[0]);
+      return chart.draw(model, {
+        width: 300,
+        height: 300,
+        vAxis: {
+          title: "Heim-Tore",
+          minValue: 0,
+          maxValue: 8
+        },
+        hAxis: {
+          title: "Auswärts-Tore",
+          minValue: 0,
+          maxValue: 8
+        }
+      });
+    }
+  });
+  $.widget('bot.profile', {
+    options: {
+      botName: ''
+    },
+    _create: function() {
+      return $.get("/bot/profil/" + this.options.botName, __bind(function(data) {
+        return this._show(data);
+      }, this));
+    },
+    _show: function(data) {
+      this.element.html(data);
+      this._details();
+      return $("#botScatterChart").resultScatter({
+        botName: this.options.botName
+      });
+    },
+    _details: function() {
+      return $.getJSON("https://api.github.com/repos/" + this.options.botName + "?callback=?", __bind(function(res) {
+        return this.element.find('.description').text(res.data.description);
+      }, this));
+    },
+    _scatter: function() {}
+  });
   $.widget('stats.pointsBySeasonTable', {
     _create: function() {
       return google.load('visualization', '1', {

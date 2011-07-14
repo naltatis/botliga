@@ -90,6 +90,8 @@ class BotService
     m.Bot.find({user: userId}).sort('id', 'ascending').find callback
   getByUserAndId: (userId, botId, callback) ->
     m.Bot.findOne {user: userId, _id: botId}, callback
+  getByName: (botName, callback) ->
+    m.Bot.findOne {name: botName}, callback
   getAll: (callback) ->
     m.Bot.find({name: {'$exists': true}}).find callback
   getAllWithPull: (callback) ->

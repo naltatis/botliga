@@ -24,25 +24,3 @@
     .chart
       p.loading
         img(src='/images/loading.gif')
-
-
-
-  //table#botsByGroups.result
-  //  caption Spieltag-Übersicht 2010/2011
-  //  thead
-  //    tr
-  //      td
-  //      - each group in groups
-  //        th(scope="col")= group
-  //  tbody
-  //    -each bot in bots
-  //      tr
-  //        th.bot(scope="col")= bot.name
-  //        - each group in groups
-  //          - if (botsByGroups[bot._id] === undefined || botsByGroups[bot._id][group] === undefined)
-  //            td.points -
-  //          - else
-  //            td.points= botsByGroups[bot._id][group]
-  //
-  //#botsByGroupsChart
-  //#lineChart

@@ -50,6 +50,20 @@ botPointsBySeason = (season, cb) ->
             res[botName][group] += guess.points || 0
             res[botName].total += guess.points
         cb err, res
+        
+guessesByBotNameAndSeason = (botName, season, cb) ->
+  model.Bot.findOne {name: botName}, (err, bot) ->
+    return cb(err) if not bot?
+    model.Match.find {season: season, date: {$lt: new Date()}}, (err, matches) ->
+      return cb(err) if not matches?
+      matchIds = (match._id for match in matches)
+      model.Guess.find({match: {$in: matchIds}, bot: bot._id}).find (err, guesses) ->
+        return cb(err) if not guesses?
+        result = {}
+        for g in guesses
+          result["#{g.hostGoals}:#{g.guestGoals}"] or= 0
+          result["#{g.hostGoals}:#{g.guestGoals}"] += 1
+        cb null, result
 
 popularResults = (season, cb) ->
   map = ->
@@ -86,3 +100,4 @@ tendency = (season, cb) ->
 (exports ? this).popularResults = popularResults
 (exports ? this).tendency = tendency
 (exports ? this).botPointsBySeason = botPointsBySeason
+(exports ? this).guessesByBotNameAndSeason = guessesByBotNameAndSeason

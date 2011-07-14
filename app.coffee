@@ -39,6 +39,7 @@ app.get "/", (req, res) ->
   res.render 'index', navigation: 'home'
 
 app.get "/auswertung", web.results
+app.get "/bot/profil/:user/:bot", web.botProfileLayer
 app.get "/einstellungen", web.settings
 app.get "/datenquellen", web.datasources
 app.post "/bot", web.updateBot
@@ -62,6 +63,9 @@ app.namespace "/api", ->
     stats.botPointsBySeason req.params.season, (err, data) -> res.send data
 
   app.get "/matches/:season", web.matchesBySeason
+  
+  app.get "/bot/:user/:bot/results/:season", (req, res) ->
+    stats.guessesByBotNameAndSeason "#{req.params.user}/#{req.params.bot}", req.params.season, (err, data) -> res.send data || err
 
   app.namespace "/stats", ->
     app.get "/popular-results/:season", (req, res) ->
