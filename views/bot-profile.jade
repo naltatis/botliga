@@ -1,10 +1,11 @@
 h2
   span= bot.name
   |'s Profil 
-h3.description
+h3.description= JSON.stringify(details)
 .botScatter
   h4 Tipp-Verteilung
   #botScatterChart
+  
     .chart
       p.loading
         img(src='/images/loading.gif')

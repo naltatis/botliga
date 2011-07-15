@@ -1,4 +1,5 @@
 s = require "../service/service"
+github = require("../service/github").github
 stats = require "../service/stats"
 Seq = require "seq"
 
@@ -56,13 +57,27 @@ results = (req, res) ->
         bots: bots
       res.render 'results', data
       
-botProfileLayer = (req, res) ->
+botProfile = (req, res) ->
   name = "#{req.params.user}/#{req.params.bot}"
-  s.bot.getByName name, (err, bot) ->
-    data = 
-      bot: bot
-      layout: false
-    res.render 'bot-profile-layer', data
+  
+  Seq()
+    .seq ->
+      s.bot.getByName name, (err, bot) =>
+        err = new Error("bot not found") if err? || !bot?
+        @ err, bot
+    .par (bot) ->
+      github.getRepoDetails bot.name, @
+    .par (bot) ->
+      github.getRepoCommits bot.name, @
+    .seq (bot, details, commits) ->
+      data = 
+        bot: bot
+        details: details
+        commits: commits
+        navigation: 'results'
+      res.render 'bot-profile', data
+    .catch (err) ->
+      res.send 404
       
 matchesBySeason = (req, res) ->
   s.match.getBySeason req.params.season, (err, data) -> res.send data
@@ -79,4 +94,4 @@ guessesBySeasonAndGroup = (req, res) ->
 (exports ? this).datasources = datasources
 (exports ? this).matchesBySeason = matchesBySeason
 (exports ? this).guessesBySeasonAndGroup = guessesBySeasonAndGroup
-(exports ? this).botProfileLayer = botProfileLayer
+(exports ? this).botProfile = botProfile
