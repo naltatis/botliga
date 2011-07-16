@@ -3,13 +3,22 @@ s = require "../service/service"
 guess = {}
 
 guess.post = (req, res) ->
+
   token = req.param 'token'
+  return res.send "missing token parameter", 400 if not token?
+  
   matchId = req.param 'match_id'
-  result = req.param('result').split ':'
+  return res.send "missing match_id parameter", 400 if not matchId?
+  
+  result = req.param 'result'
+  return res.send "missing result parameter", 400 if not result?
+  return res.send "invalid result format", 400 if not result.match(/^\d+:\d+$/)?
+  
+  result = result.split ':'
   
   s.guess.set token, matchId, result[0], result[1], (err, guess, created)->
     if err
-      res.send 500
+      res.send err.message, 500
     else
       res.send if created then 201 else 200
       # update rating if match has ended

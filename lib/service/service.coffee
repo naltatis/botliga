@@ -10,11 +10,11 @@ class GuessService
       .par ->
         m.Match.findOne {id: matchId}, @
       .seq (bot, match) ->
-        if bot? && match?
-          m.Guess.findOne {match: match._id, bot: bot._id}, (err, guess) =>
-            this err, guess, bot, match
-        else
-          callback new Error('not found')
+        return callback new Error('invalid token') if not bot?
+        return callback new Error('match not found') if not match?
+
+        m.Guess.findOne {match: match._id, bot: bot._id}, (err, guess) =>
+          this err, guess, bot, match
       .seq (guess, bot, match) ->
         created = false
         if not guess?
@@ -38,6 +38,7 @@ class GuessService
           m.Guess.findOne {match: match._id, bot: bot._id}, callback
         else
           callback(new Error 'not found')
+
   getBySeasonAndGroup: (season, group, callback) ->
     matchKeys = ['id', 'hostName', 'hostId', 'guestName', 'guestId', 'date']
     guessKeys = ['hostGoals', 'guestGoals', 'points']
