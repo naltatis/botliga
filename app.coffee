@@ -51,7 +51,6 @@ app.namespace "/maintenance", ->
   
 app.namespace "/api", ->
   app.post "/guess", api.guess.post
-  app.get "/guess", api.guess.get
 
   #app.get "/crawl", (req, res) ->
   #  crawler.updateAll ->
