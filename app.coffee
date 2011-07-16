@@ -39,7 +39,7 @@ app.get "/", (req, res) ->
   res.render 'index', navigation: 'home'
 
 app.get "/auswertung", web.results
-app.get "/bot/:user/:bot", web.botProfile
+#app.get "/bot/:user/:bot", web.botProfile
 app.get "/einstellungen", web.settings
 app.get "/datenquellen", web.datasources
 app.post "/bot", web.updateBot
