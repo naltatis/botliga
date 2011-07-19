@@ -135,6 +135,7 @@ $.widget 'stats.pointsBySeasonTable',
   _load: ->
     url = "/api/points/2010"
     $.get url, (data) =>
+      data = _(data).sortBy (i) -> i.bot
       result =
         cols: @_cols(data)
         rows: @_rows(data)
@@ -159,12 +160,11 @@ $.widget 'stats.pointsBySeasonTable',
     result
   _rows: (data) ->
     result = []
-    botNames = (bot for bot, points of data)
-    for bot in botNames.sort()
-      row = c: [v: "<a href='https://github.com/#{bot}'>#{bot}</a>"]
+    for entry in data
+      row = c: [v: "<a href='https://github.com/#{entry.bot}'>#{entry.bot}</a>"]
       for group in [1..34]
-        row.c.push {v: data[bot][group] || 0}
-      row.c.push {v: data[bot].total || 0}
+        row.c.push {v: entry.points[group] || 0}
+      row.c.push {v: entry.points.total || 0}
       result.push row
     result
     
@@ -185,9 +185,11 @@ $.widget 'stats.pointsBySeasonChart',
     chart = new google.visualization.LineChart @element.find('.chart')[0]
     chart.draw dataTable,
       width: "100%"
-      height: 450
+      height: 480
       fontSize: 12
       pointSize: 2
+      vAxis:
+        viewWindowMode: "maximized"
       hAxis:
         maxAlternation: 2
         textStyle:
@@ -195,13 +197,13 @@ $.widget 'stats.pointsBySeasonChart',
       chartArea:
         left: 60
         top: 35
-        width: "90%"
-        height: 300
-      legend: "bottom"
+        width: "70%"
+        height: 400
+      legend: "right"
   _cols: (data) ->
     result = [{id:'group', label: 'Spieltag', type: 'string'}]
-    botNames = (bot for bot, points of data)
-    for bot in botNames.sort()
+    botNames = (entry.bot for entry in data)
+    for bot in botNames
       result.push
         id: "bot_#{bot}"
         label: "#{bot}"
@@ -209,13 +211,12 @@ $.widget 'stats.pointsBySeasonChart',
     result
   _rows: (data) ->
     result = []
-    botNames = (bot for bot, points of data)
     botPoints = {}
     for group in [1..34]
       row = c: [{v: "#{group}."}]
-      for bot in botNames.sort()
-        botPoints[bot] or= 0
-        botPoints[bot] += data[bot][group] || 0
-        row.c.push {v: botPoints[bot]}
+      for entry in data
+        botPoints[entry.bot] or= 0
+        botPoints[entry.bot] += entry.points[group] || 0
+        row.c.push {v: botPoints[entry.bot]}
       result.push row
     result

@@ -107,7 +107,7 @@ class RatingService
     @scorer = new MatchScorer()
   updateForGuess: (guess, callback) ->
     m.Match.findOne { _id: guess.match }, (err, match) =>
-      if match? && match.hostGoals >= 0 && match.guestGoals >= 0
+      if match? && match.hostGoals? && match.guestGoals?
         guess.points = @scorer.score(
           [guess.hostGoals, guess.guestGoals]
           [match.hostGoals, match.guestGoals]

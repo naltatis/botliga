@@ -518,24 +518,6 @@ table.result th.bot {
 #pointsBySeasonTable .google-visualization-table-sortind {
   display: none;
 }
-#botProfileLayer {
-  position: absolute;
-  left: 70px;
-  top: 60px;
-  padding: 15px;
-  width: 700px;
-  background: #fff;
-}
-#botProfileLayer h2 {
-  font-size: 24px;
-  color: #008000;
-  margin-bottom: 10px;
-}
-#botProfileLayer h3 {
-  font-size: 14px;
-  color: #808080;
-  margin-bottom: 20px;
-}
 #botScatterChart {
   display: inline-block;
 }

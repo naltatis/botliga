@@ -1,4 +1,5 @@
 model = require "../model/model"
+_ = require 'underscore'
 
 _mapReduce = (collection, map, reduce, opt, sort, cb) ->
   model.db.collection collection, (err, matches) ->
@@ -44,12 +45,17 @@ botPointsBySeason = (season, cb) ->
         for guess in guesses
           botName = botMap[guess.bot]
           group = matchToGroup[guess.match]
+          console.log guess._id, botName, group
           if botName? && group?
             res[botName] or= {total: 0}
             res[botName][group] or= 0
             res[botName][group] += guess.points || 0
             res[botName].total += guess.points
-        cb err, res
+        
+        array = ({bot: bot, points: points} for bot, points of res)
+        array = _(array).sortBy (i) -> -i.points.total
+        
+        cb err, array
         
 guessesByBotNameAndSeason = (botName, season, cb) ->
   model.Bot.findOne {name: botName}, (err, bot) ->

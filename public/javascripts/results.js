@@ -226,6 +226,9 @@
       url = "/api/points/2010";
       return $.get(url, __bind(function(data) {
         var result;
+        data = _(data).sortBy(function(i) {
+          return i.bot;
+        });
         result = {
           cols: this._cols(data),
           rows: this._rows(data)
@@ -269,34 +272,24 @@
       return result;
     },
     _rows: function(data) {
-      var bot, botNames, group, points, result, row, _i, _len, _ref;
+      var entry, group, result, row, _i, _len;
       result = [];
-      botNames = (function() {
-        var _results;
-        _results = [];
-        for (bot in data) {
-          points = data[bot];
-          _results.push(bot);
-        }
-        return _results;
-      })();
-      _ref = botNames.sort();
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        bot = _ref[_i];
+      for (_i = 0, _len = data.length; _i < _len; _i++) {
+        entry = data[_i];
         row = {
           c: [
             {
-              v: "<a href='https://github.com/" + bot + "'>" + bot + "</a>"
+              v: "<a href='https://github.com/" + entry.bot + "'>" + entry.bot + "</a>"
             }
           ]
         };
         for (group = 1; group <= 34; group++) {
           row.c.push({
-            v: data[bot][group] || 0
+            v: entry.points[group] || 0
           });
         }
         row.c.push({
-          v: data[bot].total || 0
+          v: entry.points.total || 0
         });
         result.push(row);
       }
@@ -330,9 +323,12 @@
       chart = new google.visualization.LineChart(this.element.find('.chart')[0]);
       return chart.draw(dataTable, {
         width: "100%",
-        height: 450,
+        height: 480,
         fontSize: 12,
         pointSize: 2,
+        vAxis: {
+          viewWindowMode: "maximized"
+        },
         hAxis: {
           maxAlternation: 2,
           textStyle: {
@@ -342,14 +338,14 @@
         chartArea: {
           left: 60,
           top: 35,
-          width: "90%",
-          height: 300
+          width: "70%",
+          height: 400
         },
-        legend: "bottom"
+        legend: "right"
       });
     },
     _cols: function(data) {
-      var bot, botNames, points, result, _i, _len, _ref;
+      var bot, botNames, entry, result, _i, _len;
       result = [
         {
           id: 'group',
@@ -358,17 +354,16 @@
         }
       ];
       botNames = (function() {
-        var _results;
+        var _i, _len, _results;
         _results = [];
-        for (bot in data) {
-          points = data[bot];
-          _results.push(bot);
+        for (_i = 0, _len = data.length; _i < _len; _i++) {
+          entry = data[_i];
+          _results.push(entry.bot);
         }
         return _results;
       })();
-      _ref = botNames.sort();
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        bot = _ref[_i];
+      for (_i = 0, _len = botNames.length; _i < _len; _i++) {
+        bot = botNames[_i];
         result.push({
           id: "bot_" + bot,
           label: "" + bot,
@@ -378,17 +373,8 @@
       return result;
     },
     _rows: function(data) {
-      var bot, botNames, botPoints, group, points, result, row, _i, _len, _ref;
+      var botPoints, entry, group, result, row, _i, _len, _name;
       result = [];
-      botNames = (function() {
-        var _results;
-        _results = [];
-        for (bot in data) {
-          points = data[bot];
-          _results.push(bot);
-        }
-        return _results;
-      })();
       botPoints = {};
       for (group = 1; group <= 34; group++) {
         row = {
@@ -398,13 +384,12 @@
             }
           ]
         };
-        _ref = botNames.sort();
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          bot = _ref[_i];
-          botPoints[bot] || (botPoints[bot] = 0);
-          botPoints[bot] += data[bot][group] || 0;
+        for (_i = 0, _len = data.length; _i < _len; _i++) {
+          entry = data[_i];
+          botPoints[_name = entry.bot] || (botPoints[_name] = 0);
+          botPoints[entry.bot] += entry.points[group] || 0;
           row.c.push({
-            v: botPoints[bot]
+            v: botPoints[entry.bot]
           });
         }
         result.push(row);
