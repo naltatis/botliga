@@ -3,7 +3,6 @@ html(lang="de")
   head
     title botLiga - algorithmische Fussball-Bundesliga-Vorhersagen
     link(rel="stylesheet", href="/stylesheets/screen.css", type="text/css")
-    link(rel="stylesheet", href="http://fonts.googleapis.com/css?family=Cabin+Sketch:bold&v1", type="text/css")
     link(rel="stylesheet", href="http://fonts.googleapis.com/css?family=Droid+Sans+Mono:regular&v1", type="text/css")
     script(src="/javascripts/lib/head.js")
     script(type='text/javascript')
@@ -20,16 +19,8 @@ html(lang="de")
     meta(name="google-site-verification", content="WI1Q3e9uDKSm7La8SzxDUb0bygC0PNDe4CauhhNklvg")
   body(data-login=(everyauth.loggedIn ? everyauth.github.user.login : ''))
     header
-      img.logo(src="/images/logo.png")
-      h1
-        a(href='/')
-          em bot
-          strong Liga
-      h2
-        a(href='/')
-          | algorithmische
-          br
-          | Fussball-Bundesliga-Vorhersagen
+      a.logo(href='/')
+        img(src="/images/header.png", alt="botLiga - algorithmische Fussball-Bundesliga-Vorhersagen")
       ul.navigation
         li
           a(href='/', class= (navigation == 'home') ? 'active' : '') Home

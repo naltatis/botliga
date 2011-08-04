@@ -159,40 +159,6 @@ header .logo {
   left: 10px;
   top: 17px;
 }
-header h1 {
-  position: absolute;
-  left: 90px;
-  top: 10px;
-}
-header h1 a {
-  font-size: 60px;
-  font-family: "Cabin Sketch", serif;
-  text-decoration: none;
-  color: #000;
-}
-header h1 a:hover {
-  text-decoration: none;
-}
-header h1 a strong {
-  color: #008000;
-}
-header h2 {
-  position: absolute;
-  left: 90px;
-  top: 60px;
-}
-header h2 a {
-  display: block;
-  text-indent: 35px;
-  font-family: "Droid Sans Mono", serif;
-  font-size: 11px;
-  line-height: 13px;
-  color: #000;
-  margin-bottom: 4px;
-}
-header h2 a:hover {
-  text-decoration: none;
-}
 header .login {
   text-align: right;
   position: absolute;
