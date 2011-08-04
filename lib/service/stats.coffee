@@ -45,7 +45,6 @@ botPointsBySeason = (season, cb) ->
         for guess in guesses
           botName = botMap[guess.bot]
           group = matchToGroup[guess.match]
-          console.log guess._id, botName, group
           if botName? && group?
             res[botName] or= {total: 0}
             res[botName][group] or= 0
