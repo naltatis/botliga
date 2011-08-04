@@ -39,6 +39,8 @@ app.get "/", (req, res) ->
   res.render 'index', navigation: 'home'
 
 app.get "/auswertung", web.results
+app.get "/auswertung/:season", web.results
+app.get "/auswertung/:season/:group", web.results
 app.get "/bot/:user/:bot", web.botProfile
 app.get "/einstellungen", web.settings
 app.get "/datenquellen", web.datasources

@@ -491,3 +491,10 @@ table.result th.bot {
   width: 300px;
   height: 300px;
 }
+#results .subnav {
+  list-style-type: none;
+}
+#results .subnav li {
+  margin: 0 30px 0 0;
+  display: inline-block;
+}

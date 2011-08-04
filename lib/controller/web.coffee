@@ -44,18 +44,15 @@ datasources = (req, res) ->
       res.render 'datasources', data
 
 results = (req, res) ->
-  Seq()
-    .par ->
-      stats.botPointsBySeason "2010", @
-    .par ->
-      s.bot.getAll @
-    .seq (botsByGroups, bots) ->
-      data = 
-        navigation: 'results'
-        botsByGroups: botsByGroups
-        groups: [1..34]
-        bots: bots
-      res.render 'results', data
+  model =
+    season: req.param 'season'
+    group: req.param 'group'
+    navigation: 'results'
+    
+  model.season or= '2010'
+  model.group or= '1'
+
+  res.render 'results', model
       
 botProfile = (req, res) ->
   name = "#{req.params.user}/#{req.params.bot}"

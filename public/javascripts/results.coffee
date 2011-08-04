@@ -3,23 +3,13 @@ $.widget 'stats.guessesByGroup',
     google.load 'visualization', '1',
       packages: ['corechart', 'table']
       callback: =>
-        @element.find('.options select').change =>
-          location.hash = "#{@_group()}/#{@_season()}"
-        $(window).hashchange => @_hashchange()
-        @_hashchange()
-  _hashchange: ->
-    [group, season] = location.hash.replace('#','').split '/'
-    @season season
-    @group group
-    @_load()
+        @element.find('.options select').change ->
+          window.location = $(@).val()
+        @_load()
   _season: ->
-    @element.find('select.season').val()
+    @element.data 'season'
   _group: ->
-    @element.find('select.group').val()
-  season: (val) ->
-    @element.find('select.season').val(val)
-  group: (val) ->
-    @element.find('select.group').val(val)
+    @element.data 'group'
   _load: ->
     url = "/api/guesses/#{@_season()}/#{@_group()}"
     $.get url, (data) =>
@@ -79,8 +69,10 @@ $.widget 'stats.resultScatter'
     google.load 'visualization', '1',
       packages: ['corechart']
       callback: => @_load()
+  _season: ->
+    @element.data 'season'
   _load: ->
-    url = "/api/bot/#{@options.botName}/results/2010"
+    url = "/api/bot/#{@options.botName}/results/#{@_season()}"
     $.get url, (data) =>
       model = @_model data
       @_render model
@@ -132,8 +124,10 @@ $.widget 'stats.pointsBySeasonTable',
     google.load 'visualization', '1',
       packages: ['corechart', 'table']
       callback: => @_load()
+  _season: ->
+    @element.data "season"
   _load: ->
-    url = "/api/points/2010"
+    url = "/api/points/#{@_season()}"
     $.get url, (data) =>
       data = _(data).sortBy (i) -> i.bot
       result =
@@ -151,7 +145,7 @@ $.widget 'stats.pointsBySeasonTable',
     for group in [1..34]
       result.push
         id: "group_#{group}"
-        label: "<a href='##{group}/2010'>#{group}</a>"
+        label: group
         type: 'number'
     result.push
       id: "group_total"
@@ -173,8 +167,10 @@ $.widget 'stats.pointsBySeasonChart',
     google.load 'visualization', '1',
       packages: ['corechart', 'table']
       callback: => @_load()
+  _season: ->
+    @element.data 'season'
   _load: ->
-    url = "/api/points/2010"
+    url = "/api/points/#{@_season()}"
     $.get url, (data) =>
       result =
         cols: @_cols(data)

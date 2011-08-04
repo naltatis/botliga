@@ -5,34 +5,18 @@
       return google.load('visualization', '1', {
         packages: ['corechart', 'table'],
         callback: __bind(function() {
-          this.element.find('.options select').change(__bind(function() {
-            return location.hash = "" + (this._group()) + "/" + (this._season());
-          }, this));
-          $(window).hashchange(__bind(function() {
-            return this._hashchange();
-          }, this));
-          return this._hashchange();
+          this.element.find('.options select').change(function() {
+            return window.location = $(this).val();
+          });
+          return this._load();
         }, this)
       });
     },
-    _hashchange: function() {
-      var group, season, _ref;
-      _ref = location.hash.replace('#', '').split('/'), group = _ref[0], season = _ref[1];
-      this.season(season);
-      this.group(group);
-      return this._load();
-    },
     _season: function() {
-      return this.element.find('select.season').val();
+      return this.element.data('season');
     },
     _group: function() {
-      return this.element.find('select.group').val();
-    },
-    season: function(val) {
-      return this.element.find('select.season').val(val);
-    },
-    group: function(val) {
-      return this.element.find('select.group').val(val);
+      return this.element.data('group');
     },
     _load: function() {
       var url;
@@ -149,9 +133,12 @@
         }, this)
       });
     },
+    _season: function() {
+      return this.element.data('season');
+    },
     _load: function() {
       var url;
-      url = "/api/bot/" + this.options.botName + "/results/2010";
+      url = "/api/bot/" + this.options.botName + "/results/" + (this._season());
       return $.get(url, __bind(function(data) {
         var model;
         model = this._model(data);
@@ -221,9 +208,12 @@
         }, this)
       });
     },
+    _season: function() {
+      return this.element.data("season");
+    },
     _load: function() {
       var url;
-      url = "/api/points/2010";
+      url = "/api/points/" + (this._season());
       return $.get(url, __bind(function(data) {
         var result;
         data = _(data).sortBy(function(i) {
@@ -260,7 +250,7 @@
       for (group = 1; group <= 34; group++) {
         result.push({
           id: "group_" + group,
-          label: "<a href='#" + group + "/2010'>" + group + "</a>",
+          label: group,
           type: 'number'
         });
       }
@@ -305,9 +295,12 @@
         }, this)
       });
     },
+    _season: function() {
+      return this.element.data('season');
+    },
     _load: function() {
       var url;
-      url = "/api/points/2010";
+      url = "/api/points/" + (this._season());
       return $.get(url, __bind(function(data) {
         var result;
         result = {
