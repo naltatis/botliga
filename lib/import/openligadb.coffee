@@ -65,7 +65,7 @@ class MatchImporter
       guestGoals: result.points_team2 if  result.points_team2 >= 0
       season: result.league_saison
       group: result.group_order_id
-      date: result.match_date_time
+      date: result.match_date_time_utc
     }
 
 (exports ? this).MatchImporter = MatchImporter
