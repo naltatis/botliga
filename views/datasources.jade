@@ -48,7 +48,7 @@
           td= match.guestId
           td= match.guestName
           td= (new Date(match.date)).toFormat('DD.MM.YYYY HH24:MI:SS')
-          td= match.hostGoals || '-' + ":" + (match.guestGoals || '-')
+          td= (match.hostGoals || '-') + ":" + (match.guestGoals || '-')
   p
     
 
