@@ -21,7 +21,8 @@
 		"nib": ">= 0.0.8",
 		"uuid-pure": ">= 1.0.10",
 		"date-utils": ">= 1.2.0",
-		"narrow": ">= 0.0.1"
+		"narrow": ">= 0.0.1",
+		"at_scheduler": "0.1.0"
 	},
 	"engines": {
 	  "node": "0.4"

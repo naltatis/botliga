@@ -3,7 +3,9 @@ MatchScorer = require("../rating").MatchScorer
 Seq = require "seq"
 
 class GuessService
+  training_season: '2010'
   set: (token, matchId, hostGoals, guestGoals, callback) ->
+    self = @
     Seq()
       .par ->
         m.Bot.findOne {apiToken: token}, @
@@ -12,6 +14,7 @@ class GuessService
       .seq (bot, match) ->
         return callback new Error('invalid token') if not bot?
         return callback new Error('match not found') if not match?
+        return callback new Error('match has already started') if not self._isMatchEditable match
 
         m.Guess.findOne {match: match._id, bot: bot._id}, (err, guess) =>
           this err, guess, bot, match
@@ -27,6 +30,13 @@ class GuessService
         guess.save (err, guess) ->
           callback err, guess, created
           
+  _isMatchEditable: (match) ->
+    return true if match.season == @training_season
+    if match.date.isBefore(new Date())
+      return false
+    else
+      return true
+
   get: (botId, matchId, callback) ->
     Seq()
       .par ->

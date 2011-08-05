@@ -40,10 +40,28 @@ refreshPoints = (req, res) ->
       .seq ->
         res.send 200
 
-importer = (req, res) ->
+importSeason = (req, res) ->
   requireSecret req, res, ->
-    importer = new openligadb.MatchImporter()
-    importer.importBySeason season for season in [req.params.season]
+    season = req.param 'season'
+    if season?
+      importer = new openligadb.MatchImporter()
+      importer.importBySeason season, ->
+        res.send "imported #{season}"
+    else
+      res.send "season required"
 
-(exports ? this).importer = importer
+importGroup = (req, res) ->
+  requireSecret req, res, ->
+    season = req.param 'season'
+    group = req.param 'group'
+    if season? && group?
+      importer = new openligadb.MatchImporter()
+      importer.importBySeasonAndGroup season, group, ->
+        res.send "imported #{group}/#{season}"
+    else
+      res.send "season and group required"
+
+
+(exports ? this).importSeason = importSeason
+(exports ? this).importGroup = importGroup
 (exports ? this).refreshPoints = refreshPoints

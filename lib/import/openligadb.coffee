@@ -1,13 +1,15 @@
 model = require "../model/model"
 rest = require "restler"
 _ = require "underscore"
+Seq = require "seq"
 
 apiHost = "http://openligadb-json.heroku.com/api/"
 
 class MatchImporter
   constructor: ->
     
-  importBySeasonAndGoup: (season, group) ->
+  importBySeasonAndGroup: (season, group, cb = ->) ->
+    self = @
     console.log "importing #{season}/#{group}"
     url = "#{apiHost}matchdata_by_group_league_saison"
     options =
@@ -15,25 +17,40 @@ class MatchImporter
         league_shortcut: 'bl1'
         group_order_id: group
         league_saison: season
-    rest.get(url, options).on 'complete', (data) =>
-      console.log "--------------->", season, group
-      _(data.matchdata).each (result, i) =>
+        
+    Seq()
+      .seq ->
+        rest.get(url, options).on 'complete', (data) =>
+          console.log "---->", season, group
+          @ null, data.matchdata
+      .flatten()
+      .parMap (result) ->
         if result?
-          data = @_match result
-          console.log data
-          model.Match.update {id: data.id}, data, {upsert: true}, (err) ->
-            console.log "imported #{season}/#{group}", err
+          data = self._match result
+          console.log "importing\t#{data.hostName}\t\t#{data.guestName}"
+          model.Match.update {id: data.id}, data, {upsert: true}, (err) =>
+            console.log err if err
+            @ err
+        else
+          @ null
+      .seq cb
 
-  importBySeason: (season) ->
-    @_groupsBySeason season, (groups) =>
-      _(groups).each (group, i) =>
-        @importBySeasonAndGoup season, group
+  importBySeason: (season, cb = ->) ->
+    self = @
+    Seq()
+      .seq ->
+        self._groupsBySeason season, @
+      .flatten()
+      .parMap (group) ->
+        self.importBySeasonAndGroup season, group, @
+      .seq cb
     
   _groupsBySeason: (season, cb) ->
     rest
       .get("#{apiHost}avail_groups?league_saison=#{season}&league_shortcut=bl1")
       .on 'complete', (data) =>
-        cb(group.group_order_id for group in data.group)
+        res = (group.group_order_id for group in data.group)
+        cb null, res
              
   _match: (result) ->
     result.points_team1 = parseInt(result.points_team1, 10)
