@@ -1,6 +1,7 @@
 m = require "../model/model"
 MatchScorer = require("../rating").MatchScorer
 Seq = require "seq"
+_ = require "underscore"
 
 class GuessService
   training_season: '2010'
@@ -90,6 +91,7 @@ class GuessService
           self null, _match
       .seq (matches...) ->
         points = {}
+        matches =  _(matches).sortBy (e) -> e.date.getTime()
         for match in matches
           for guess in match.guesses
             points[guess.bot] or= 0
