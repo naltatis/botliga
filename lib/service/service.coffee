@@ -32,7 +32,7 @@ class GuessService
           
   _isMatchEditable: (match) ->
     return true if match.season == @training_season
-    if match.date.isBefore(new Date())
+    if match.date.isBefore(new Date().addHours(2))
       return false
     else
       return true
@@ -81,7 +81,7 @@ class GuessService
                 _guess[key] = guess[key]
             
               # only include guesses for passed matches
-              if not match.date.isBefore(new Date())
+              if not match.date.isBefore(new Date().addHours(2))
                 _guess.hostGoals = _guess.guestGoals = '-'
               
               _guess.bot = self.vars.bots[guess.bot]
