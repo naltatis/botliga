@@ -71,7 +71,7 @@ class GuessService
                 _guess[key] = guess[key]
             
               # only include guesses for passed matches
-              if not match.date.isBefore(new Date())  
+              if not match.date.isBefore(new Date())
                 _guess.hostGoals = _guess.guestGoals = '-'
               
               _guess.bot = self.vars.bots[guess.bot]

@@ -88,13 +88,13 @@
           });
           if (guess != null) {
             row.c.push({
-              v: guess.points,
-              f: "" + guess.hostGoals + ":" + guess.guestGoals + " <strong>" + guess.points + "</strong>"
+              v: guess.points || 0,
+              f: "" + guess.hostGoals + ":" + guess.guestGoals + " <strong>" + (guess.points != null ? guess.points : '') + "</strong>"
             });
           } else {
             row.c.push({
               v: 0,
-              f: "-:- <strong>0</strong>"
+              f: ""
             });
           }
         }

@@ -44,12 +44,12 @@ $.widget 'stats.guessesByGroup',
         guess = _(match.guesses).detect (guess) -> bot == guess.bot
         if guess?
           row.c.push
-            v: guess.points
-            f: "#{guess.hostGoals}:#{guess.guestGoals} <strong>#{guess.points}</strong>"
+            v: guess.points || 0
+            f: "#{guess.hostGoals}:#{guess.guestGoals} <strong>#{if guess.points? then guess.points else ''}</strong>"
         else
           row.c.push
             v: 0
-            f: "-:- <strong>0</strong>"
+            f: ""
       row.c.push
         v: data.points[bot]
       result.push row

@@ -49,7 +49,7 @@ results = (req, res) ->
     group: req.param 'group'
     navigation: 'results'
     
-  model.season or= '2010'
+  model.season or= '2011'
   model.group or= '1'
 
   res.render 'results', model

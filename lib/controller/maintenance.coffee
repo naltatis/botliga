@@ -20,16 +20,16 @@ refreshPoints = (req, res) ->
         
           
     updatePoints = (guess, match, cb) ->
-      if match? && match.hostGoals >= 0 && match.guestGoals >= 0
+      if match? && match.hostGoals? && match.guestGoals?
         guess.points = scorer.score(
           [guess.hostGoals, guess.guestGoals]
           [match.hostGoals, match.guestGoals]
         )
         console.log [guess.hostGoals, guess.guestGoals], [match.hostGoals, match.guestGoals], guess.points
-        guess.save cb
       else
+        guess.points = null
         console.log "match hasn't ended yet"
-        cb()
+      guess.save cb
 
     Seq()
       .seq ->
