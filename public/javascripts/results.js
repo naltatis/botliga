@@ -56,7 +56,7 @@
         match = _ref[_i];
         result.push({
           id: "match_" + match.id,
-          label: "<img src='/images/teams/" + match.hostId + ".gif' title='" + match.hostName + "'><img src='/images/teams/" + match.guestId + ".gif' title='" + match.guestName + "'><br>" + match.hostGoals + ":" + match.guestGoals,
+          label: "<div class='team team-" + match.hostId + "' title='" + match.hostName + "'></div><div class='team team-" + match.guestId + "' title='" + match.guestName + "'></div><br>" + match.hostGoals + ":" + match.guestGoals,
           type: 'number'
         });
       }
