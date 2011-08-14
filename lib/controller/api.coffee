@@ -16,7 +16,10 @@ guess.post = (req, res) ->
   
   result = result.split ':'
   
-  s.guess.set token, matchId, result[0], result[1], (err, guess, created)->
+  # god mode for manipulating guesses
+  force = req.param('secret') == process.env.MAINTENANCE
+  
+  s.guess.set token, matchId, result[0], result[1], force, (err, guess, created)->
     if err
       res.send err.message, 500
     else

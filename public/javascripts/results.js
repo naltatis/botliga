@@ -319,9 +319,6 @@
         height: 480,
         fontSize: 12,
         pointSize: 2,
-        vAxis: {
-          viewWindowMode: "maximized"
-        },
         hAxis: {
           maxAlternation: 2,
           textStyle: {

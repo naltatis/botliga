@@ -5,7 +5,8 @@ _ = require "underscore"
 
 class GuessService
   training_season: '2010'
-  set: (token, matchId, hostGoals, guestGoals, callback) ->
+  set: (token, matchId, hostGoals, guestGoals, force, callback) ->
+    console.log force
     self = @
     Seq()
       .par ->
@@ -15,7 +16,7 @@ class GuessService
       .seq (bot, match) ->
         return callback new Error('invalid token') if not bot?
         return callback new Error('match not found') if not match?
-        return callback new Error('match has already started') if not self._isMatchEditable match
+        return callback new Error('match has already started') if not self._isMatchEditable match, force
 
         m.Guess.findOne {match: match._id, bot: bot._id}, (err, guess) =>
           this err, guess, bot, match
@@ -31,7 +32,8 @@ class GuessService
         guess.save (err, guess) ->
           callback err, guess, created
           
-  _isMatchEditable: (match) ->
+  _isMatchEditable: (match, force) ->
+    return true if force
     return true if match.season == @training_season
     if match.date.isBefore(new Date().addHours(2))
       return false
