@@ -13,7 +13,8 @@ html(lang="de")
         ["/javascripts/lib/underscore.js"],
         ["/javascripts/results.js"],
         ["/javascripts/settings.js"],
-        ["/javascripts/main.js"]
+        ["/javascripts/main.js"],
+        ["https://apis.google.com/js/plusone.js"]
       )
     meta(name="google-site-verification", content="WI1Q3e9uDKSm7La8SzxDUb0bygC0PNDe4CauhhNklvg")
   body(data-login=(everyauth.loggedIn ? everyauth.github.user.login : ''))
@@ -44,7 +45,9 @@ html(lang="de")
       !{body}
       #footer
         ul
-          li
+          li.gplus
+            | !{'<g:plusone size="small" href="http://www.botliga.de"></g:plusone>'}
+          li.twitter
             a(href="http://twitter.com/botliga") Twitter: @botliga
           li
             a(href="https://github.com/naltatis/botliga") GitHub: naltatis/botliga
