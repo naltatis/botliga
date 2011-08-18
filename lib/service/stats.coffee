@@ -49,7 +49,7 @@ botPointsBySeason = (season, cb) ->
             res[botName] or= {total: 0}
             res[botName][group] or= 0
             res[botName][group] += guess.points || 0
-            res[botName].total += guess.points
+            res[botName].total += guess.points || 0
         
         array = ({bot: bot, points: points} for bot, points of res)
         array = _(array).sortBy (i) -> -i.points.total
