@@ -29,7 +29,6 @@ $.widget 'stats.guessesByGroup',
       result.push
         id: "match_#{match.id}"
         label: "<div class='team team-#{match.hostId}' title='#{match.hostName}'></div><div class='team team-#{match.guestId}' title='#{match.guestName}'></div><br>#{match.hostGoals}:#{match.guestGoals}"
-#        label: "<img src='/images/teams/#{match.hostId}.gif' title='#{match.hostName}'><img src='/images/teams/#{match.guestId}.gif' title='#{match.guestName}'><br>#{match.hostGoals}:#{match.guestGoals}"
         type: 'number'
     result.push
       id: 'total'
@@ -38,7 +37,7 @@ $.widget 'stats.guessesByGroup',
     result
   _rows: (data) ->
     result = []
-    for bot in @_bots(data.matches).sort()
+    for bot in @_bots(data.matches)
       row = 
         c: [v: "<a href='https://github.com/#{bot}'>#{bot}</a>"]
       for match in data.matches
@@ -54,7 +53,7 @@ $.widget 'stats.guessesByGroup',
       row.c.push
         v: data.points[bot]
       result.push row
-    result
+    _(result).sortBy (r) -> r.c[r.c.length - 1].v * -1
   _bots: (matches) ->
     result = []
     for match in matches
@@ -118,7 +117,18 @@ $.widget 'bot.profile'
     
   _scatter: ->
     #$.get "/api/bot/#{@options.botName}/results/2010", (data) => @_show data
+
     
+cache = {}
+getCached = (url, cb) ->
+  if cache[url]?
+    cache[url].push cb
+  else
+    cache[url] = [cb]
+    $.get url, (data) ->
+      for callback in cache[url]
+        callback(data)
+      delete cache[url]
 
 $.widget 'stats.pointsBySeasonTable',
   _create: ->
@@ -129,7 +139,7 @@ $.widget 'stats.pointsBySeasonTable',
     @element.data "season"
   _load: ->
     url = "/api/points/#{@_season()}"
-    $.get url, (data) =>
+    getCached url, (data) =>
       data = _(data).sortBy (i) -> i.bot
       result =
         cols: @_cols(data)
@@ -161,8 +171,9 @@ $.widget 'stats.pointsBySeasonTable',
         row.c.push {v: entry.points[group] || 0}
       row.c.push {v: entry.points.total || 0}
       result.push row
-    result
+    _(result).sortBy (r) -> r.c[r.c.length - 1].v * -1
     
+
 $.widget 'stats.pointsBySeasonChart',
   _create: ->
     google.load 'visualization', '1',
@@ -172,7 +183,7 @@ $.widget 'stats.pointsBySeasonChart',
     @element.data 'season'
   _load: ->
     url = "/api/points/#{@_season()}"
-    $.get url, (data) =>
+    getCached url, (data) =>
       result =
         cols: @_cols(data)
         rows: @_rows(data)
@@ -207,11 +218,11 @@ $.widget 'stats.pointsBySeasonChart',
   _rows: (data) ->
     result = []
     botPoints = {}
-    for group in [1..34]
+    for group in [1..8]
       row = c: [{v: "#{group}."}]
       for entry in data
         botPoints[entry.bot] or= 0
-        botPoints[entry.bot] += entry.points[group] || 0
+        botPoints[entry.bot] += entry.points[group] || undefined
         row.c.push {v: botPoints[entry.bot], f: "+#{entry.points[group]||0} (#{botPoints[entry.bot]})"}
       result.push row
     result

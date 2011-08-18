@@ -1,4 +1,5 @@
 (function() {
+  var cache, getCached;
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   $.widget('stats.guessesByGroup', {
     _create: function() {
@@ -70,7 +71,7 @@
     _rows: function(data) {
       var bot, guess, match, result, row, _i, _j, _len, _len2, _ref, _ref2;
       result = [];
-      _ref = this._bots(data.matches).sort();
+      _ref = this._bots(data.matches);
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         bot = _ref[_i];
         row = {
@@ -103,7 +104,9 @@
         });
         result.push(row);
       }
-      return result;
+      return _(result).sortBy(function(r) {
+        return r.c[r.c.length - 1].v * -1;
+      });
     },
     _bots: function(matches) {
       var guess, match, result, _i, _j, _len, _len2, _ref;
@@ -199,6 +202,23 @@
     },
     _scatter: function() {}
   });
+  cache = {};
+  getCached = function(url, cb) {
+    if (cache[url] != null) {
+      return cache[url].push(cb);
+    } else {
+      cache[url] = [cb];
+      return $.get(url, function(data) {
+        var callback, _i, _len, _ref;
+        _ref = cache[url];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          callback = _ref[_i];
+          callback(data);
+        }
+        return delete cache[url];
+      });
+    }
+  };
   $.widget('stats.pointsBySeasonTable', {
     _create: function() {
       return google.load('visualization', '1', {
@@ -214,7 +234,7 @@
     _load: function() {
       var url;
       url = "/api/points/" + (this._season());
-      return $.get(url, __bind(function(data) {
+      return getCached(url, __bind(function(data) {
         var result;
         data = _(data).sortBy(function(i) {
           return i.bot;
@@ -283,7 +303,9 @@
         });
         result.push(row);
       }
-      return result;
+      return _(result).sortBy(function(r) {
+        return r.c[r.c.length - 1].v * -1;
+      });
     }
   });
   $.widget('stats.pointsBySeasonChart', {
@@ -301,7 +323,7 @@
     _load: function() {
       var url;
       url = "/api/points/" + (this._season());
-      return $.get(url, __bind(function(data) {
+      return getCached(url, __bind(function(data) {
         var result;
         result = {
           cols: this._cols(data),
@@ -366,7 +388,7 @@
       var botPoints, entry, group, result, row, _i, _len, _name;
       result = [];
       botPoints = {};
-      for (group = 1; group <= 34; group++) {
+      for (group = 1; group <= 8; group++) {
         row = {
           c: [
             {
@@ -377,7 +399,7 @@
         for (_i = 0, _len = data.length; _i < _len; _i++) {
           entry = data[_i];
           botPoints[_name = entry.bot] || (botPoints[_name] = 0);
-          botPoints[entry.bot] += entry.points[group] || 0;
+          botPoints[entry.bot] += entry.points[group] || void 0;
           row.c.push({
             v: botPoints[entry.bot],
             f: "+" + (entry.points[group] || 0) + " (" + botPoints[entry.bot] + ")"
