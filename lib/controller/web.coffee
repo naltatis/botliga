@@ -50,7 +50,7 @@ results = (req, res) ->
     navigation: 'results'
     
   model.season or= '2011'
-  model.group or= '3'
+  model.group or= '4'
 
   res.render 'results', model
       
