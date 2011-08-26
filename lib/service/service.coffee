@@ -51,7 +51,8 @@ class GuessService
           m.Guess.findOne {match: match._id, bot: bot._id}, callback
         else
           callback(new Error 'not found')
-
+  getByMatchId: (matchId, callback) ->
+    m.Guess.find {match: matchId}, callback
   getBySeasonAndGroup: (season, group, callback) ->
     matchKeys = ['id', 'hostName', 'hostId', 'guestName', 'guestId', 'date']
     guessKeys = ['hostGoals', 'guestGoals', 'points']
@@ -129,7 +130,7 @@ class RatingService
         guess.save (err, guess) ->
           callback err, guess
       else
-        callback(new Error 'match not found or not ended')
+        callback()
 
 (exports ? this).guess = new GuessService()
 (exports ? this).rating = new RatingService()

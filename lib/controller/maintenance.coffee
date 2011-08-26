@@ -1,4 +1,5 @@
 m = require "../model/model"
+s = require "../service/service"
 MatchScorer = require("../rating").MatchScorer
 openligadb = require "../import/openligadb"
 Seq = require "seq"
@@ -50,12 +51,23 @@ importSeason = (req, res) ->
     else
       res.send "season required"
 
+updatePoints = (match) ->
+  Seq()
+    .seq ->
+      s.guess.getByMatchId match._id, @
+    .flatten()
+    .parMap (guess) ->
+      s.rating.updateForGuess guess, @
+    .seq ->
+      console.log "updated points for match #{match.id}"
+
 importGroup = (req, res) ->
   requireSecret req, res, ->
     season = req.param 'season'
     group = req.param 'group'
     if season? && group?
       importer = new openligadb.MatchImporter()
+      importer.on 'match', updatePoints
       importer.importBySeasonAndGroup season, group, ->
         res.send "imported #{group}/#{season}"
     else

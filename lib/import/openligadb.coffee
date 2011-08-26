@@ -2,10 +2,11 @@ model = require "../model/model"
 rest = require "restler"
 _ = require "underscore"
 Seq = require "seq"
+{EventEmitter} = require "events"
 
 apiHost = "http://openligadb-json.heroku.com/api/"
 
-class MatchImporter
+class MatchImporter extends EventEmitter
   constructor: ->
     
   importBySeasonAndGroup: (season, group, cb = ->) ->
@@ -30,7 +31,9 @@ class MatchImporter
           console.log "importing\t#{data.hostName}\t\t#{data.guestName}"
           model.Match.update {id: data.id}, data, {upsert: true}, (err) =>
             console.log err if err
-            @ err
+            model.Match.findOne {id: data.id}, (err, match) =>
+              self.emit "match", match
+              @ err
         else
           @ null
       .seq cb
