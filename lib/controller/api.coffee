@@ -26,10 +26,7 @@ guess.post = (req, res) ->
       res.send if created then 201 else 200
       # update rating if match has ended
       s.rating.updateForGuess guess, (err, guess) ->
-        if err
-          console.log "error: #{err}"
-        else
-          console.log "updated score for guess #{guess._id} >> #{guess.points} points"
+        console.log "updated score for guess #{guess._id} >> #{guess.points} points" if guess
 
 
 stats = {}
