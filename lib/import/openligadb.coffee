@@ -18,6 +18,7 @@ class MatchImporter extends EventEmitter
         league_shortcut: 'bl1'
         group_order_id: group
         league_saison: season
+    console.log url, options
         
     Seq()
       .seq ->

@@ -51,7 +51,7 @@ importSeason = (req, res) ->
     else
       res.send "season required"
 
-updatePoints = (match) ->
+_updatePoints = (match) ->
   Seq()
     .seq ->
       s.guess.getByMatchId match._id, @
@@ -61,14 +61,17 @@ updatePoints = (match) ->
     .seq ->
       console.log "updated points for match #{match.id}"
 
-importGroup = (req, res) ->
+importGroup = (season, group, cb) ->
+  importer = new openligadb.MatchImporter()
+  importer.on 'match', _updatePoints
+  importer.importBySeasonAndGroup season, group, cb
+
+importGroupController = (req, res) ->
   requireSecret req, res, ->
     season = req.param 'season'
     group = req.param 'group'
     if season? && group?
-      importer = new openligadb.MatchImporter()
-      importer.on 'match', updatePoints
-      importer.importBySeasonAndGroup season, group, ->
+      importGroup season, group, ->
         res.send "imported #{group}/#{season}"
     else
       res.send "season and group required"
@@ -76,4 +79,5 @@ importGroup = (req, res) ->
 
 (exports ? this).importSeason = importSeason
 (exports ? this).importGroup = importGroup
+(exports ? this).importGroupController = importGroupController
 (exports ? this).refreshPoints = refreshPoints

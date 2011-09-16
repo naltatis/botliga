@@ -51,7 +51,7 @@ app.get "/impressum", (req, res) -> res.render 'impressum', navigation: 'impress
 app.namespace "/maintenance", ->
   app.get "/refresh-points", maintenance.refreshPoints
   app.get "/import/:season", maintenance.importSeason
-  app.get "/import/:season/:group", maintenance.importGroup
+  app.get "/import/:season/:group", maintenance.importGroupController
   
 app.namespace "/api", ->
   app.post "/guess", api.guess.post
@@ -81,5 +81,5 @@ port = process.env.PORT || 3000
 app.listen port, ->
   console.log "Listening on #{port}"
   
-#updater = new Updater()
-#updater.start()
+updater = new Updater()
+updater.start()
