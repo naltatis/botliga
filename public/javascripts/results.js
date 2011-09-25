@@ -388,7 +388,7 @@
       var botPoints, entry, group, result, row, _i, _len, _name;
       result = [];
       botPoints = {};
-      for (group = 1; group <= 10; group++) {
+      for (group = 1; group <= 7; group++) {
         row = {
           c: [
             {
