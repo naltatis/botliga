@@ -388,7 +388,7 @@
       var botPoints, entry, group, result, row, _i, _len, _name;
       result = [];
       botPoints = {};
-      for (group = 1; group <= 8; group++) {
+      for (group = 1; group <= 10; group++) {
         row = {
           c: [
             {
@@ -399,7 +399,7 @@
         for (_i = 0, _len = data.length; _i < _len; _i++) {
           entry = data[_i];
           botPoints[_name = entry.bot] || (botPoints[_name] = 0);
-          botPoints[entry.bot] += entry.points[group] || void 0;
+          botPoints[entry.bot] += entry.points[group] || 0;
           row.c.push({
             v: botPoints[entry.bot],
             f: "+" + (entry.points[group] || 0) + " (" + botPoints[entry.bot] + ")"
