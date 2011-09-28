@@ -222,7 +222,7 @@ $.widget 'stats.pointsBySeasonChart',
       row = c: [{v: "#{group}."}]
       for entry in data
         botPoints[entry.bot] or= 0
-        botPoints[entry.bot] += entry.points[group] || undefined
+        botPoints[entry.bot] += entry.points[group] || 0
         row.c.push {v: botPoints[entry.bot], f: "+#{entry.points[group]||0} (#{botPoints[entry.bot]})"}
       result.push row
     result
