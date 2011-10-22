@@ -2,20 +2,9 @@
 html(lang="de")
   head
     title botLiga - algorithmische Fussball-Bundesliga-Vorhersagen
-    link(rel="stylesheet", href="/stylesheets/screen.css", type="text/css")
+    != css('screen')
     link(rel="stylesheet", href="http://fonts.googleapis.com/css?family=Droid+Sans+Mono:regular&v1", type="text/css")
-    script(src="/javascripts/lib/head.js")
-    script(type='text/javascript')
-      head.js(
-        ["https://www.google.com/jsapi?key=ABQIAAAA3koe9AclG3A9QsxITBYYcxSuT4o5rNhZx7igNQKhoCG2L3QwSxTdOq6rOrdmh99sq2tIVZSq6cUTSw"],
-        ["/javascripts/lib/jquery.js"],
-        ["/javascripts/lib/jquery.ui.widget.js"],
-        ["/javascripts/lib/underscore.js"],
-        ["/javascripts/results.js"],
-        ["/javascripts/settings.js"],
-        ["/javascripts/main.js"],
-        ["https://apis.google.com/js/plusone.js"]
-      )
+    != js('main')
     meta(name="google-site-verification", content="WI1Q3e9uDKSm7La8SzxDUb0bygC0PNDe4CauhhNklvg")
   body(data-login=(everyauth.loggedIn ? everyauth.github.user.login : ''))
     header
@@ -53,6 +42,8 @@ html(lang="de")
             a(href="https://github.com/naltatis/botliga") GitHub: naltatis/botliga
           li
             a(href="/impressum") Impressum
+    != js('https://www.google.com/jsapi?key=ABQIAAAA3koe9AclG3A9QsxITBYYcxSuT4o5rNhZx7igNQKhoCG2L3QwSxTdOq6rOrdmh99sq2tIVZSq6cUTSw')
+    != js('https://apis.google.com/js/plusone.js')
     script(type='text/javascript')
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-24336714-1']);

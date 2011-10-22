@@ -11,13 +11,6 @@ maintenance = require "./lib/controller/maintenance"
 require "express-namespace"
 require "date-utils"
 
-
-# stylus compiler
-compile = (str, path) ->
-  stylus(str)
-    .set('filename', path)
-    .include(nib.path)
-
 app = express.createServer()
 app.set 'view engine', 'jade'
 app.use express.bodyParser()
@@ -25,15 +18,9 @@ app.use express.cookieParser()
 app.use express.session(secret: process.env.SECRET || "soadh89g2OHA")
 app.use auth.middleware()
 app.use app.router
-app.use stylus.middleware(src: __dirname + '/public', compile: compile)
 app.use express.static(__dirname + '/public')
+app.use require('connect-assets')()
 
-app.use stylus.middleware(
-  src: "#{__dirname}/views"
-  dest: "#{__dirname}/public"
-  compile: (str, path, fn) ->
-    stylus(str).set('compress', false)
-)
 auth.helpExpress app
 
 app.get "/", (req, res) ->
