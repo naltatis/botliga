@@ -39,13 +39,15 @@ $.widget 'stats.guessesByGroup',
     result = []
     for bot in @_bots(data.matches)
       row = 
-        c: [v: "<a href='https://github.com/#{bot}'>#{bot}</a>"]
+        c: [v: "<a href='https://github.com/#{bot}'>#{bot}</a>", p: 'className': "google-visualization-table-td bot-name"]
       for match in data.matches
         guess = _(match.guesses).detect (guess) -> bot == guess.bot
         if guess?
           row.c.push
             v: guess.points || 0
             f: "#{guess.hostGoals}:#{guess.guestGoals} <strong>#{if guess.points? then guess.points else ''}</strong>"
+            p:
+              'className': "google-visualization-table-td points-#{if guess.points? then guess.points else '-none'}"
         else
           row.c.push
             v: 0
