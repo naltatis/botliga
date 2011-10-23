@@ -6,5 +6,17 @@
 
 $ ->
   $('#guessesByGroup').guessesByGroup()
-  $('#pointsBySeasonTable').pointsBySeasonTable()
   $('#pointsBySeasonChart').pointsBySeasonChart()
+  
+  $('#results a.seasonChart').click (e) ->
+    e.preventDefault()
+    $(@).parent().siblings().find('a').removeClass('current')
+    $(@).addClass('current')
+    $('#pointsBySeasonChart').show()
+    $('#pointsBySeasonTable').hide()  
+  $('#results a.seasonTable').click (e) ->
+    e.preventDefault()
+    $(@).parent().siblings().find('a').removeClass('current')
+    $(@).addClass('current')
+    $('#pointsBySeasonTable').pointsBySeasonTable().show()
+    $('#pointsBySeasonChart').hide()  

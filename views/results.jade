@@ -11,13 +11,17 @@
       li
         h2 Auswertung vorherige Saison (Training)
     
+  ul.subnav
+    li
+      h3
+        | Ergebnisse
+        = group
+        | . Spieltag
+        = season + '/' + (parseInt(season) + 1)
+    li
+      a(href='/api/points/' + season) JSON
   
   #guessesByGroup(data-season=season, data-group=group)
-    h3
-      | Ergebnisse
-      = group
-      | . Spieltag
-      = season + '/' + (parseInt(season) + 1)
     .options
       select#guessesByGroupGroup.group
         - for (i=1; i<=34; i++)
@@ -26,10 +30,19 @@
       p.loading
         img(src='/images/loading.gif')
 
+  ul.subnav
+    li
+      h3
+        | Saison Übersicht 
+        = season + '/' + (parseInt(season) + 1)
+    li
+      a.seasonChart.current(href='#') Chart
+    li
+      a.seasonTable(href='#') Tabelle
+    li
+      a(href='/api/points/2011') JSON
+
   #pointsBySeasonTable(data-season=season, data-group=group)
-    h3
-      | Saison Übersicht 
-      = season + '/' + (parseInt(season) + 1)
     .table
       p.loading
         img(src='/images/loading.gif')
