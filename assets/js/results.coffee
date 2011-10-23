@@ -183,6 +183,8 @@ $.widget 'stats.pointsBySeasonChart',
       callback: => @_load()
   _season: ->
     @element.data 'season'
+  _group: ->
+    @element.data 'group'
   _load: ->
     url = "/api/points/#{@_season()}"
     getCached url, (data) =>
@@ -220,7 +222,8 @@ $.widget 'stats.pointsBySeasonChart',
   _rows: (data) ->
     result = []
     botPoints = {}
-    for group in [1..10]
+    to = @_group()
+    for group in [0..to]
       row = c: [{v: "#{group}."}]
       for entry in data
         botPoints[entry.bot] or= 0

@@ -116,6 +116,10 @@ class BotService
 class MatchService
   getBySeason: (season, callback) ->
     m.Match.find({season: season}).sort('date', 'ascending').find callback
+  getCurrentGroup: (callback) ->
+    date = new Date().addDays(-2)
+    m.Match.find({date:{$gt: date}}).sort('date', 'ascending').find (err, matches) ->
+      callback err, matches[0].group
 
 class RatingService
   constructor: ->

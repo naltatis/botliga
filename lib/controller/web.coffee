@@ -50,9 +50,13 @@ results = (req, res) ->
     navigation: 'results'
     
   model.season or= '2011'
-  model.group or= '10'
-
-  res.render 'results', model
+  
+  if model.group?
+    res.render 'results', model    
+  else
+    s.match.getCurrentGroup (err, group) ->
+      model.group = group
+      res.render 'results', model    
       
 botProfile = (req, res) ->
   name = "#{req.params.user}/#{req.params.bot}"
