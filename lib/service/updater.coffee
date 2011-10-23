@@ -1,6 +1,7 @@
 model = require "../model/model"
 require '../vendor/scheduler'
 maintenance = require "../controller/maintenance"
+log = require('util').log
 
 class Updater
   constructor: ->
@@ -9,8 +10,9 @@ class Updater
   start: ->
     @upcomingMatches()
   _task: (season, group) ->
+    log "automatically importing #{season}/#{group} ..."
     maintenance.importGroup season, group, ->
-      console.log "imported #{season}/#{group}"
+      log "... finished"
   upcomingMatches: ->
     model.Match.find date: {$gt: new Date()}, (err, matches) =>
       dates = {}
@@ -18,9 +20,10 @@ class Updater
         dates[match.date.getTime()] = match.group
       for time, group of dates
         @_addTasks parseInt(time), group
+      log "#{Object.keys(dates).length} scheduled updates for #{matches.length} upcoming matches created"
   _addTasks: (time, group) ->
-    for i in [0..20]
+    for i in [0..50]
       task = => @_task "2011", group
-      offset = 10 * 60 * 1000 * i
+      offset = 5 * 60 * 1000 * i
       @scheduler.addJob time + offset, task
 (exports ? this).Updater = Updater
