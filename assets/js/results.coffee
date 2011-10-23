@@ -63,10 +63,7 @@ $.widget 'stats.guessesByGroup',
         result.push guess.bot if guess.bot? && !_(result).contains guess.bot
     result
 
-$.widget 'stats.resultScatter'
-  options:
-    botName: ''
-    
+$.widget 'stats.scatterChart'
   _create: ->
     google.load 'visualization', '1',
       packages: ['corechart']
@@ -74,17 +71,31 @@ $.widget 'stats.resultScatter'
   _season: ->
     @element.data 'season'
   _load: ->
-    url = "/api/bot/#{@options.botName}/results/#{@_season()}"
-    $.get url, (data) =>
-      model = @_model data
-      @_render model
+    #url = "/api/bot/#{@options.botName}/results/#{@_season()}"
+    #$.get url, (data) =>
+    data = 
+      '0:0': 3
+      '2:1': 6
+      '1:3': 2
+      '1:5': 1
+      '2:3': 3
+      '5:5': 2
+      '3:2': 1
+    model = @_model data
+    @_render model
   _model: (data) ->
     d = new google.visualization.DataTable()
     d.addColumn 'number', 'Heim-Tore'
-    d.addColumn 'number', 'Auswärts-Tore'
+    for i in [1.._(data).size()]
+      d.addColumn 'number'
+    i = 0
     for result, count of data
+      i++
       [home, guest] = result.split ':'
-      d.addRow [parseInt(home, 10), parseInt(guest, 10)]
+      row = [parseInt(home, 10)]
+      for n in [1.._(data).size()]
+        row.push if n == i then parseInt(guest, 10) else null
+      d.addRow row
     d
     
   _render: (model) ->
@@ -92,14 +103,24 @@ $.widget 'stats.resultScatter'
     chart.draw model,
       width: 300
       height: 300
+      pointSize: 15
+      series: [
+        (visibleInLegend: false, color: 'green', pointSize: 20),
+        (visibleInLegend: false, color: 'green', pointSize: 14),
+        (visibleInLegend: false, color: 'green', pointSize: 15),
+        (visibleInLegend: false, color: 'green', pointSize: 18),
+        (visibleInLegend: false, color: 'green', pointSize: 18),
+        (visibleInLegend: false, color: 'green', pointSize: 9),
+        (visibleInLegend: false, color: 'green', pointSize: 14)
+      ]
       vAxis: 
         title: "Heim-Tore"
         minValue: 0
-        maxValue: 8
+        maxValue: 5
       hAxis: 
         title: "Auswärts-Tore"
         minValue: 0
-        maxValue: 8
+        maxValue: 5
 
 $.widget 'bot.profile'
   options:
