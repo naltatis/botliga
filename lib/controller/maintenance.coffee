@@ -46,8 +46,11 @@ importSeason = (req, res) ->
     season = req.param 'season'
     if season?
       importer = new openligadb.MatchImporter()
-      importer.importBySeason season, ->
-        res.send "imported #{season}"
+      importer.importBySeason season, (err) ->
+        if err
+          res.send "failed to import #{season}: #{err}"
+        else
+          res.send "imported #{season}"
     else
       res.send "season required"
 
@@ -65,17 +68,26 @@ importGroup = (season, group, cb) ->
   importer = new openligadb.MatchImporter()
   importer.on 'match', _updatePoints
   importer.importBySeasonAndGroup season, group, cb
+  
+_handleImportGroup = (season, group, res) ->
+  importGroup season, group, (err) ->
+    if err
+      res.send "failed to imported #{group}/#{season}: #{err}"
+    else
+      res.send "imported #{group}/#{season}"
 
 importGroupController = (req, res) ->
   requireSecret req, res, ->
     season = req.param 'season'
     group = req.param 'group'
-    if season? && group?
-      importGroup season, group, ->
-        res.send "imported #{group}/#{season}"
+    
+    return res.send "season and group required" if not season? && group?
+    
+    if group == 'current'
+      s.match.getCurrentGroup (err, currentGroup) ->
+        _handleImportGroup season, "#{currentGroup}", res
     else
-      res.send "season and group required"
-
+      _handleImportGroup season, group, res
 
 (exports ? this).importSeason = importSeason
 (exports ? this).importGroup = importGroup

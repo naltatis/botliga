@@ -22,9 +22,13 @@ class MatchImporter extends EventEmitter
         
     Seq()
       .seq ->
-        rest.get(url, options).on 'complete', (data) =>
-          console.log "---->", season, group
-          @ null, data.matchdata
+        rest
+          .get(url, options)
+          .on 'success', (data) =>
+            console.log "---->", season, group
+            @ null, data.matchdata
+          .on 'error', (error) =>
+            @ error
       .flatten()
       .parMap (result) ->
         if result?
@@ -37,7 +41,10 @@ class MatchImporter extends EventEmitter
               @ err
         else
           @ null
-      .seq cb
+      .seq(cb)
+      .catch (err) ->
+        console.log "error while importing #{season}/#{group}: #{err}"
+        cb err
 
   importBySeason: (season, cb = ->) ->
     self = @
@@ -47,14 +54,19 @@ class MatchImporter extends EventEmitter
       .flatten()
       .parMap (group) ->
         self.importBySeasonAndGroup season, group, @
-      .seq cb
+      .seq(cb)
+      .catch (err) ->
+        console.log err
+        cb err
     
   _groupsBySeason: (season, cb) ->
     rest
       .get("#{apiHost}avail_groups?league_saison=#{season}&league_shortcut=bl1")
-      .on 'complete', (data) =>
+      .on 'success', (data) =>
         res = (group.group_order_id for group in data.group)
         cb null, res
+      .on 'error', (err) =>
+        cb err
              
   _match: (result) ->
     result.points_team1 = parseInt(result.points_team1, 10)
