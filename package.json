@@ -23,7 +23,7 @@
 		"date-utils": "1.2.9",
 		"narrow": "0.0.1",
 		"xml2js": "0.1.13",
-		"connect-assets": "2.1.7"
+		"connect-assets": "2.1.5"
 	},
 	"engines": {
 	  "node": "0.4"
