@@ -63,6 +63,7 @@ $.widget 'stats.guessesByGroup',
         result.push guess.bot if guess.bot? && !_(result).contains guess.bot
     result
 
+###
 $.widget 'stats.scatterChart'
   _create: ->
     google.load 'visualization', '1',
@@ -141,7 +142,7 @@ $.widget 'bot.profile'
   _scatter: ->
     #$.get "/api/bot/#{@options.botName}/results/2010", (data) => @_show data
 
-    
+###    
 cache = {}
 getCached = (url, cb) ->
   if cache[url]?
@@ -221,6 +222,7 @@ $.widget 'stats.pointsBySeasonChart',
       height: 480
       fontSize: 12
       pointSize: 2
+      curveType: "function"
       hAxis:
         maxAlternation: 2
         textStyle:

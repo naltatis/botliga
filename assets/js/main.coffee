@@ -7,7 +7,6 @@
 $ ->
   $('#guessesByGroup').guessesByGroup()
   $('#pointsBySeasonChart').pointsBySeasonChart()
-  $('#scatterChart').scatterChart()
   
   $('#results a.seasonChart').click (e) ->
     e.preventDefault()
