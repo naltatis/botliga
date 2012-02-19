@@ -4,7 +4,6 @@ nib = require "nib"
 auth = require('./lib/model/auth').auth
 crawler = require("./lib/import/crawler").crawler
 stats = require "./lib/service/stats"
-Updater = require("./lib/service/updater").Updater
 api = require "./lib/controller/api"
 web = require "./lib/controller/web"
 maintenance = require "./lib/controller/maintenance"

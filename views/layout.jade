@@ -6,6 +6,8 @@ html(lang="de")
     link(rel="stylesheet", href="http://fonts.googleapis.com/css?family=Droid+Sans+Mono:regular&v1", type="text/css")
     != js('main')
     meta(name="google-site-verification", content="WI1Q3e9uDKSm7La8SzxDUb0bygC0PNDe4CauhhNklvg")
+    link(rel="icon", href="/favicon.png", type="image/png")
+    link(rel="apple-touch-icon", href="/apple-touch-icon.png")
   body(data-login=(everyauth.loggedIn ? everyauth.github.user.login : ''))
     header
       a.logo(href='/')
