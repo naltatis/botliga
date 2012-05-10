@@ -55,7 +55,10 @@ results = (req, res) ->
     res.render 'results', model    
   else
     s.match.getCurrentGroup (err, group) ->
-      model.group = group
+      if err
+        model.group = 34
+      else
+        model.group = group
       res.render 'results', model    
       
 botProfile = (req, res) ->
