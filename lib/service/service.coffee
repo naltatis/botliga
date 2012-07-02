@@ -111,7 +111,8 @@ class BotService
   getAll: (callback) ->
     m.Bot.find({name: {'$exists': true}}).find callback
   getAllWithPull: (callback) ->
-    m.Bot.find({url: {'$exists': true}, url: {'$ne': ''}, usePullApi: true}).find callback
+    m.Bot.find({url: {'$ne': ''}, usePullApi: true}).find callback
+    #m.Bot.find({url: {'$exists': true}, url: {'$ne': ''}, usePullApi: true}).find callback
     
 class MatchService
   getBySeason: (season, callback) ->
