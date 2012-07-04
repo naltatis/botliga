@@ -1,1 +1,2 @@
 .DS_Store
+node_modules/mongoose-auth/node_modules/bcrypt/build/
