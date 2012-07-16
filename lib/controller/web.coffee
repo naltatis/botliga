@@ -32,7 +32,7 @@ updateBot = (req, res) ->
 datasources = (req, res) ->
   Seq()
     .par ->
-      s.match.getBySeason "2011", @
+      s.match.getBySeason "2012", @
     .par ->
       s.match.getBySeason "2010", @
     .seq (currentMatches, lastMatches) ->

@@ -3,9 +3,9 @@ $ ->
 
   return unless login
   
-  $.getJSON "https://github.com/api/v2/json/repos/show/#{login}?callback=?", (data) ->
-    for repo in data.repositories
-      $option = $("<option>").text(repo.name).attr('value', repo.owner + "/" + repo.name).data('repository', repo.url)
+  $.getJSON "https://api.github.com/users/#{login}/repos?callback=?", (response) ->
+    for repo in response.data
+      $option = $("<option>").text(repo.name).attr('value', repo.owner.login + "/" + repo.name).data('repository', repo.html_url)
       $('#botList select').append $option
     $('#botList select').val ->
       $(@).closest('.bot').data('name')

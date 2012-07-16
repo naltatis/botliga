@@ -77,8 +77,8 @@ class MatchImporter extends EventEmitter
       guestId: result.id_team2
       hostName: result.name_team1
       guestName: result.name_team2
-      hostGoals: result.points_team1 if result.points_team1 >= 0
-      guestGoals: result.points_team2 if  result.points_team2 >= 0
+      hostGoals: if result.points_team1 >= 0 then result.points_team1 else null
+      guestGoals: if result.points_team2 >= 0 then result.points_team2 else null
       season: result.league_saison
       group: result.group_order_id
       date: new Date(result.match_date_time_utc)
