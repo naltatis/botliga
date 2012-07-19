@@ -20,7 +20,7 @@ html(lang="de")
         li
           a(href='/datenquellen', class= (navigation == 'datasources') ? 'active' : '') Datenquellen
         li
-          a(href='/einstellungen', class= (navigation == 'settings') ? 'active' : '') Meine Bots
+          a(href=(everyauth.loggedIn ? '/einstellungen' : '/auth/github'), class= (navigation == 'settings') ? 'active' : '') Meine Bots
       .login
         - if (everyauth.loggedIn)
           .loggedIn
