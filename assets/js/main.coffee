@@ -20,7 +20,3 @@ $ ->
     $(@).addClass('current')
     $('#pointsBySeasonTable').pointsBySeasonTable().show()
     $('#pointsBySeasonChart').hide()
-    
-  $(window).scroll (e) ->
-    top = $(@).scrollTop() / 30
-    $("body").css 'backgroundPosition', "center -#{top}px"
