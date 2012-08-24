@@ -4,6 +4,7 @@ nib = require "nib"
 auth = require('./lib/model/auth').auth
 crawler = require("./lib/import/crawler").crawler
 stats = require "./lib/service/stats"
+Updater = require("./lib/service/updater").Updater
 api = require "./lib/controller/api"
 web = require "./lib/controller/web"
 maintenance = require "./lib/controller/maintenance"
@@ -67,5 +68,5 @@ port = process.env.PORT || 3000
 app.listen port, ->
   console.log "Listening on #{port}"
   
-#updater = new Updater()
-#updater.start()
+updater = new Updater()
+updater.start()
