@@ -7,25 +7,39 @@ Seq = require "seq"
 apiHost = "http://openligadb-json.heroku.com/api/"
 
 class MatchImporter extends EventEmitter
+  lastChangeTimestamps: {}
   constructor: ->
     
   importBySeasonAndGroup: (season, group, cb = ->) ->
     self = @
     console.log "importing #{season}/#{group}"
     url = "#{apiHost}matchdata_by_group_league_saison"
+    lastChangeUrl = "#{apiHost}last_change_date_by_group_league_saison"
     options =
       query:
         league_shortcut: 'bl1'
         group_order_id: group
         league_saison: season
-    console.log url, options
         
     Seq()
       .seq ->
+        console.log lastChangeUrl, season, group
+        rest
+          .get(lastChangeUrl, options)
+          .on 'success', (lastChange) =>
+            if self.lastChangeTimestamps["#{season}/#{group}"] is lastChange
+              @ "not-changed"
+            else
+              @ null, lastChange
+          .on 'error', (error) =>
+            @ error
+      .seq (lastChange) ->
+        console.log url, season, group
         rest
           .get(url, options)
           .on 'success', (data) =>
-            console.log "---->", season, group
+            console.log "---->", season, group, lastChange
+            self.lastChangeTimestamps["#{season}/#{group}"] = lastChange
             @ null, data.matchdata
           .on 'error', (error) =>
             @ error
@@ -43,8 +57,12 @@ class MatchImporter extends EventEmitter
           @ null
       .seq(cb)
       .catch (err) ->
-        console.log "error while importing #{season}/#{group}: #{err}"
-        cb err
+        if err is "not-changed"
+          console.log "data didn't change #{season}/#{group} >> skipping ...."
+          cb()
+        else
+          console.log "error while importing #{season}/#{group}: #{err}"
+          cb err
 
   importBySeason: (season, cb = ->) ->
     self = @
