@@ -15,7 +15,7 @@ settings = (req, res) ->
       res.render 'settings',
         navigation: 'settings'
         bots: bots
-        
+
 updateBot = (req, res) ->
   requireLogin req, res, ->
     s.bot.getByUserAndId req.user._id, req.param('id'), (err, bot) ->
@@ -32,15 +32,15 @@ updateBot = (req, res) ->
 datasources = (req, res) ->
   Seq()
     .par ->
-      s.match.getBySeason "2012", @
+      s.match.getBySeason "2013", @
     .par ->
       s.match.getBySeason "2010", @
     .seq (currentMatches, lastMatches) ->
-      data = 
+      data =
         navigation: 'datasources'
         currentMatches: currentMatches
         lastMatches: lastMatches
-    
+
       res.render 'datasources', data
 
 results = (req, res) ->
@@ -48,20 +48,20 @@ results = (req, res) ->
     season: req.param 'season'
     group: req.param 'group'
     navigation: 'results'
-    
-  model.season or= '2012'
-  #model.group or= '34'
-  
+
+  model.season or= '2013'
+  model.group or= '1'
+
   if model.group?
-    res.render 'results', model    
+    res.render 'results', model
   else
     s.match.getCurrentGroup (err, group) ->
       model.group = group
-      res.render 'results', model    
-      
+      res.render 'results', model
+
 botProfile = (req, res) ->
   name = "#{req.params.user}/#{req.params.bot}"
-  
+
   Seq()
     .seq ->
       s.bot.getByName name, (err, bot) =>
@@ -72,7 +72,7 @@ botProfile = (req, res) ->
     .par (bot) ->
       github.getRepoCommits bot.name, @
     .seq (bot, details, commits) ->
-      data = 
+      data =
         bot: bot
         details: details
         commits: commits
@@ -80,7 +80,7 @@ botProfile = (req, res) ->
       res.render 'bot-profile', data
     .catch (err) ->
       res.send 404
-      
+
 matchesBySeason = (req, res) ->
   s.match.getBySeason req.params.season, (err, data) -> res.send data
 

@@ -1,38 +1,34 @@
 #results.copy
   ul.subnav
     case season
-      when "2012"
+      when "2013"
         li
           h2 Auswertung aktuelle Saison
         li
-          a(href='/auswertung/2011') Auswertung 2011/2012
+          a(href='/auswertung/2012') Auswertung 2012/2013
         li
           a(href='/auswertung/2010') Auswertung 2010/2011 (Training)
-      when "2011"
+      when "2012"
         li
-          a(href='/auswertung/2012') Auswertung aktuelle Saison
+          a(href='/auswertung/2013') Auswertung aktuelle Saison
         li
-          h2 Auswertung 2011/2012
+          h2 Auswertung 2012/2013
         li
           a(href='/auswertung/2010') Auswertung 2010/2011 (Training)
       default
         li
-          a(href='/auswertung/2012') Auswertung aktuelle Saison
+          a(href='/auswertung/2013') Auswertung aktuelle Saison
         li
-          a(href='/auswertung/2011') Auswertung 2011/2012
+          a(href='/auswertung/2012') Auswertung 2012/2013
         li
           h2 Auswertung 2010/2011 (Training)
-    
+
   ul.subnav
     li
-      h3
-        | Ergebnisse 
-        = group
-        | . Spieltag 
-        = season + '/' + (parseInt(season) + 1)
+      h3 Ergebnisse #{group}. Spieltag #{season}/#{parseInt(season) + 1}
     li
       a(href='/api/points/' + season) JSON
-  
+
   #guessesByGroup(data-season=season, data-group=group)
     .options
       select#guessesByGroupGroup.group
@@ -44,9 +40,7 @@
 
   ul.subnav
     li
-      h3
-        | Saison Übersicht 
-        = season + '/' + (parseInt(season) + 1)
+      h3 Saison Übersicht #{season}/#{parseInt(season) + 1}
     li
       a.seasonChart.current(href='#') Chart
     li
