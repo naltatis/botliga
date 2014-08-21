@@ -1,25 +1,40 @@
 #results.copy
   ul.subnav
     case season
-      when "2013"
+      when "2014"
         li
           h2 Auswertung aktuelle Saison
         li
-          a(href='/auswertung/2012') Auswertung 2012/2013
+          a(href='/auswertung/2013') 2013/2014
         li
-          a(href='/auswertung/2010') Auswertung 2010/2011 (Training)
+          a(href='/auswertung/2012') 2012/2013
+        li
+          a(href='/auswertung/2010') 2010/2011 (Training)
+      when "2013"
+        li
+          a(href='/auswertung/2014') aktuelle Saison
+        li
+          h2 Auswertung 2013/2014
+        li
+          a(href='/auswertung/2012') 2012/2013
+        li
+          a(href='/auswertung/2010') 2010/2011 (Training)
       when "2012"
         li
-          a(href='/auswertung/2013') Auswertung aktuelle Saison
+          a(href='/auswertung/2014') aktuelle Saison
+        li
+          a(href='/auswertung/2013') 2013/2014
         li
           h2 Auswertung 2012/2013
         li
-          a(href='/auswertung/2010') Auswertung 2010/2011 (Training)
+          a(href='/auswertung/2010') 2010/2011 (Training)
       default
         li
-          a(href='/auswertung/2013') Auswertung aktuelle Saison
+          a(href='/auswertung/2014') aktuelle Saison
         li
-          a(href='/auswertung/2012') Auswertung 2012/2013
+          a(href='/auswertung/2013') 2013/2014
+        li
+          a(href='/auswertung/2012') 2012/2013
         li
           h2 Auswertung 2010/2011 (Training)
 

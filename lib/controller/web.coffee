@@ -32,7 +32,7 @@ updateBot = (req, res) ->
 datasources = (req, res) ->
   Seq()
     .par ->
-      s.match.getBySeason "2013", @
+      s.match.getBySeason "2014", @
     .par ->
       s.match.getBySeason "2010", @
     .seq (currentMatches, lastMatches) ->
@@ -49,7 +49,7 @@ results = (req, res) ->
     group: req.param 'group'
     navigation: 'results'
 
-  model.season or= '2013'
+  model.season or= '2014'
   #model.group or= '1'
 
   if model.group?
