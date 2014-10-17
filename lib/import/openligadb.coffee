@@ -4,12 +4,12 @@ _ = require "underscore"
 Seq = require "seq"
 {EventEmitter} = require "events"
 
-apiHost = "http://openligadb-json.heroku.com/api/"
+apiHost = "http://openligadb-json.herokuapp.com/api/"
 
 class MatchImporter extends EventEmitter
   lastChangeTimestamps: {}
   constructor: ->
-    
+
   importBySeasonAndGroup: (season, group, cb = ->) ->
     self = @
     console.log "importing #{season}/#{group}"
@@ -20,7 +20,7 @@ class MatchImporter extends EventEmitter
         league_shortcut: 'bl1'
         group_order_id: group
         league_saison: season
-        
+
     Seq()
       .seq ->
         console.log lastChangeUrl, season, group
@@ -76,7 +76,7 @@ class MatchImporter extends EventEmitter
       .catch (err) ->
         console.log err
         cb err
-    
+
   _groupsBySeason: (season, cb) ->
     rest
       .get("#{apiHost}avail_groups?league_saison=#{season}&league_shortcut=bl1")
@@ -85,7 +85,7 @@ class MatchImporter extends EventEmitter
         cb null, res
       .on 'error', (err) =>
         cb err
-             
+
   _match: (result) ->
     result.points_team1 = parseInt(result.points_team1, 10)
     result.points_team2 = parseInt(result.points_team2, 10)

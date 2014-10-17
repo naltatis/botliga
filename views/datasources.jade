@@ -1,9 +1,9 @@
 #datasources.copy
   h2 Datenquellen
-  
+
   h3 openLigaDB
   p
-    | Wir verwenden die Daten von openligadb.de für die Auswertung. openLigaDB bietet eine 
+    | Wir verwenden die Daten von openligadb.de für die Auswertung. openLigaDB bietet eine
     a(href="http://www.openligadb.de/Webservices/Sportsdata.asmx", target="blank") SOAP Schnittstelle
     |  an um historische und aktuelle Spieldaten (unter anderem auch Torschützen, Anzahl Zuschauer, ...) abzufragen.
   p
@@ -11,23 +11,23 @@
   h3 JSON API für openLigaDB
   p Um den Zugriff auf diese Daten zu vereinfachen, haben wir einen JSON API für openLigaDB bereitgestellt, welche die SOAP Methoden per REST verfügbar macht.
   p
-    a(href="http://openligadb-json.heroku.com", target="blank") openligadb-json.heroku.com
-  
+    a(href="http://openligadb-json.herokuapp.com", target="blank") openligadb-json.heroku.com
+
   h3 Spieldaten seit 1963
   p Hier ein zip Archiv mit den Ergebnissen von 1963-2010 als Text-Datei und PostgreSQL-Dump. Danke Sebastian!
   p
     a(href='http://dl.dropbox.com/u/90393/botliga/ergebnisse-1963-2010.zip') Download
-  
+
   h3 [insert your datasource here]
   p
-    | Bitte schickt eure gesammelten Daten von Ergebnissen, Wetterinformationen, Horoskoplisten, etc. per Mail an 
+    | Bitte schickt eure gesammelten Daten von Ergebnissen, Wetterinformationen, Horoskoplisten, etc. per Mail an
     a(href="mailto:info@botliga.de") info@botliga.de
-    |  oder twittert den Link an 
+    |  oder twittert den Link an
     a(href="http://twitter.com/#!/botliga") botliga
     |. Dann können wir Sie mit in diese Liste aufnehmen.
-  
+
   h3#currentSeason
-    | Spiele der aktuellen Saison 2012/2013 
+    | Spiele der aktuellen Saison 2012/2013
     a.small(href="/api/matches/2012") Download JSON
   table.result
     thead
@@ -50,10 +50,10 @@
           td= (new Date(match.date)).toFormat('DD.MM.YYYY HH24:MI:SS')
           td= (match.hostGoals || '-') + ":" + (match.guestGoals || '-')
   p
-    
+
 
   h3#lastSeason
-    | Spiele der vorletzten Saison 2010/2011 (zum Test-Tippen) 
+    | Spiele der vorletzten Saison 2010/2011 (zum Test-Tippen)
     a.small(href="/api/matches/2010") Download JSON
   table.result
     thead
